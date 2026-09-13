@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>گزارش مالی - نمایشگاه پرده کابورا</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f8;
+            color: #202733;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #172033;
+            color: white;
+            padding: 20px 25px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #b9c2d0;
+            font-size: 13px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* ================= TOP BAR ================= */
+
+        .top-bar {
+            background: white;
+            border-radius: 13px;
+            padding: 13px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            border: 1px solid #e5e8eb;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 18px;
+        }
+
+        .month-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .month-area label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555f6d;
+        }
+
+        input[type="month"] {
+            height: 38px;
+            border: 1px solid #d8dde3;
+            border-radius: 8px;
+            padding: 0 10px;
+            font-family: Tahoma;
+            outline: none;
+            background: #fafbfc;
+        }
+
+        input[type="month"]:focus {
+            border-color: #172033;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 9px 14px;
+            font-family: Tahoma;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #172033;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #26334a;
+        }
+
+        .btn-light {
+            background: #eef1f4;
+            color: #344050;
+        }
+
+        .btn-light:hover {
+            background: #e2e6ea;
+        }
+
+        /* ================= ERROR ================= */
+
+        #errorBox {
+            display: none;
+            background: #fff1f1;
+            color: #b42318;
+            border: 1px solid #f3c4c4;
+            padding: 11px 14px;
+            border-radius: 9px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        /* ================= TITLE ================= */
+
+        .report-heading {
+            background: white;
+            border: 1px solid #e5e8eb;
+            border-radius: 13px;
+            padding: 17px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .report-heading h2 {
+            margin: 0;
+            font-size: 19px;
+            color: #172033;
+        }
+
+        .report-heading p {
+            margin: 6px 0 0;
+            color: #7a838e;
+            font-size: 12px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e8eb;
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 100px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            left: -18px;
+            bottom: -18px;
+            width: 60px;
+            height: 60px;
+            background: #f3f5f7;
+            border-radius: 50%;
+        }
+
+        .card-title {
+            font-size: 12px;
+            color: #68717a;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-value {
+            font-size: 19px;
+            font-weight: bold;
+            color: #172033;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sales {
+            border-top: 3px solid #2e7d32;
+        }
+
+        .receipts {
+            border-top: 3px solid #1976d2;
+        }
+
+        .purchases {
+            border-top: 3px solid #ef6c00;
+        }
+
+        .expenses {
+            border-top: 3px solid #c62828;
+        }
+
+        /* ================= FINANCIAL BOX ================= */
+
+        .financial-box {
+            background: white;
+            border: 1px solid #e5e8eb;
+            border-radius: 13px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .box-title {
+            padding: 14px 17px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e8ebee;
+            font-size: 15px;
+            font-weight: bold;
+            color: #172033;
+        }
+
+        .financial-content {
+            padding: 5px 17px;
+        }
+
+        .financial-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 3px;
+            border-bottom: 1px solid #edf0f2;
+            font-size: 13px;
+        }
+
+        .financial-row:last-child {
+            border-bottom: none;
+        }
+
+        .financial-label {
+            color: #606975;
+        }
+
+        .financial-value {
+            font-weight: bold;
+            color: #172033;
+        }
+
+        .positive {
+            color: #218739 !important;
+        }
+
+        .negative {
+            color: #c62828 !important;
+        }
+
+        /* ================= PROFIT ================= */
+
+        .profit-box {
+            background: linear-gradient(135deg, #172033, #25344d);
+            color: white;
+            border-radius: 13px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 5px 15px rgba(23, 32, 51, 0.18);
+            text-align: center;
+        }
+
+        .profit-title {
+            font-size: 13px;
+            color: #cbd3df;
+            margin-bottom: 9px;
+        }
+
+        #profit {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        #status {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #cbd3df;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer-note {
+            text-align: center;
+            color: #8a929c;
+            font-size: 11px;
+            padding: 8px 0 20px;
+        }
+
+        /* ================= PRINT ================= */
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            header {
+                background: #172033 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .top-bar,
+            .buttons,
+            #errorBox {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 10px;
+                padding: 0;
+            }
+
+            .card,
+            .financial-box,
+            .report-heading,
+            .profit-box {
+                box-shadow: none;
+            }
+
+            .card:hover {
+                transform: none;
+            }
+
+            .profit-box {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .footer-note {
+                display: none;
+            }
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 16px;
+            }
+
+            header h1 {
+                font-size: 19px;
+            }
+
+            .container {
+                margin-top: 12px;
+                padding: 0 10px;
+            }
+
+            .top-bar {
+                align-items: stretch;
+            }
+
+            .month-area,
+            .buttons {
+                width: 100%;
+            }
+
+            input[type="month"] {
+                flex: 1;
+            }
+
+            .buttons button,
+            .buttons .back-btn {
+                flex: 1;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 9px;
+            }
+
+            .card {
+                padding: 12px;
+                min-height: 90px;
+            }
+
+            .card-value {
+                font-size: 16px;
+            }
+
+            .card-title {
+                font-size: 11px;
+            }
+
+            .report-heading {
+                padding: 14px;
+            }
+
+            .report-heading h2 {
+                font-size: 17px;
+            }
+
+            .financial-row {
+                font-size: 12px;
+            }
+
+            #profit {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+        <div class="header-inner">
+            <h1>نمایشگاه پرده کابورا</h1>
+            <p>گزارش مالی ماهانه</p>
+        </div>
+    </header>
+
+
+    <div class="container">
+
+        <!-- ================= TOP BAR ================= -->
+
+        <div class="top-bar">
+
+            <div class="month-area">
+                <label for="month">ماه گزارش:</label>
+                <input type="month" id="month">
+            </div>
+
+            <div class="buttons">
+
+                <button class="btn-primary" onclick="loadReport()">
+                    🔄 بروزرسانی
+                </button>
+
+                <button class="btn-light" onclick="window.print()">
+                    🖨️ چاپ گزارش
+                </button>
+
+                <a href="/" class="back-btn btn-light">
+                    🏠 داشبورد
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ERROR ================= -->
+
+        <div id="errorBox"></div>
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="report-heading">
+
+            <h2 id="monthTitle">
+                گزارش مالی
+            </h2>
+
+            <p>
+                خلاصه فعالیت مالی نمایشگاه در ماه انتخاب‌شده
+            </p>
+
+        </div>
+
+
+        <!-- ================= TOP CARDS ================= -->
+
+        <div class="cards">
+
+            <div class="card sales">
+
+                <div class="card-title">
+                    💰 فروش ماه
+                </div>
+
+                <div class="card-value" id="sales">
+                    0 افغانی
+                </div>
+
+            </div>
+
+
+            <div class="card receipts">
+
+                <div class="card-title">
+                    💵 رسید مشتریان
+                </div>
+
+                <div class="card-value" id="receipts">
+                    0 افغانی
+                </div>
+
+            </div>
+
+
+            <div class="card purchases">
+
+                <div class="card-title">
+                    🛒 خریدهای ماه
+                </div>
+
+                <div class="card-value" id="purchases">
+                    0 افغانی
+                </div>
+
+            </div>
+
+
+            <div class="card expenses">
+
+                <div class="card-title">
+                    🧾 مصارف ماه
+                </div>
+
+                <div class="card-value" id="expenses">
+                    0 افغانی
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FINANCIAL SUMMARY ================= -->
+
+        <div class="financial-box">
+
+            <div class="box-title">
+                📊 خلاصه حساب ماه
+            </div>
+
+            <div class="financial-content">
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        فروش ماه
+                    </span>
+
+                    <span class="financial-value positive" id="sales2">
+                        0 افغانی
+                    </span>
+                </div>
+
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        رسید مشتریان
+                    </span>
+
+                    <span class="financial-value positive" id="receipts2">
+                        0 افغانی
+                    </span>
+                </div>
+
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        باقی‌مانده حساب مشتریان
+                    </span>
+
+                    <span class="financial-value" id="balance">
+                        0 افغانی
+                    </span>
+                </div>
+
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        خریدهای ماه
+                    </span>
+
+                    <span class="financial-value negative" id="purchases2">
+                        0 افغانی
+                    </span>
+                </div>
+
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        مصارف ماه
+                    </span>
+
+                    <span class="financial-value negative" id="expenses2">
+                        0 افغانی
+                    </span>
+                </div>
+
+
+                <div class="financial-row">
+                    <span class="financial-label">
+                        دستمزد خیاط
+                    </span>
+
+                    <span class="financial-value negative" id="tailor">
+                        0 افغانی
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FINAL BALANCE ================= -->
+
+        <div class="profit-box">
+
+            <div class="profit-title">
+                📈 تراز نهایی ماه
+            </div>
+
+            <div id="profit">
+                0 افغانی
+            </div>
+
+            <div id="status">
+                در حال دریافت اطلاعات...
+            </div>
+
+        </div>
+
+
+        <div class="footer-note">
+            نمایشگاه پرده کابورا — سیستم مدیریت و حسابداری
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const API = "";
+
+
+        // ================= MONEY =================
+
+        function money(value) {
+
+            return Number(value || 0).toLocaleString("fa-AF") + " افغانی";
+
+        }
+
+
+        // ================= CURRENT MONTH =================
+
+        function getCurrentMonth() {
+
+            const now = new Date();
+
+            const year = now.getFullYear();
+
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+
+            return `${year}-${month}`;
+
+        }
+
+
+        // ================= FORMAT MONTH =================
+
+        function formatMonth(month) {
+
+            const names = [
+                "",
+                "جنوری",
+                "فبروری",
+                "مارچ",
+                "اپریل",
+                "می",
+                "جون",
+                "جولای",
+                "آگست",
+                "سپتامبر",
+                "اکتبر",
+                "نوامبر",
+                "دسامبر"
+            ];
+
+            const parts = month.split("-");
+
+            const year = parts[0];
+
+            const monthNumber = Number(parts[1]);
+
+            return `${names[monthNumber]} ${year}`;
+
+        }
+
+
+        // ================= LOAD REPORT =================
+
+        async function loadReport() {
+
+            const month = document.getElementById("month").value;
+
+            const errorBox = document.getElementById("errorBox");
+
+            errorBox.style.display = "none";
+
+            try {
+
+                // ==========================================
+                // BILLS
+                // ==========================================
+
+                const billsResponse = await fetch(`${API}/api/bills`);
+
+                const bills = await billsResponse.json();
+
+                const monthBills = bills.filter(bill => {
+
+                    const date =
+                        bill.BillDate ||
+                        bill.Date ||
+                        bill.CreatedAt;
+
+                    if (!date) return false;
+
+                    return String(date).substring(0, 7) === month;
+
+                });
+
+
+                let totalSales = 0;
+
+                let totalReceipts = 0;
+
+
+                monthBills.forEach(bill => {
+
+                    totalSales += Number(
+                        bill.TotalAmount || 0
+                    );
+
+                    totalReceipts += Number(
+                        bill.ReceiptAmount || 0
+                    );
+
+                });
+
+
+                const customerBalance =
+                    totalSales - totalReceipts;
+
+
+                // ==========================================
+                // PURCHASES
+                // ==========================================
+
+                const purchasesResponse =
+                    await fetch(
+                        `${API}/api/purchases?month=${month}`
+                    );
+
+                const purchases =
+                    await purchasesResponse.json();
+
+
+                let totalPurchases = 0;
+
+
+                if (Array.isArray(purchases)) {
+
+                    purchases.forEach(item => {
+
+                        totalPurchases += Number(
+                            item.TotalAmount || 0
+                        );
+
+                    });
+
+                }
+
+
+                // ==========================================
+                // EXPENSES
+                // ==========================================
+
+                const expensesResponse =
+                    await fetch(
+                        `${API}/api/expenses`
+                    );
+
+                const expensesData =
+                    await expensesResponse.json();
+
+
+                let expenses = [];
+
+                if (Array.isArray(expensesData)) {
+
+                    expenses = expensesData;
+
+                } else if (
+                    expensesData &&
+                    Array.isArray(expensesData.expenses)
+                ) {
+
+                    expenses = expensesData.expenses;
+
+                }
+
+
+                const monthExpenses =
+                    expenses.filter(expense => {
+
+                        const date =
+                            expense.ExpenseDate ||
+                            expense.Date ||
+                            expense.CreatedAt;
+
+                        if (!date) return false;
+
+                        return String(date).substring(0, 7) === month;
+
+                    });
+
+
+                let totalExpenses = 0;
+
+
+                monthExpenses.forEach(expense => {
+
+                    totalExpenses += Number(
+                        expense.Amount ||
+                        expense.TotalAmount ||
+                        0
+                    );
+
+                });
+
+
+                // ==========================================
+                // TAILOR
+                // ==========================================
+
+                const tailorResponse =
+                    await fetch(
+                        `${API}/api/tailor/account?month=${month}`
+                    );
+
+                const tailorData =
+                    await tailorResponse.json();
+
+
+                const tailorTotal =
+                    Number(
+                        tailorData?.summary?.TotalTailorAmount || 0
+                    );
+
+
+                // ==========================================
+                // FINAL BALANCE
+                // ==========================================
+
+                const finalBalance =
+                    totalSales -
+                    totalPurchases -
+                    totalExpenses -
+                    tailorTotal;
+
+
+                // ==========================================
+                // UPDATE TITLE
+                // ==========================================
+
+                document.getElementById("monthTitle").textContent =
+                    `گزارش مالی ${formatMonth(month)}`;
+
+
+                // ==========================================
+                // UPDATE CARDS
+                // ==========================================
+
+                document.getElementById("sales").textContent =
+                    money(totalSales);
+
+                document.getElementById("receipts").textContent =
+                    money(totalReceipts);
+
+                document.getElementById("purchases").textContent =
+                    money(totalPurchases);
+
+                document.getElementById("expenses").textContent =
+                    money(totalExpenses);
+
+
+                // ==========================================
+                // UPDATE SUMMARY
+                // ==========================================
+
+                document.getElementById("sales2").textContent =
+                    money(totalSales);
+
+                document.getElementById("receipts2").textContent =
+                    money(totalReceipts);
+
+                document.getElementById("balance").textContent =
+                    money(customerBalance);
+
+                document.getElementById("purchases2").textContent =
+                    money(totalPurchases);
+
+                document.getElementById("expenses2").textContent =
+                    money(totalExpenses);
+
+                document.getElementById("tailor").textContent =
+                    money(tailorTotal);
+
+
+                // ==========================================
+                // FINAL PROFIT
+                // ==========================================
+
+                const profitElement =
+                    document.getElementById("profit");
+
+                profitElement.textContent =
+                    money(finalBalance);
+
+
+                if (finalBalance >= 0) {
+
+                    profitElement.classList.remove("negative");
+
+                    profitElement.classList.add("positive");
+
+                    document.getElementById("status").textContent =
+                        "وضعیت مالی ماه مثبت است";
+
+                } else {
+
+                    profitElement.classList.remove("positive");
+
+                    profitElement.classList.add("negative");
+
+                    document.getElementById("status").textContent =
+                        "وضعیت مالی ماه منفی است";
+
+                }
+
+
+                document.getElementById("status").textContent +=
+                    ` — ${monthBills.length} بل ثبت شده`;
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                errorBox.textContent =
+                    "❌ در دریافت اطلاعات گزارش خطا رخ داد.";
+
+                errorBox.style.display = "block";
+
+            }
+
+        }
+
+
+        // ================= START =================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                const month =
+                    document.getElementById("month");
+
+                month.value =
+                    getCurrentMonth();
+
+                loadReport();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

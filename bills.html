@@ -1,0 +1,3410 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ثبت بل - نمایشگاه پرده کابورا</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 96%;
+            max-width: 1400px;
+            margin: 25px auto;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #d1d5db;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #1f2937;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            border: 0;
+        }
+
+        .btn-add {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .item-row {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .item-header strong {
+            font-size: 17px;
+        }
+
+        .btn-remove {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .type-box {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 9px 12px;
+            cursor: pointer;
+        }
+
+        .type-box input {
+            width: auto;
+            margin-left: 5px;
+        }
+
+        .tailor-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 18px;
+        }
+
+        .tailor-box h3 {
+            margin-top: 0;
+            color: #c2410c;
+            border-bottom: 1px solid #fed7aa;
+            padding-bottom: 10px;
+        }
+
+        .tailor-rate-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .calculation {
+            margin-top: 15px;
+            background: #eef6ff;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .tailor-calculation {
+            margin-top: 12px;
+            background: #fff7ed;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #9a3412;
+        }
+
+        .calculation-details {
+            display: none !important;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .summary-box {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            background: #f3f4f6;
+        }
+
+        .summary-box h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .summary-box strong {
+            font-size: 25px;
+        }
+
+        .tailor-summary {
+            margin-top: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+        }
+
+        .tailor-summary h3 {
+            margin: 0 0 10px;
+            color: #9a3412;
+        }
+
+        .tailor-summary strong {
+            font-size: 25px;
+            color: #c2410c;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .link-button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            font-family: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-save {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-reset {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-customers {
+            background: #2563eb;
+            color: white;
+        }
+
+        .status {
+            display: none;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 1000px) {
+            .grid,
+            .tailor-rate-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .grid,
+            .summary,
+            .tailor-rate-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+        /* =====================================================
+   جستجوی بل‌ها
+===================================================== */
+
+.search-box{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+}
+
+.search-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.btn-search{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-clear-search{
+    background:#6b7280;
+    color:white;
+}
+
+.search-results{
+    margin-top:20px;
+    overflow-x:auto;
+}
+
+.search-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+.search-table th{
+    background:#1f2937;
+    color:white;
+    padding:12px;
+    white-space:nowrap;
+}
+
+.search-table td{
+    padding:11px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+    white-space:nowrap;
+}
+
+.search-table tr:hover{
+    background:#f8fafc;
+}
+
+.search-empty{
+    text-align:center;
+    color:#888;
+    padding:25px;
+}
+
+.search-details-btn{
+    display:inline-block;
+    background:#16a34a;
+    color:white;
+    text-decoration:none;
+    padding:7px 12px;
+    border-radius:7px;
+    font-size:13px;
+}
+
+.search-details-btn:hover{
+    background:#15803d;
+}
+/* =========================================================
+   KABOORA CURTAIN - BILLS RESPONSIVE DESIGN
+   فقط ظاهر و سایز صفحه
+   ========================================================= */
+
+/* ---------- کامپیوتر بزرگ ---------- */
+
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1400px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tailor-rate-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+}
+
+
+/* ---------- لپتاپ ---------- */
+
+@media (max-width: 1200px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .tailor-rate-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .header {
+        padding: 23px 18px;
+    }
+
+}
+
+
+/* ---------- تبلت ---------- */
+
+@media (max-width: 900px) {
+
+    .container {
+        width: 94%;
+        margin: 18px auto 30px;
+    }
+
+    .header {
+        padding: 20px 15px;
+        border-radius: 13px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .header p {
+        font-size: 13px;
+    }
+
+    .card {
+        padding: 18px;
+        border-radius: 13px;
+        margin-bottom: 16px;
+    }
+
+    .card h2 {
+        font-size: 19px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .tailor-rate-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-title {
+        align-items: center;
+    }
+
+    .item-row {
+        padding: 15px;
+    }
+
+    .types {
+        gap: 7px;
+    }
+
+    .type-box {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .search-box {
+        padding: 15px;
+    }
+
+    .search-results {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+}
+
+
+/* ---------- موبایل ---------- */
+
+@media (max-width: 650px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 94%;
+        margin: 14px auto 25px;
+    }
+
+    .header {
+        padding: 17px 10px;
+        margin-bottom: 14px;
+        border-radius: 11px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .header p {
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .card {
+        padding: 13px;
+        border-radius: 11px;
+        margin-bottom: 13px;
+    }
+
+    .card h2 {
+        font-size: 17px;
+        padding-bottom: 10px;
+        margin-bottom: 13px;
+    }
+
+    /* تمام فرم‌ها یک ستونه */
+
+    .grid,
+    .tailor-rate-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+        min-height: 42px;
+    }
+
+    textarea {
+        min-height: 80px;
+    }
+
+    /* عنوان بخش */
+
+    .section-title {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 9px;
+    }
+
+    .section-title h2 {
+        width: 100%;
+    }
+
+    .btn-add {
+        width: 100%;
+        min-height: 42px;
+        font-size: 13px;
+    }
+
+    /* ردیف تشک و پرده */
+
+    .item-row {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .item-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .item-header strong {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .btn-remove {
+        padding: 7px 10px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    /* انواع تشک و پرده */
+
+    .types {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .type-box {
+        width: 100%;
+        padding: 9px 7px;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .type-box input {
+        width: auto;
+        min-height: auto;
+        margin-left: 4px;
+    }
+
+    /* بخش خیاط */
+
+    .tailor-box {
+        padding: 12px;
+        margin-top: 13px;
+        border-radius: 9px;
+    }
+
+    .tailor-box h3 {
+        font-size: 15px;
+    }
+
+    /* محاسبات */
+
+    .calculation,
+    .tailor-calculation {
+        padding: 11px;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    /* خلاصه */
+
+    .summary {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .summary-box {
+        padding: 15px 10px;
+    }
+
+    .summary-box h3 {
+        font-size: 13px;
+    }
+
+    .summary-box strong {
+        font-size: 21px;
+    }
+
+    .tailor-summary {
+        padding: 15px 10px;
+    }
+
+    .tailor-summary h3 {
+        font-size: 14px;
+    }
+
+    .tailor-summary strong {
+        font-size: 21px;
+    }
+
+    /* دکمه‌های اصلی */
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    button,
+    .link-button {
+        width: 100%;
+        min-height: 43px;
+        padding: 11px 14px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* جستجو */
+
+    .search-box {
+        padding: 12px;
+    }
+
+    .search-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .search-buttons button {
+        width: 100%;
+    }
+
+    /* جدول جستجو */
+
+    .search-results {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .search-table {
+        min-width: 850px;
+        font-size: 12px;
+    }
+
+    .search-table th,
+    .search-table td {
+        padding: 9px 7px;
+    }
+
+    .search-details-btn {
+        padding: 7px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status {
+        font-size: 12px;
+        line-height: 1.8;
+        padding: 10px;
+    }
+
+}
+
+
+/* ---------- موبایل خیلی کوچک ---------- */
+
+@media (max-width: 360px) {
+
+    .container {
+        width: 95%;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+
+    .item-row {
+        padding: 10px;
+    }
+
+    .item-header strong {
+        font-size: 13px;
+    }
+
+    .types {
+        grid-template-columns: 1fr;
+    }
+
+    .type-box {
+        font-size: 12px;
+    }
+
+    .summary-box strong,
+    .tailor-summary strong {
+        font-size: 19px;
+    }
+
+    .search-table {
+        min-width: 800px;
+    }
+
+}
+
+
+/* ---------- جلوگیری از بیرون‌زدگی ---------- */
+
+.card,
+.item-row,
+.tailor-box,
+.search-box,
+.summary-box,
+.tailor-summary {
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- لمس بهتر موبایل ---------- */
+
+@media (max-width: 650px) {
+
+    button,
+    input,
+    select,
+    textarea {
+        touch-action: manipulation;
+    }
+
+}
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>نمایشگاه پرده کابورا</h1>
+        <p>سیستم ثبت بل مشتریان</p>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <!-- =====================================================
+     جستجوی بل‌ها
+===================================================== -->
+
+<div class="card">
+
+    <h2>🔍 جستجوی بل‌ها</h2>
+
+    <div class="search-box">
+
+        <div class="grid">
+
+            <div class="form-group">
+
+                <label>شماره بل</label>
+
+                <input
+                    type="number"
+                    id="searchBillNumber"
+                    placeholder="مثلاً 25">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>نام مشتری</label>
+
+                <input
+                    type="text"
+                    id="searchCustomerName"
+                    placeholder="نام مشتری">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>شماره تلفن</label>
+
+                <input
+                    type="text"
+                    id="searchPhone"
+                    placeholder="شماره تلفن">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>تاریخ بل</label>
+
+                <input
+                    type="date"
+                    id="searchDate">
+
+            </div>
+
+        </div>
+
+
+        <div class="search-buttons">
+
+            <button
+                type="button"
+                class="btn-search"
+                onclick="searchBills()">
+
+                🔍 جستجو
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-clear-search"
+                onclick="clearBillSearch()">
+
+                🔄 پاک کردن جستجو
+
+            </button>
+
+        </div>
+
+
+        <div class="search-results">
+
+            <table class="search-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>شماره بل</th>
+
+                        <th>نام مشتری</th>
+
+                        <th>شماره تلفن</th>
+
+                        <th>تاریخ</th>
+
+                        <th>مبلغ کل</th>
+
+                        <th>رسید</th>
+
+                        <th>باقی‌مانده</th>
+
+                        <th>عملیات</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="searchResultsBody">
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="search-empty">
+
+                            برای جستجو اطلاعات را وارد کنید.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ================= اطلاعات بل ================= -->
+
+    <div class="card">
+
+        <h2>🧾 اطلاعات بل</h2>
+
+        <div class="grid">
+
+            <div class="form-group">
+                <label>شماره بل</label>
+                <input type="number" id="BillNumber" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>مشتری</label>
+
+                <select id="CustomerId">
+                    <option value="">در حال دریافت مشتریان...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>تاریخ بل</label>
+                <input type="date" id="BillDate">
+            </div>
+
+            <div class="form-group">
+                <label>تاریخ تحویل</label>
+                <input type="date" id="DeliveryDate">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= تشک ================= -->
+
+    <div class="card">
+
+        <div class="section-title">
+
+            <h2>🛏️ تشک و بالشت</h2>
+
+            <button
+                type="button"
+                class="btn-add"
+                onclick="addMattressRow()">
+                ➕ افزودن تشک
+            </button>
+
+        </div>
+
+        <div id="mattressContainer"></div>
+
+    </div>
+
+
+    <!-- ================= پرده ================= -->
+
+    <div class="card">
+
+        <div class="section-title">
+
+            <h2>🪟 پرده و جالی</h2>
+
+            <button
+                type="button"
+                class="btn-add"
+                onclick="addCurtainRow()">
+                ➕ افزودن پرده
+            </button>
+
+        </div>
+
+        <div id="curtainContainer"></div>
+
+    </div>
+
+
+    <!-- ================= رسید ================= -->
+
+    <div class="card">
+
+        <h2>💰 رسید مشتری</h2>
+
+        <div class="grid">
+
+            <div class="form-group">
+
+                <label>رسید</label>
+
+                <input
+                    type="number"
+                    id="ReceiptAmount"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>تاریخ رسید</label>
+
+                <input
+                    type="date"
+                    id="PaymentDate">
+
+            </div>
+
+            <div
+                class="form-group"
+                style="grid-column: span 2;">
+
+                <label>توضیحات</label>
+
+                <textarea
+                    id="PaymentDescription"
+                    placeholder="مثلاً: پیش پرداخت مشتری"></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= خلاصه ================= -->
+
+    <div class="card">
+
+        <h2>📊 خلاصه حساب</h2>
+
+        <div class="summary">
+
+            <div class="summary-box">
+
+                <h3>مجموع بل مشتری</h3>
+
+                <strong id="showTotal">0</strong>
+
+                <div>افغانی</div>
+
+            </div>
+
+            <div class="summary-box">
+
+                <h3>رسید مشتری</h3>
+
+                <strong id="showReceipt">0</strong>
+
+                <div>افغانی</div>
+
+            </div>
+
+            <div class="summary-box">
+
+                <h3>باقی‌مانده مشتری</h3>
+
+                <strong id="showBalance">0</strong>
+
+                <div>افغانی</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="tailor-summary">
+
+            <h3>✂️ مجموع دستمزد خیاط</h3>
+
+            <strong id="showTailorTotal">0</strong>
+
+            <div>افغانی</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= دکمه‌ها ================= -->
+
+    <div class="card">
+
+        <div class="buttons">
+
+            <button
+                type="button"
+                class="btn-save"
+                onclick="saveBill()">
+                💾 ثبت بل
+            </button>
+
+            <button
+                type="button"
+                class="btn-reset"
+                onclick="resetForm()">
+                🔄 پاک کردن
+            </button>
+
+            <a
+                href="/customers.html"
+                class="link-button btn-customers">
+                👤 مدیریت مشتریان
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const API = "http://localhost:3000";
+
+let mattressCounter = 0;
+let curtainCounter = 0;
+
+
+// =====================================================
+// پیام
+// =====================================================
+
+function showStatus(message, type) {
+
+    const status =
+        document.getElementById("status");
+
+    status.textContent = message;
+
+    status.className =
+        "status " + type;
+}
+
+
+// =====================================================
+// تاریخ امروز
+// =====================================================
+
+function getToday() {
+
+    const today = new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(today.getMonth() + 1)
+        .padStart(2, "0");
+
+    const day =
+        String(today.getDate())
+        .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+// =====================================================
+// شماره بل بعدی
+// =====================================================
+
+async function loadNextBillNumber() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/bills/next-number`
+            );
+
+        const data =
+            await response.json();
+
+        document.getElementById("BillNumber").value =
+            data.BillNumber;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "خطا در دریافت شماره بل",
+            "error"
+        );
+    }
+}
+
+
+// =====================================================
+// مشتریان
+// =====================================================
+
+async function loadCustomers() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/customers`
+            );
+
+        const customers =
+            await response.json();
+
+        const select =
+            document.getElementById("CustomerId");
+
+        select.innerHTML =
+            '<option value="">انتخاب مشتری</option>';
+
+        customers.forEach(customer => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                customer.Id;
+
+            option.textContent =
+                `${customer.FullName} - ${customer.Phone || "بدون شماره"}`;
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "خطا در دریافت مشتریان",
+            "error"
+        );
+    }
+}
+
+
+// =====================================================
+// افزودن ردیف تشک
+// =====================================================
+
+function addMattressRow() {
+
+    mattressCounter++;
+
+    const container =
+        document.getElementById(
+            "mattressContainer"
+        );
+
+    const row =
+        document.createElement("div");
+
+    row.className = "item-row";
+
+    row.dataset.id =
+        mattressCounter;
+
+    row.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                تشک و بالشت شماره ${mattressCounter}
+            </strong>
+
+            <button
+                type="button"
+                class="btn-remove"
+                onclick="
+                    this.closest('.item-row').remove();
+                    calculateGrandTotal();
+                ">
+                حذف
+            </button>
+
+        </div>
+
+
+        <label>نوع تشک</label>
+
+        <div class="types">
+
+            <label class="type-box">
+                <input type="checkbox" class="simple">
+                ساده
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="sajafDar">
+                سجاف‌دار
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="boxi">
+                باکسی
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="designDar">
+                دیزاین‌دار
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="zirPoosh">
+                زیرپوش
+            </label>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="form-group">
+                <label>تعداد تشک</label>
+
+                <input
+                    type="number"
+                    class="mattressCount"
+                    min="0"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>تعداد بالشت</label>
+
+                <input
+                    type="number"
+                    class="pillowCount"
+                    min="0"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>بالشت کوچک</label>
+
+                <input
+                    type="number"
+                    class="smallPillowCount"
+                    min="0"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>بالشت رول</label>
+
+                <input
+                    type="number"
+                    class="rollPillowCount"
+                    min="0"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>متر پارچه</label>
+
+                <input
+                    type="number"
+                    class="fabricMeters"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>قیمت هر متر پارچه مشتری</label>
+
+                <input
+                    type="number"
+                    class="fabricPrice"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+
+            <div class="form-group">
+                <label>قیمت دوخت مشتری</label>
+
+                <input
+                    type="number"
+                    class="sewingPrice"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             نرخ‌های خیاط تشک
+             ================================================= -->
+
+        <div class="tailor-box">
+
+            <h3>✂️ نرخ دستمزد خیاط</h3>
+
+            <div class="tailor-rate-grid">
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط تشک ساده</label>
+
+                    <input
+                        type="number"
+                        class="tailorSimplePrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط سجاف‌دار</label>
+
+                    <input
+                        type="number"
+                        class="tailorSajafDarPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط باکسی</label>
+
+                    <input
+                        type="number"
+                        class="tailorBoxiPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط دیزاین‌دار</label>
+
+                    <input
+                        type="number"
+                        class="tailorDesignDarPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط زیرپوش</label>
+
+                    <input
+                        type="number"
+                        class="tailorZirPooshPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط بالشت</label>
+
+                    <input
+                        type="number"
+                        class="tailorPillowPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط بالشت کوچک</label>
+
+                    <input
+                        type="number"
+                        class="tailorSmallPillowPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>نرخ خیاط بالشت رول</label>
+
+                    <input
+                        type="number"
+                        class="tailorRollPillowPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="calculation">
+
+            مبلغ این ردیف مشتری:
+            <span class="rowTotal">0</span>
+            افغانی
+
+        </div>
+
+
+        <div class="tailor-calculation">
+
+            دستمزد خیاط این ردیف:
+            <span class="tailorRowTotal">0</span>
+            افغانی
+
+        </div>
+
+    `;
+
+    container.appendChild(row);
+
+    calculateGrandTotal();
+}
+
+
+// =====================================================
+// محاسبه ردیف تشک
+// =====================================================
+
+function calculateMattressRow(row) {
+
+    const mattressCount =
+        Number(
+            row.querySelector(".mattressCount").value
+        ) || 0;
+
+    const pillowCount =
+        Number(
+            row.querySelector(".pillowCount").value
+        ) || 0;
+
+    const smallPillowCount =
+        Number(
+            row.querySelector(".smallPillowCount").value
+        ) || 0;
+
+    const rollPillowCount =
+        Number(
+            row.querySelector(".rollPillowCount").value
+        ) || 0;
+
+    const fabricMeters =
+        Number(
+            row.querySelector(".fabricMeters").value
+        ) || 0;
+
+    const fabricPrice =
+        Number(
+            row.querySelector(".fabricPrice").value
+        ) || 0;
+
+    const sewingPrice =
+        Number(
+            row.querySelector(".sewingPrice").value
+        ) || 0;
+
+
+    // =================================================
+    // قیمت مشتری
+    // =================================================
+
+    const customerTotal =
+        (fabricMeters * fabricPrice)
+        +
+        sewingPrice;
+
+
+    // =================================================
+    // نرخ‌های خیاط
+    // =================================================
+
+    const tailorSimplePrice =
+        Number(
+            row.querySelector(".tailorSimplePrice").value
+        ) || 0;
+
+    const tailorSajafDarPrice =
+        Number(
+            row.querySelector(".tailorSajafDarPrice").value
+        ) || 0;
+
+    const tailorBoxiPrice =
+        Number(
+            row.querySelector(".tailorBoxiPrice").value
+        ) || 0;
+
+    const tailorDesignDarPrice =
+        Number(
+            row.querySelector(".tailorDesignDarPrice").value
+        ) || 0;
+
+    const tailorZirPooshPrice =
+        Number(
+            row.querySelector(".tailorZirPooshPrice").value
+        ) || 0;
+
+    const tailorPillowPrice =
+        Number(
+            row.querySelector(".tailorPillowPrice").value
+        ) || 0;
+
+    const tailorSmallPillowPrice =
+        Number(
+            row.querySelector(".tailorSmallPillowPrice").value
+        ) || 0;
+
+    const tailorRollPillowPrice =
+        Number(
+            row.querySelector(".tailorRollPillowPrice").value
+        ) || 0;
+
+
+    // =================================================
+    // محاسبه دستمزد خیاط
+    // =================================================
+
+    let tailorTotal = 0;
+
+
+    if (
+        row.querySelector(".simple").checked
+    ) {
+
+        tailorTotal +=
+            mattressCount *
+            tailorSimplePrice;
+    }
+
+
+    if (
+        row.querySelector(".sajafDar").checked
+    ) {
+
+        tailorTotal +=
+            mattressCount *
+            tailorSajafDarPrice;
+    }
+
+
+    if (
+        row.querySelector(".boxi").checked
+    ) {
+
+        tailorTotal +=
+            mattressCount *
+            tailorBoxiPrice;
+    }
+
+
+    if (
+        row.querySelector(".designDar").checked
+    ) {
+
+        tailorTotal +=
+            mattressCount *
+            tailorDesignDarPrice;
+    }
+
+
+    if (
+        row.querySelector(".zirPoosh").checked
+    ) {
+
+        tailorTotal +=
+            mattressCount *
+            tailorZirPooshPrice;
+    }
+
+
+    // بالشت
+    tailorTotal +=
+        pillowCount *
+        tailorPillowPrice;
+
+
+    // بالشت کوچک
+    tailorTotal +=
+        smallPillowCount *
+        tailorSmallPillowPrice;
+
+
+    // بالشت رول
+    tailorTotal +=
+        rollPillowCount *
+        tailorRollPillowPrice;
+
+
+    // =================================================
+    // نمایش
+    // =================================================
+
+    row.querySelector(".rowTotal").textContent =
+        customerTotal.toLocaleString("en-US");
+
+
+    row.querySelector(".tailorRowTotal").textContent =
+        tailorTotal.toLocaleString("en-US");
+
+
+    return {
+        customerTotal,
+        tailorTotal
+    };
+}
+
+
+// =====================================================
+// افزودن ردیف پرده
+// =====================================================
+
+function addCurtainRow() {
+
+    curtainCounter++;
+
+    const container =
+        document.getElementById(
+            "curtainContainer"
+        );
+
+    const row =
+        document.createElement("div");
+
+    row.className = "item-row";
+
+    row.dataset.id =
+        curtainCounter;
+
+
+    row.innerHTML = `
+
+        <div class="item-header">
+
+            <strong>
+                پرده و جالی شماره ${curtainCounter}
+            </strong>
+
+            <button
+                type="button"
+                class="btn-remove"
+                onclick="
+                    this.closest('.item-row').remove();
+                    calculateGrandTotal();
+                ">
+                حذف
+            </button>
+
+        </div>
+
+
+        <label>نوع پرده</label>
+
+        <div class="types">
+
+            <label class="type-box">
+                <input type="checkbox" class="ringdar">
+                رینگ‌دار
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="plyti">
+                پلیتی
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="sePlyte">
+                سه‌پلیته
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="minimal">
+                مینیمال
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="iranian">
+                ایرانی
+            </label>
+
+            <label class="type-box">
+                <input type="checkbox" class="poshtPardeyi">
+                پشت‌پرده‌ای
+            </label>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="form-group">
+
+                <label>متر جالی</label>
+
+                <input
+                    type="number"
+                    class="jaliMeters"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>قیمت هر متر جالی مشتری</label>
+
+                <input
+                    type="number"
+                    class="jaliPrice"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>متر پارچه</label>
+
+                <input
+                    type="number"
+                    class="fabricMeters"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>قیمت هر متر پارچه مشتری</label>
+
+                <input
+                    type="number"
+                    class="fabricPrice"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>قیمت دوخت مشتری هر متر</label>
+
+                <input
+                    type="number"
+                    class="sewingPrice"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    oninput="calculateGrandTotal()">
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= نرخ خیاط پرده ================= -->
+
+        <div class="tailor-box">
+
+            <h3>✂️ حساب خیاط پرده</h3>
+
+            <div class="grid">
+
+                <div class="form-group">
+
+                    <label>
+                        نرخ دوخت خیاط هر متر
+                    </label>
+
+                    <input
+                        type="number"
+                        class="tailorSewingPrice"
+                        min="0"
+                        step="0.01"
+                        value="0"
+                        oninput="calculateGrandTotal()">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="calculation">
+
+            مبلغ این ردیف مشتری:
+            <span class="rowTotal">0</span>
+            افغانی
+
+        </div>
+
+
+        <div class="tailor-calculation">
+
+            دستمزد خیاط این ردیف:
+            <span class="tailorRowTotal">0</span>
+            افغانی
+
+        </div>
+
+    `;
+
+
+    container.appendChild(row);
+
+    calculateGrandTotal();
+}
+
+
+// =====================================================
+// محاسبه پرده
+// =====================================================
+
+function calculateCurtainRow(row) {
+
+    const jaliMeters =
+        Number(
+            row.querySelector(".jaliMeters").value
+        ) || 0;
+
+    const jaliPrice =
+        Number(
+            row.querySelector(".jaliPrice").value
+        ) || 0;
+
+    const fabricMeters =
+        Number(
+            row.querySelector(".fabricMeters").value
+        ) || 0;
+
+    const fabricPrice =
+        Number(
+            row.querySelector(".fabricPrice").value
+        ) || 0;
+
+    const sewingPrice =
+        Number(
+            row.querySelector(".sewingPrice").value
+        ) || 0;
+
+    const tailorSewingPrice =
+        Number(
+            row.querySelector(".tailorSewingPrice").value
+        ) || 0;
+
+
+    // =================================================
+    // مشتری
+    // =================================================
+
+    const jaliTotal =
+        jaliMeters * jaliPrice;
+
+    const jaliSewingTotal =
+        jaliMeters * sewingPrice;
+
+    const fabricTotal =
+        fabricMeters * fabricPrice;
+
+    const fabricSewingTotal =
+        fabricMeters * sewingPrice;
+
+
+    const customerTotal =
+        jaliTotal
+        +
+        jaliSewingTotal
+        +
+        fabricTotal
+        +
+        fabricSewingTotal;
+
+
+    // =================================================
+    // خیاط
+    // =================================================
+
+    const tailorTotal =
+        (jaliMeters + fabricMeters)
+        *
+        tailorSewingPrice;
+
+
+    row.querySelector(".rowTotal").textContent =
+        customerTotal.toLocaleString("en-US");
+
+
+    row.querySelector(".tailorRowTotal").textContent =
+        tailorTotal.toLocaleString("en-US");
+
+
+    return {
+        customerTotal,
+        tailorTotal
+    };
+}
+
+
+// =====================================================
+// محاسبه مجموع کل
+// =====================================================
+
+function calculateGrandTotal() {
+
+    let total = 0;
+
+    let tailorTotal = 0;
+
+
+    // تشک
+    document
+        .querySelectorAll(
+            "#mattressContainer .item-row"
+        )
+        .forEach(row => {
+
+            const result =
+                calculateMattressRow(row);
+
+            total +=
+                result.customerTotal;
+
+            tailorTotal +=
+                result.tailorTotal;
+
+        });
+
+
+    // پرده
+    document
+        .querySelectorAll(
+            "#curtainContainer .item-row"
+        )
+        .forEach(row => {
+
+            const result =
+                calculateCurtainRow(row);
+
+            total +=
+                result.customerTotal;
+
+            tailorTotal +=
+                result.tailorTotal;
+
+        });
+
+
+    const receipt =
+        Number(
+            document.getElementById(
+                "ReceiptAmount"
+            ).value
+        ) || 0;
+
+
+    const balance =
+        total - receipt;
+
+
+    document.getElementById(
+        "showTotal"
+    ).textContent =
+        total.toLocaleString("en-US");
+
+
+    document.getElementById(
+        "showReceipt"
+    ).textContent =
+        receipt.toLocaleString("en-US");
+
+
+    document.getElementById(
+        "showBalance"
+    ).textContent =
+        balance.toLocaleString("en-US");
+
+
+    document.getElementById(
+        "showTailorTotal"
+    ).textContent =
+        tailorTotal.toLocaleString("en-US");
+
+
+    return {
+        total,
+        tailorTotal
+    };
+}
+
+
+// =====================================================
+// جمع‌آوری تشک‌ها
+// =====================================================
+
+function getMattressItems() {
+
+    const items = [];
+
+
+    document
+        .querySelectorAll(
+            "#mattressContainer .item-row"
+        )
+        .forEach(row => {
+
+            const mattressCount =
+                Number(
+                    row.querySelector(
+                        ".mattressCount"
+                    ).value
+                ) || 0;
+
+            const pillowCount =
+                Number(
+                    row.querySelector(
+                        ".pillowCount"
+                    ).value
+                ) || 0;
+
+            const smallPillowCount =
+                Number(
+                    row.querySelector(
+                        ".smallPillowCount"
+                    ).value
+                ) || 0;
+
+            const rollPillowCount =
+                Number(
+                    row.querySelector(
+                        ".rollPillowCount"
+                    ).value
+                ) || 0;
+
+
+            const tailorSimplePrice =
+                Number(
+                    row.querySelector(
+                        ".tailorSimplePrice"
+                    ).value
+                ) || 0;
+
+            const tailorSajafDarPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorSajafDarPrice"
+                    ).value
+                ) || 0;
+
+            const tailorBoxiPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorBoxiPrice"
+                    ).value
+                ) || 0;
+
+            const tailorDesignDarPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorDesignDarPrice"
+                    ).value
+                ) || 0;
+
+            const tailorZirPooshPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorZirPooshPrice"
+                    ).value
+                ) || 0;
+
+            const tailorPillowPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorPillowPrice"
+                    ).value
+                ) || 0;
+
+            const tailorSmallPillowPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorSmallPillowPrice"
+                    ).value
+                ) || 0;
+
+            const tailorRollPillowPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorRollPillowPrice"
+                    ).value
+                ) || 0;
+
+
+            // =================================================
+            // مبلغ خیاط
+            // =================================================
+
+            let tailorSewingAmount = 0;
+
+
+            if (
+                row.querySelector(".simple").checked
+            ) {
+
+                tailorSewingAmount +=
+                    mattressCount *
+                    tailorSimplePrice;
+            }
+
+
+            if (
+                row.querySelector(".sajafDar").checked
+            ) {
+
+                tailorSewingAmount +=
+                    mattressCount *
+                    tailorSajafDarPrice;
+            }
+
+
+            if (
+                row.querySelector(".boxi").checked
+            ) {
+
+                tailorSewingAmount +=
+                    mattressCount *
+                    tailorBoxiPrice;
+            }
+
+
+            if (
+                row.querySelector(".designDar").checked
+            ) {
+
+                tailorSewingAmount +=
+                    mattressCount *
+                    tailorDesignDarPrice;
+            }
+
+
+            if (
+                row.querySelector(".zirPoosh").checked
+            ) {
+
+                tailorSewingAmount +=
+                    mattressCount *
+                    tailorZirPooshPrice;
+            }
+
+
+            tailorSewingAmount +=
+                pillowCount *
+                tailorPillowPrice;
+
+
+            tailorSewingAmount +=
+                smallPillowCount *
+                tailorSmallPillowPrice;
+
+
+            tailorSewingAmount +=
+                rollPillowCount *
+                tailorRollPillowPrice;
+
+
+            items.push({
+
+                TailorId: null,
+
+                Simple:
+                    row.querySelector(
+                        ".simple"
+                    ).checked ? 1 : 0,
+
+                SajafDar:
+                    row.querySelector(
+                        ".sajafDar"
+                    ).checked ? 1 : 0,
+
+                Boxi:
+                    row.querySelector(
+                        ".boxi"
+                    ).checked ? 1 : 0,
+
+                DesignDar:
+                    row.querySelector(
+                        ".designDar"
+                    ).checked ? 1 : 0,
+
+                ZirPoosh:
+                    row.querySelector(
+                        ".zirPoosh"
+                    ).checked ? 1 : 0,
+
+                MattressCount:
+                    mattressCount,
+
+                PillowCount:
+                    pillowCount,
+
+                SmallPillowCount:
+                    smallPillowCount,
+
+                RollPillowCount:
+                    rollPillowCount,
+
+                FabricMeters:
+                    Number(
+                        row.querySelector(
+                            ".fabricMeters"
+                        ).value
+                    ) || 0,
+
+                FabricPrice:
+                    Number(
+                        row.querySelector(
+                            ".fabricPrice"
+                        ).value
+                    ) || 0,
+
+                SewingPrice:
+                    Number(
+                        row.querySelector(
+                            ".sewingPrice"
+                        ).value
+                    ) || 0,
+
+
+                // نرخ‌های خیاط
+                TailorSimplePrice:
+                    tailorSimplePrice,
+
+                TailorSajafDarPrice:
+                    tailorSajafDarPrice,
+
+                TailorBoxiPrice:
+                    tailorBoxiPrice,
+
+                TailorDesignDarPrice:
+                    tailorDesignDarPrice,
+
+                TailorZirPooshPrice:
+                    tailorZirPooshPrice,
+
+                TailorPillowPrice:
+                    tailorPillowPrice,
+
+                TailorSmallPillowPrice:
+                    tailorSmallPillowPrice,
+
+                TailorRollPillowPrice:
+                    tailorRollPillowPrice,
+
+
+                // مجموع دستمزد خیاط
+                TailorSewingAmount:
+                    tailorSewingAmount
+
+            });
+
+        });
+
+
+    return items;
+}
+
+
+// =====================================================
+// جمع‌آوری پرده‌ها
+// =====================================================
+
+function getCurtainItems() {
+
+    const items = [];
+
+
+    document
+        .querySelectorAll(
+            "#curtainContainer .item-row"
+        )
+        .forEach(row => {
+
+            const jaliMeters =
+                Number(
+                    row.querySelector(
+                        ".jaliMeters"
+                    ).value
+                ) || 0;
+
+            const fabricMeters =
+                Number(
+                    row.querySelector(
+                        ".fabricMeters"
+                    ).value
+                ) || 0;
+
+            const tailorSewingPrice =
+                Number(
+                    row.querySelector(
+                        ".tailorSewingPrice"
+                    ).value
+                ) || 0;
+
+
+            const tailorSewingAmount =
+                (jaliMeters + fabricMeters)
+                *
+                tailorSewingPrice;
+
+
+            items.push({
+
+                TailorId: null,
+
+                Ringdar:
+                    row.querySelector(
+                        ".ringdar"
+                    ).checked ? 1 : 0,
+
+                Plyti:
+                    row.querySelector(
+                        ".plyti"
+                    ).checked ? 1 : 0,
+
+                SePlyte:
+                    row.querySelector(
+                        ".sePlyte"
+                    ).checked ? 1 : 0,
+
+                Minimal:
+                    row.querySelector(
+                        ".minimal"
+                    ).checked ? 1 : 0,
+
+                Iranian:
+                    row.querySelector(
+                        ".iranian"
+                    ).checked ? 1 : 0,
+
+                PoshtPardeyi:
+                    row.querySelector(
+                        ".poshtPardeyi"
+                    ).checked ? 1 : 0,
+
+                JaliMeters:
+                    jaliMeters,
+
+                JaliPrice:
+                    Number(
+                        row.querySelector(
+                            ".jaliPrice"
+                        ).value
+                    ) || 0,
+
+                FabricMeters:
+                    fabricMeters,
+
+                FabricPrice:
+                    Number(
+                        row.querySelector(
+                            ".fabricPrice"
+                        ).value
+                    ) || 0,
+
+                SewingPrice:
+                    Number(
+                        row.querySelector(
+                            ".sewingPrice"
+                        ).value
+                    ) || 0,
+
+                TailorSewingPrice:
+                    tailorSewingPrice,
+
+                TailorSewingAmount:
+                    tailorSewingAmount
+
+            });
+
+        });
+
+
+    return items;
+}
+
+
+// =====================================================
+// ثبت بل
+// =====================================================
+
+async function saveBill() {
+
+    const BillNumber =
+        Number(
+            document.getElementById(
+                "BillNumber"
+            ).value
+        );
+
+
+    const CustomerId =
+        Number(
+            document.getElementById(
+                "CustomerId"
+            ).value
+        );
+
+
+    const BillDate =
+        document.getElementById(
+            "BillDate"
+        ).value;
+
+
+    const DeliveryDate =
+        document.getElementById(
+            "DeliveryDate"
+        ).value;
+
+
+    const mattressItems =
+        getMattressItems();
+
+
+    const curtainItems =
+        getCurtainItems();
+
+
+    const totals =
+        calculateGrandTotal();
+
+
+    const TotalAmount =
+        totals.total;
+
+
+    const TailorTotalAmount =
+        totals.tailorTotal;
+
+
+    const ReceiptAmount =
+        Number(
+            document.getElementById(
+                "ReceiptAmount"
+            ).value
+        ) || 0;
+
+
+    const PaymentDate =
+        document.getElementById(
+            "PaymentDate"
+        ).value;
+
+
+    const PaymentDescription =
+        document.getElementById(
+            "PaymentDescription"
+        ).value;
+
+
+    if (!CustomerId) {
+
+        showStatus(
+            "لطفاً مشتری را انتخاب کنید",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!BillDate) {
+
+        showStatus(
+            "لطفاً تاریخ بل را انتخاب کنید",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (
+        mattressItems.length === 0 &&
+        curtainItems.length === 0
+    ) {
+
+        showStatus(
+            "لطفاً حداقل یک تشک یا یک پرده اضافه کنید",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (ReceiptAmount > TotalAmount) {
+
+        showStatus(
+            "مبلغ رسید نمی‌تواند بیشتر از مجموع بل باشد",
+            "error"
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/bills`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        BillNumber,
+
+                        CustomerId,
+
+                        BillDate,
+
+                        DeliveryDate:
+                            DeliveryDate || null,
+
+                        TotalAmount,
+
+                        TailorTotalAmount,
+
+                        ReceiptAmount,
+
+                        PaymentDate:
+                            PaymentDate || BillDate,
+
+                        PaymentDescription,
+
+                        mattressItems,
+
+                        curtainItems
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "خطا در ثبت بل"
+            );
+
+        }
+
+
+        showStatus(
+            `بل شماره ${BillNumber} با موفقیت ثبت شد ✅`,
+            "success"
+        );
+
+
+        await loadNextBillNumber();
+
+
+        document.getElementById(
+            "CustomerId"
+        ).value = "";
+
+
+        document.getElementById(
+            "DeliveryDate"
+        ).value = "";
+
+
+        document.getElementById(
+            "ReceiptAmount"
+        ).value = 0;
+
+
+        document.getElementById(
+            "PaymentDescription"
+        ).value = "";
+
+
+        document.getElementById(
+            "mattressContainer"
+        ).innerHTML = "";
+
+
+        document.getElementById(
+            "curtainContainer"
+        ).innerHTML = "";
+
+
+        mattressCounter = 0;
+
+        curtainCounter = 0;
+
+
+        calculateGrandTotal();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            error.message,
+            "error"
+        );
+
+    }
+}
+
+
+// =====================================================
+// پاک کردن فرم
+// =====================================================
+
+function resetForm() {
+
+    document.getElementById(
+        "CustomerId"
+    ).value = "";
+
+
+    document.getElementById(
+        "BillDate"
+    ).value =
+        getToday();
+
+
+    document.getElementById(
+        "DeliveryDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "ReceiptAmount"
+    ).value = 0;
+
+
+    document.getElementById(
+        "PaymentDate"
+    ).value =
+        getToday();
+
+
+    document.getElementById(
+        "PaymentDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "mattressContainer"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "curtainContainer"
+    ).innerHTML = "";
+
+
+    mattressCounter = 0;
+
+    curtainCounter = 0;
+
+
+    calculateGrandTotal();
+
+    showStatus("", "");
+}
+
+
+// =====================================================
+// شروع صفحه
+// =====================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        document.getElementById(
+            "BillDate"
+        ).value =
+            getToday();
+
+
+        document.getElementById(
+            "PaymentDate"
+        ).value =
+            getToday();
+
+
+        await loadCustomers();
+
+        await loadNextBillNumber();
+
+
+        addMattressRow();
+
+        addCurtainRow();
+
+
+        calculateGrandTotal();
+
+    }
+);
+// =====================================================
+// جستجوی بل‌ها
+// =====================================================
+
+
+// =====================================================
+// جستجوی بل‌ها - نسخه اصلاح‌شده
+// =====================================================
+
+async function searchBills() {
+
+    const billNumber = document
+        .getElementById("searchBillNumber")
+        .value
+        .trim();
+
+    const customerName = document
+        .getElementById("searchCustomerName")
+        .value
+        .trim();
+
+    const phone = document
+        .getElementById("searchPhone")
+        .value
+        .trim();
+
+    const date = document
+        .getElementById("searchDate")
+        .value;
+
+    const tbody = document.getElementById("searchResultsBody");
+
+
+    // اگر هیچ چیزی وارد نشده باشد
+    if (!billNumber && !customerName && !phone && !date) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="search-empty">
+                    لطفاً حداقل یک مورد برای جستجو وارد کنید.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    // نمایش حالت جستجو
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="8" class="search-empty">
+                🔄 در حال جستجو...
+            </td>
+        </tr>
+    `;
+
+
+    try {
+
+        const params = new URLSearchParams();
+
+
+        if (billNumber) {
+            params.set("billNumber", billNumber);
+        }
+
+        if (customerName) {
+            params.set("customerName", customerName);
+        }
+
+        if (phone) {
+            params.set("phone", phone);
+        }
+
+        if (date) {
+            params.set("date", date);
+        }
+
+
+        const url =
+            `${API}/api/bills?${params.toString()}`;
+
+
+        console.log("Search URL:", url);
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            throw new Error(
+                `خطای سرور: ${response.status} ${errorText}`
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log("Search result:", data);
+
+
+        // API ما آرایه برمی‌گرداند
+        const bills =
+            Array.isArray(data)
+                ? data
+                : (
+                    Array.isArray(data.bills)
+                        ? data.bills
+                        : []
+                );
+
+
+        // هیچ نتیجه‌ای پیدا نشد
+        if (bills.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="search-empty">
+                        ❌ هیچ بلی با این مشخصات پیدا نشد.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        // نمایش نتایج
+        tbody.innerHTML = bills.map(bill => {
+
+            const id =
+                String(bill.Id || "").trim();
+
+
+            const billNumberValue =
+                bill.BillNumber ?? "-";
+
+
+            const customer =
+                bill.CustomerName || "-";
+
+
+            const customerPhone =
+                bill.Phone || "-";
+
+
+            const total =
+                Number(
+                    bill.TotalAmount || 0
+                );
+
+
+            const receipt =
+                Number(
+                    bill.ReceiptAmount || 0
+                );
+
+
+            const balance =
+                bill.BalanceAmount !== undefined
+                    ? Number(
+                        bill.BalanceAmount || 0
+                    )
+                    : total - receipt;
+
+
+            const billDate =
+                formatSearchDate(
+                    bill.BillDate
+                );
+
+
+            return `
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${billNumberValue}
+                        </strong>
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(customer)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(customerPhone)}
+                    </td>
+
+
+                    <td>
+                        ${billDate}
+                    </td>
+
+
+                    <td>
+                        ${moneySearch(total)}
+                    </td>
+
+
+                    <td>
+                        ${moneySearch(receipt)}
+                    </td>
+
+
+                    <td>
+                        ${moneySearch(balance)}
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            id
+                            ? `
+                                <a
+                                    href="/bill-details.html?id=${encodeURIComponent(id)}"
+                                    target="_blank"
+                                    class="search-details-btn">
+                                    👁 جزئیات
+                                </a>
+                            `
+                            : `
+                                <span style="color:#999;">
+                                    بدون شناسه
+                                </span>
+                            `
+                        }
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Search error:",
+            error
+        );
+
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="search-empty">
+                    ❌ خطا در جستجو:
+                    ${escapeHtml(error.message)}
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+// =====================================================
+// نمایش مبلغ
+// =====================================================
+
+function moneySearch(value) {
+
+    return Number(
+        value || 0
+    ).toLocaleString("fa-AF")
+    + " افغانی";
+}
+
+
+// =====================================================
+// نمایش تاریخ
+// =====================================================
+
+function formatSearchDate(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(value);
+    }
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+
+    return `${year}/${month}/${day}`;
+}
+
+
+// =====================================================
+// جلوگیری از نمایش کد HTML
+// =====================================================
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+// =====================================================
+// پاک کردن جستجو
+// =====================================================
+
+function clearBillSearch() {
+
+    document.getElementById(
+        "searchBillNumber"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchCustomerName"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchPhone"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchResultsBody"
+    ).innerHTML = `
+        <tr>
+            <td
+                colspan="8"
+                class="search-empty">
+
+                برای جستجو اطلاعات را وارد کنید.
+
+            </td>
+        </tr>
+    `;
+}
+
+// =====================================================
+// پاک کردن جستجو
+// =====================================================
+
+function clearBillSearch() {
+
+    document.getElementById(
+        "searchBillNumber"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchCustomerName"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchPhone"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchResultsBody"
+    ).innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="8"
+                class="search-empty">
+
+                برای جستجو اطلاعات را وارد کنید.
+
+            </td>
+
+        </tr>
+
+    `;
+
+}
+
+</script>
+
+</body>
+</html>

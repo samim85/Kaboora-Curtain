@@ -1,0 +1,3038 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>کارمندان - نمایشگاه پرده کابورا</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        .header {
+            background: #17202a;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #d5d8dc;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back-btn {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: Tahoma;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn {
+            background: #566573;
+            color: white;
+        }
+
+        .add-btn {
+            background: #1e8449;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #17202a;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        /* خلاصه اصلی */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: #f8f9f9;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #e5e7e9;
+        }
+
+        .summary-box strong {
+            display: block;
+            font-size: 23px;
+            margin-top: 8px;
+        }
+
+        /* خلاصه حساب کارمند */
+
+        .account-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .account-box {
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #ddd;
+            background: #f8f9f9;
+        }
+
+        .account-box .title {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .account-box .amount {
+            display: block;
+            margin-top: 8px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .salary-box {
+            background: #eaf2f8;
+            border-color: #aed6f1;
+        }
+
+        .receipt-box {
+            background: #e8f8f5;
+            border-color: #a3e4d7;
+        }
+
+        .balance-box {
+            background: #fef5e7;
+            border-color: #f8c471;
+        }
+
+        .balance-paid {
+            background: #e8f8f5;
+            border-color: #a3e4d7;
+        }
+
+        .balance-negative {
+            background: #fadbd8;
+            border-color: #e6b0aa;
+        }
+
+        .month-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .month-box label {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .month-box input {
+            max-width: 220px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd1d1;
+            border-radius: 7px;
+            font-family: Tahoma;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .save-btn {
+            background: #2874a6;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .cancel-btn {
+            background: #7f8c8d;
+            color: white;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #d5f5e3;
+            color: #196f3d;
+        }
+
+        .error {
+            background: #fadbd8;
+            color: #922b21;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        th {
+            background: #17202a;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8f9f9;
+        }
+
+        .edit-btn {
+            background: #f39c12;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .delete-btn {
+            background: #c0392b;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .payment-btn {
+            background: #1e8449;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .receipt-btn {
+            background: #2874a6;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .payment-box {
+            display: none;
+            background: #f8f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 15px;
+        }
+
+        .payment-box h3 {
+            margin-top: 0;
+        }
+
+        .payment-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .payment-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .payment-save {
+            background: #1e8449;
+            color: white;
+        }
+
+        .payment-cancel {
+            background: #7f8c8d;
+            color: white;
+        }
+
+        .payment-table {
+            min-width: 1000px;
+        }
+
+        .payment-table th {
+            background: #34495e;
+        }
+
+        .small-edit {
+            background: #f39c12;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        .small-delete {
+            background: #c0392b;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        .small-receipt {
+            background: #2874a6;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        .active {
+            color: #1e8449;
+            font-weight: bold;
+        }
+
+        .inactive {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .salary {
+            font-weight: bold;
+        }
+
+        .balance-positive {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .balance-zero {
+            color: #1e8449;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+
+            .summary,
+            .account-summary,
+            .form-grid,
+            .payment-form {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+        /* =========================================================
+   KABOORA CURTAIN
+   RESPONSIVE DESIGN - EMPLOYEES
+   فقط تنظیم اندازه و نمایش
+========================================================= */
+
+/* کامپیوترهای بزرگ */
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1450px;
+    }
+
+    .header {
+        padding: 28px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+}
+
+
+/* لپتاپ */
+@media (max-width: 1200px) {
+
+    .container {
+        max-width: 96%;
+    }
+
+    .summary,
+    .account-summary {
+        gap: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .payment-form {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* تبلت */
+@media (max-width: 900px) {
+
+    .header {
+        padding: 20px 15px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 94%;
+        padding: 0;
+        margin: 18px auto;
+    }
+
+    .top-buttons {
+        gap: 8px;
+    }
+
+    button,
+    .back-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .summary,
+    .account-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .payment-form {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .month-box input {
+        max-width: 100%;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+}
+
+
+/* موبایل */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .header {
+        padding: 17px 12px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .header p {
+        font-size: 12px;
+    }
+
+    .container {
+        width: 96%;
+        margin: 10px auto;
+    }
+
+    /* دکمه‌های بالا */
+
+    .top-buttons {
+        display: grid;
+        grid-template-columns:
+            1fr 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .top-buttons button,
+    .top-buttons .back-btn {
+        width: 100%;
+        text-align: center;
+        padding: 11px 7px;
+        font-size: 13px;
+    }
+
+    /* خلاصه */
+
+    .summary,
+    .account-summary {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-bottom: 14px;
+    }
+
+    .summary-box,
+    .account-box {
+        padding: 15px;
+    }
+
+    .summary-box strong {
+        font-size: 20px;
+    }
+
+    .account-box .amount {
+        font-size: 20px;
+    }
+
+    /* کارت‌ها */
+
+    .card {
+        padding: 13px;
+        border-radius: 11px;
+        margin-bottom: 14px;
+    }
+
+    .card h2 {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    /* فرم */
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .payment-form {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    input,
+    textarea,
+    select {
+        padding: 11px;
+        font-size: 14px;
+    }
+
+    .save-btn,
+    .cancel-btn,
+    .payment-save,
+    .payment-cancel {
+        width: 100%;
+        min-height: 43px;
+        margin-top: 8px;
+    }
+
+    /* ماه */
+
+    .month-box {
+        padding: 13px;
+    }
+
+    .month-box label {
+        display: block;
+        margin: 0 0 8px;
+        font-size: 13px;
+    }
+
+    .month-box input {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* جدول */
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table,
+    .payment-table {
+        min-width: 1050px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+        white-space: nowrap;
+    }
+
+    /* دکمه‌های عملیات جدول */
+
+    td button {
+        margin: 2px;
+        padding: 7px 9px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .edit-btn,
+    .delete-btn,
+    .payment-btn,
+    .receipt-btn {
+        padding: 7px 9px;
+    }
+
+    .small-edit,
+    .small-delete,
+    .small-receipt {
+        padding: 7px 8px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    /* کارت حساب کارمند */
+
+    #paymentsCard {
+        overflow: hidden;
+    }
+
+    .payment-box {
+        padding: 12px;
+    }
+
+    .payment-box h3 {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* پیام */
+
+    .message {
+        font-size: 13px;
+        padding: 11px;
+        line-height: 1.6;
+    }
+
+}
+
+
+/* موبایل خیلی کوچک */
+@media (max-width: 360px) {
+
+    .container {
+        width: 98%;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .top-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-box strong {
+        font-size: 18px;
+    }
+
+    .account-box .amount {
+        font-size: 18px;
+    }
+
+    .card {
+        padding: 11px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+
+    .card h3 {
+        font-size: 14px;
+    }
+
+    table,
+    .payment-table {
+        min-width: 950px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 7px 5px;
+    }
+
+}
+
+
+/* جلوگیری از بیرون‌زدگی متن */
+
+.header,
+.card,
+.summary-box,
+.account-box,
+.month-box,
+.message {
+    overflow-wrap: anywhere;
+}
+
+
+/* لمس بهتر دکمه‌ها */
+
+button,
+a {
+    touch-action: manipulation;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>👨‍💼 مدیریت کارمندان</h1>
+        <p>نمایشگاه پرده کابورا</p>
+    </div>
+
+    <div class="container">
+
+        <div class="top-buttons">
+
+            <a href="/" class="back-btn">
+                🏠 بازگشت به داشبورد
+            </a>
+
+            <button class="add-btn" onclick="showForm()">
+                ➕ ثبت کارمند جدید
+            </button>
+
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <!-- خلاصه کلی -->
+
+        <div class="summary">
+
+            <div class="summary-box">
+                تعداد کارمندان
+                <strong id="employeeCount">0</strong>
+            </div>
+
+            <div class="summary-box">
+                مجموع پرداخت‌ها
+                <strong id="totalPayments">0 افغانی</strong>
+            </div>
+
+            <div class="summary-box">
+                کارمندان فعال
+                <strong id="activeEmployees">0</strong>
+            </div>
+
+        </div>
+
+        <!-- فرم کارمند -->
+
+        <div class="card" id="employeeForm" style="display:none;">
+
+            <h2 id="formTitle">
+                ➕ ثبت کارمند جدید
+            </h2>
+
+            <input type="hidden" id="employeeId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>نام کارمند</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="نام کامل کارمند">
+                </div>
+
+                <div class="form-group">
+                    <label>شماره تماس</label>
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="شماره تماس">
+                </div>
+
+                <div class="form-group">
+                    <label>وظیفه</label>
+                    <input
+                        type="text"
+                        id="position"
+                        placeholder="مثلاً فروشنده، حسابدار...">
+                </div>
+
+                <div class="form-group">
+                    <label>معاش ماهانه</label>
+                    <input
+                        type="number"
+                        id="salary"
+                        min="0"
+                        step="0.01"
+                        placeholder="مبلغ معاش ماهانه">
+                </div>
+
+                <div class="form-group">
+                    <label>تاریخ استخدام</label>
+                    <input
+                        type="date"
+                        id="hireDate">
+                </div>
+
+                <div class="form-group">
+                    <label>وضعیت</label>
+
+                    <select id="isActive">
+                        <option value="1">فعال</option>
+                        <option value="0">غیرفعال</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button class="save-btn" onclick="saveEmployee()">
+                💾 ذخیره کارمند
+            </button>
+
+            <button
+                class="cancel-btn"
+                id="cancelBtn"
+                onclick="hideForm()">
+
+                لغو
+
+            </button>
+
+        </div>
+
+        <!-- لیست کارمندان -->
+
+        <div class="card">
+
+            <h2>👨‍💼 لیست کارمندان</h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>شماره</th>
+                            <th>نام</th>
+                            <th>تماس</th>
+                            <th>وظیفه</th>
+                            <th>معاش ماهانه</th>
+                            <th>تاریخ استخدام</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="employeesTable">
+
+                        <tr>
+                            <td colspan="8" class="empty">
+                                در حال دریافت اطلاعات...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- حساب و پرداخت‌های کارمند -->
+
+        <div class="card" id="paymentsCard" style="display:none;">
+
+            <h2 id="paymentsTitle">
+                💰 حساب کارمند
+            </h2>
+
+            <div class="payment-box" style="display:block;">
+
+                <h3 id="selectedEmployeeName">
+                    کارمند
+                </h3>
+
+                <input
+                    type="hidden"
+                    id="paymentEmployeeId">
+
+                <input
+                    type="hidden"
+                    id="paymentId">
+
+                <!-- انتخاب ماه -->
+
+                <div class="month-box">
+
+                    <label>
+                        📅 ماه حساب:
+                    </label>
+
+                    <input
+                        type="month"
+                        id="accountMonth"
+                        onchange="updateEmployeeAccount()">
+
+                </div>
+
+                <!-- خلاصه حساب -->
+
+                <div class="account-summary">
+
+                    <div class="account-box salary-box">
+
+                        <div class="title">
+                            💰 حقوق ماهانه
+                        </div>
+
+                        <span
+                            class="amount"
+                            id="accountSalary">
+
+                            0 افغانی
+
+                        </span>
+
+                    </div>
+
+                    <div class="account-box receipt-box">
+
+                        <div class="title">
+                            🧾 مجموع رسیدها
+                        </div>
+
+                        <span
+                            class="amount"
+                            id="accountReceipts">
+
+                            0 افغانی
+
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="account-box balance-box"
+                        id="balanceBox">
+
+                        <div class="title">
+                            📊 بیلانس
+                        </div>
+
+                        <span
+                            class="amount"
+                            id="accountBalance">
+
+                            0 افغانی
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- فرم پرداخت -->
+
+                <h3>
+                    💵 ثبت پرداخت جدید
+                </h3>
+
+                <div class="payment-form">
+
+                    <div class="form-group">
+
+                        <label>مبلغ پرداخت</label>
+
+                        <input
+                            type="number"
+                            id="paymentAmount"
+                            min="1"
+                            step="0.01"
+                            placeholder="مثلاً 10000">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>تاریخ پرداخت</label>
+
+                        <input
+                            type="date"
+                            id="paymentDate">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>توضیحات</label>
+
+                        <input
+                            type="text"
+                            id="paymentDescription"
+                            placeholder="مثلاً معاش ماه سنبله">
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="payment-save"
+                    id="paymentSaveBtn"
+                    onclick="savePayment()">
+
+                    💾 ثبت پرداخت
+
+                </button>
+
+                <button
+                    class="payment-cancel"
+                    onclick="cancelPaymentEdit()">
+
+                    لغو ویرایش
+
+                </button>
+
+                <!-- لیست پرداخت‌ها -->
+
+                <h3 style="margin-top:25px;">
+                    📋 لیست رسیدهای پرداخت
+                </h3>
+
+                <div class="table-wrapper">
+
+                    <table class="payment-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>شماره</th>
+                                <th>شماره رسید</th>
+                                <th>مبلغ</th>
+                                <th>تاریخ</th>
+                                <th>توضیحات</th>
+                                <th>عملیات</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="paymentsTable">
+
+                            <tr>
+                                <td colspan="6" class="empty">
+                                    هنوز پرداختی ثبت نشده است.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+const API = "";
+
+let employees = [];
+let payments = [];
+
+
+// =========================================================
+// ابزارها
+// =========================================================
+
+function money(value) {
+
+    return Number(value || 0)
+        .toLocaleString("fa-AF") + " افغانی";
+
+}
+
+
+function showMessage(text, type = "success") {
+
+    const box = document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className = "message " + type;
+
+    box.style.display = "block";
+
+    setTimeout(() => {
+
+        box.style.display = "none";
+
+    }, 3500);
+
+}
+
+
+function formatDate(value) {
+
+    if (!value) return "-";
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) {
+        return "-";
+    }
+
+    return date.toLocaleDateString("fa-AF");
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function getCurrentMonth() {
+
+    const date = new Date();
+
+    const year = date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
+
+    return `${year}-${month}`;
+
+}
+
+
+function getToday() {
+
+    const date = new Date();
+
+    const year = date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
+
+    const day =
+        String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+// =========================================================
+// فرم کارمند
+// =========================================================
+
+function showForm() {
+
+    document.getElementById("employeeForm")
+        .style.display = "block";
+
+    document.getElementById("formTitle")
+        .textContent = "➕ ثبت کارمند جدید";
+
+    document.getElementById("employeeId").value = "";
+
+    document.getElementById("fullName").value = "";
+
+    document.getElementById("phone").value = "";
+
+    document.getElementById("position").value = "";
+
+    document.getElementById("salary").value = "";
+
+    document.getElementById("hireDate").value = getToday();
+
+    document.getElementById("isActive").value = "1";
+
+    document.getElementById("cancelBtn")
+        .style.display = "inline-block";
+
+    document.getElementById("fullName").focus();
+
+}
+
+
+function hideForm() {
+
+    document.getElementById("employeeForm")
+        .style.display = "none";
+
+    document.getElementById("employeeId").value = "";
+
+}
+
+
+// =========================================================
+// دریافت کارمندان
+// =========================================================
+
+async function loadEmployees() {
+
+    try {
+
+        const response =
+            await fetch(API + "/api/employees");
+
+        if (!response.ok) {
+
+            throw new Error(
+                "خطا در دریافت کارمندان"
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        employees =
+            Array.isArray(data)
+                ? data
+                : (data.employees || []);
+
+        renderEmployees();
+
+        calculateEmployeeSummary();
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "employeesTable"
+        ).innerHTML = `
+
+            <tr>
+                <td colspan="8" class="empty">
+                    خطا در دریافت اطلاعات کارمندان
+                </td>
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+// =========================================================
+// نمایش کارمندان
+// =========================================================
+
+function renderEmployees() {
+
+    const tbody =
+        document.getElementById(
+            "employeesTable"
+        );
+
+    if (!employees.length) {
+
+        tbody.innerHTML = `
+
+            <tr>
+                <td colspan="8" class="empty">
+                    هنوز هیچ کارمندی ثبت نشده است.
+                </td>
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        employees.map((employee, index) => {
+
+            const id =
+                employee.Id ?? employee.id;
+
+            const active =
+                Number(employee.IsActive) === 1;
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            employee.FullName || ""
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            employee.Phone || "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            employee.Position || "-"
+                        )}
+                    </td>
+
+                    <td class="salary">
+                        ${money(employee.Salary)}
+                    </td>
+
+                    <td>
+                        ${formatDate(
+                            employee.HireDate
+                        )}
+                    </td>
+
+                    <td class="${
+                        active
+                            ? "active"
+                            : "inactive"
+                    }">
+
+                        ${
+                            active
+                                ? "فعال"
+                                : "غیرفعال"
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="payment-btn"
+                            onclick="showPayments(${id})">
+
+                            💰 حساب
+
+                        </button>
+
+                        <button
+                            class="edit-btn"
+                            onclick="editEmployee(${id})">
+
+                            ✏️ ویرایش
+
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteEmployee(${id})">
+
+                            🗑 حذف
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+// =========================================================
+// خلاصه کلی کارمندان
+// =========================================================
+
+async function calculateEmployeeSummary() {
+
+    document.getElementById(
+        "employeeCount"
+    ).textContent = employees.length;
+
+
+    const activeCount =
+        employees.filter(
+            employee =>
+                Number(employee.IsActive) === 1
+        ).length;
+
+
+    document.getElementById(
+        "activeEmployees"
+    ).textContent = activeCount;
+
+
+    let total = 0;
+
+
+    for (const employee of employees) {
+
+        try {
+
+            const id =
+                employee.Id ?? employee.id;
+
+            const response =
+                await fetch(
+                    API +
+                    "/api/employees/" +
+                    id +
+                    "/payments"
+                );
+
+            if (!response.ok) continue;
+
+            const data =
+                await response.json();
+
+            const list =
+                Array.isArray(data)
+                    ? data
+                    : [];
+
+
+            total += list.reduce(
+                (sum, item) =>
+                    sum + Number(item.Amount || 0),
+                0
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "totalPayments"
+    ).textContent = money(total);
+
+}
+
+
+// =========================================================
+// ثبت / ویرایش کارمند
+// =========================================================
+
+async function saveEmployee() {
+
+    const id =
+        document.getElementById(
+            "employeeId"
+        ).value;
+
+
+    const fullName =
+        document.getElementById(
+            "fullName"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "phone"
+        ).value.trim();
+
+
+    const position =
+        document.getElementById(
+            "position"
+        ).value.trim();
+
+
+    const salary =
+        document.getElementById(
+            "salary"
+        ).value;
+
+
+    const hireDate =
+        document.getElementById(
+            "hireDate"
+        ).value;
+
+
+    const isActive =
+        document.getElementById(
+            "isActive"
+        ).value === "1";
+
+
+    if (!fullName) {
+
+        showMessage(
+            "❌ نام کارمند را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const employeeData = {
+
+        FullName: fullName,
+
+        Phone: phone,
+
+        Position: position,
+
+        Salary: Number(salary) || 0,
+
+        HireDate: hireDate || null,
+
+        IsActive: isActive
+
+    };
+
+
+    try {
+
+        let response;
+
+
+        if (id) {
+
+            response =
+                await fetch(
+                    API +
+                    "/api/employees/" +
+                    id,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                employeeData
+                            )
+
+                    }
+                );
+
+        } else {
+
+            response =
+                await fetch(
+                    API + "/api/employees",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                employeeData
+                            )
+
+                    }
+                );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "خطا در ذخیره کارمند"
+            );
+
+        }
+
+
+        showMessage(
+            id
+                ? "✅ اطلاعات کارمند ویرایش شد."
+                : "✅ کارمند با موفقیت ثبت شد."
+        );
+
+
+        hideForm();
+
+        loadEmployees();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// ویرایش کارمند
+// =========================================================
+
+function editEmployee(id) {
+
+    const employee =
+        employees.find(
+            item =>
+                String(
+                    item.Id ?? item.id
+                ) === String(id)
+        );
+
+
+    if (!employee) {
+
+        showMessage(
+            "❌ کارمند پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "employeeForm"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "✏️ ویرایش کارمند";
+
+
+    document.getElementById(
+        "employeeId"
+    ).value =
+        employee.Id ?? employee.id;
+
+
+    document.getElementById(
+        "fullName"
+    ).value =
+        employee.FullName || "";
+
+
+    document.getElementById(
+        "phone"
+    ).value =
+        employee.Phone || "";
+
+
+    document.getElementById(
+        "position"
+    ).value =
+        employee.Position || "";
+
+
+    document.getElementById(
+        "salary"
+    ).value =
+        employee.Salary || 0;
+
+
+    document.getElementById(
+        "hireDate"
+    ).value =
+        employee.HireDate
+            ? String(employee.HireDate).substring(0, 10)
+            : "";
+
+
+    document.getElementById(
+        "isActive"
+    ).value =
+        Number(employee.IsActive) === 1
+            ? "1"
+            : "0";
+
+
+    document.getElementById(
+        "cancelBtn"
+    ).style.display =
+        "inline-block";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+// =========================================================
+// حذف کارمند
+// =========================================================
+
+async function deleteEmployee(id) {
+
+    const employee =
+        employees.find(
+            item =>
+                String(
+                    item.Id ?? item.id
+                ) === String(id)
+        );
+
+
+    if (!employee) return;
+
+
+    const name =
+        employee.FullName ||
+        "این کارمند";
+
+
+    if (!confirm(
+        `آیا مطمئن هستید که «${name}» حذف شود؟`
+    )) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/employees/" +
+                id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "خطا در حذف کارمند"
+            );
+
+        }
+
+
+        showMessage(
+            "✅ کارمند حذف شد."
+        );
+
+
+        document.getElementById(
+            "paymentsCard"
+        ).style.display = "none";
+
+
+        loadEmployees();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// نمایش حساب کارمند
+// =========================================================
+
+async function showPayments(employeeId) {
+
+    const employee =
+        employees.find(
+            item =>
+                String(
+                    item.Id ?? item.id
+                ) === String(employeeId)
+        );
+
+
+    if (!employee) {
+
+        showMessage(
+            "❌ کارمند پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "paymentsCard"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "paymentEmployeeId"
+    ).value =
+        employeeId;
+
+
+    document.getElementById(
+        "selectedEmployeeName"
+    ).textContent =
+        "👤 حساب " +
+        (employee.FullName || "کارمند");
+
+
+    document.getElementById(
+        "accountMonth"
+    ).value =
+        getCurrentMonth();
+
+
+    resetPaymentForm();
+
+
+    await loadPayments(employeeId);
+
+
+    document.getElementById(
+        "paymentsCard"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// =========================================================
+// دریافت پرداخت‌ها
+// =========================================================
+
+async function loadPayments(employeeId) {
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/employees/" +
+                employeeId +
+                "/payments"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "خطا در دریافت پرداخت‌ها"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        payments =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        renderPayments();
+
+        updateEmployeeAccount();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "paymentsTable"
+        ).innerHTML = `
+
+            <tr>
+                <td colspan="6" class="empty">
+                    خطا در دریافت پرداخت‌ها
+                </td>
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+// =========================================================
+// بررسی ماه پرداخت
+// =========================================================
+
+function paymentBelongsToMonth(payment, month) {
+
+    if (!payment.PaymentDate || !month) {
+        return false;
+    }
+
+    return String(payment.PaymentDate)
+        .substring(0, 7) === month;
+
+}
+
+
+// =========================================================
+// حساب ماهانه کارمند
+// =========================================================
+
+function updateEmployeeAccount() {
+
+    const employeeId =
+        document.getElementById(
+            "paymentEmployeeId"
+        ).value;
+
+
+    const employee =
+        employees.find(
+            item =>
+                String(
+                    item.Id ?? item.id
+                ) === String(employeeId)
+        );
+
+
+    if (!employee) return;
+
+
+    const month =
+        document.getElementById(
+            "accountMonth"
+        ).value;
+
+
+    const salary =
+        Number(employee.Salary || 0);
+
+
+    const monthlyPayments =
+        payments.filter(
+            payment =>
+                paymentBelongsToMonth(
+                    payment,
+                    month
+                )
+        );
+
+
+    const receipts =
+        monthlyPayments.reduce(
+            (sum, payment) =>
+                sum + Number(payment.Amount || 0),
+            0
+        );
+
+
+    const balance =
+        salary - receipts;
+
+
+    document.getElementById(
+        "accountSalary"
+    ).textContent =
+        money(salary);
+
+
+    document.getElementById(
+        "accountReceipts"
+    ).textContent =
+        money(receipts);
+
+
+    document.getElementById(
+        "accountBalance"
+    ).textContent =
+        money(Math.abs(balance));
+
+
+    const balanceBox =
+        document.getElementById(
+            "balanceBox"
+        );
+
+
+    balanceBox.classList.remove(
+        "balance-paid",
+        "balance-negative"
+    );
+
+
+    if (balance <= 0) {
+
+        balanceBox.classList.add(
+            "balance-paid"
+        );
+
+        document.getElementById(
+            "accountBalance"
+        ).textContent =
+            balance < 0
+                ? "اضافه پرداخت " +
+                  money(Math.abs(balance))
+                : "0 افغانی";
+
+    } else {
+
+        balanceBox.classList.add(
+            "balance-negative"
+        );
+
+        document.getElementById(
+            "accountBalance"
+        ).textContent =
+            money(balance);
+
+    }
+
+}
+
+
+// =========================================================
+// نمایش پرداخت‌ها
+// =========================================================
+
+function renderPayments() {
+
+    const tbody =
+        document.getElementById(
+            "paymentsTable"
+        );
+
+
+    const month =
+        document.getElementById(
+            "accountMonth"
+        ).value;
+
+
+    const monthlyPayments =
+        payments.filter(
+            payment =>
+                paymentBelongsToMonth(
+                    payment,
+                    month
+                )
+        );
+
+
+    if (!monthlyPayments.length) {
+
+        tbody.innerHTML = `
+
+            <tr>
+                <td colspan="6" class="empty">
+                    در این ماه هنوز هیچ پرداختی ثبت نشده است.
+                </td>
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        monthlyPayments.map(
+            (payment, index) => {
+
+                const paymentId =
+                    payment.Id;
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            <strong>
+                                رسید #${paymentId}
+                            </strong>
+                        </td>
+
+                        <td>
+                            <strong>
+                                ${money(payment.Amount)}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${formatDate(
+                                payment.PaymentDate
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                payment.Description || "-"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="small-receipt"
+                                onclick="printPayment(${paymentId})">
+
+                                🖨️ چاپ رسید
+
+                            </button>
+
+                            <button
+                                class="small-edit"
+                                onclick="editPayment(${paymentId})">
+
+                                ✏️ ویرایش
+
+                            </button>
+
+                            <button
+                                class="small-delete"
+                                onclick="deletePayment(${paymentId})">
+
+                                🗑 حذف
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+// =========================================================
+// تغییر ماه
+// =========================================================
+
+document.getElementById("accountMonth")
+    ?.addEventListener("change", () => {
+
+        renderPayments();
+
+        updateEmployeeAccount();
+
+    });
+
+
+// =========================================================
+// ثبت / ویرایش پرداخت
+// =========================================================
+
+async function savePayment() {
+
+    const employeeId =
+        document.getElementById(
+            "paymentEmployeeId"
+        ).value;
+
+
+    const paymentId =
+        document.getElementById(
+            "paymentId"
+        ).value;
+
+
+    const amount =
+        document.getElementById(
+            "paymentAmount"
+        ).value;
+
+
+    const paymentDate =
+        document.getElementById(
+            "paymentDate"
+        ).value;
+
+
+    const description =
+        document.getElementById(
+            "paymentDescription"
+        ).value.trim();
+
+
+    if (!employeeId) {
+
+        showMessage(
+            "❌ کارمند انتخاب نشده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!amount || Number(amount) <= 0) {
+
+        showMessage(
+            "❌ مبلغ پرداخت را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!paymentDate) {
+
+        showMessage(
+            "❌ تاریخ پرداخت را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const paymentData = {
+
+        Amount: Number(amount),
+
+        PaymentDate: paymentDate,
+
+        Description: description
+
+    };
+
+
+    try {
+
+        let response;
+
+
+        if (paymentId) {
+
+            response =
+                await fetch(
+                    API +
+                    "/api/employees/" +
+                    employeeId +
+                    "/payments/" +
+                    paymentId,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                paymentData
+                            )
+
+                    }
+                );
+
+        } else {
+
+            response =
+                await fetch(
+                    API +
+                    "/api/employees/" +
+                    employeeId +
+                    "/payments",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(
+                                paymentData
+                            )
+
+                    }
+                );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "خطا در ذخیره پرداخت"
+            );
+
+        }
+
+
+        showMessage(
+            paymentId
+                ? "✅ پرداخت ویرایش شد."
+                : "✅ پرداخت معاش ثبت شد."
+        );
+
+
+        resetPaymentForm();
+
+
+        await loadPayments(
+            employeeId
+        );
+
+
+        calculateEmployeeSummary();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// ویرایش پرداخت
+// =========================================================
+
+function editPayment(id) {
+
+    const payment =
+        payments.find(
+            item =>
+                String(item.Id) ===
+                String(id)
+        );
+
+
+    if (!payment) {
+
+        showMessage(
+            "❌ پرداخت پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "paymentId"
+    ).value =
+        payment.Id;
+
+
+    document.getElementById(
+        "paymentAmount"
+    ).value =
+        payment.Amount || "";
+
+
+    document.getElementById(
+        "paymentDate"
+    ).value =
+        payment.PaymentDate
+            ? String(payment.PaymentDate)
+                .substring(0, 10)
+            : "";
+
+
+    document.getElementById(
+        "paymentDescription"
+    ).value =
+        payment.Description || "";
+
+
+    document.getElementById(
+        "paymentSaveBtn"
+    ).textContent =
+        "✏️ ویرایش پرداخت";
+
+}
+
+
+// =========================================================
+// حذف پرداخت
+// =========================================================
+
+async function deletePayment(id) {
+
+    const employeeId =
+        document.getElementById(
+            "paymentEmployeeId"
+        ).value;
+
+
+    if (!confirm(
+        "آیا از حذف این پرداخت مطمئن هستید؟"
+    )) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/employees/" +
+                employeeId +
+                "/payments/" +
+                id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "خطا در حذف پرداخت"
+            );
+
+        }
+
+
+        showMessage(
+            "✅ پرداخت حذف شد."
+        );
+
+
+        await loadPayments(
+            employeeId
+        );
+
+
+        calculateEmployeeSummary();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// چاپ رسید پرداخت
+// =========================================================
+
+function printPayment(id) {
+
+    const payment =
+        payments.find(
+            item =>
+                String(item.Id) ===
+                String(id)
+        );
+
+
+    if (!payment) {
+
+        showMessage(
+            "❌ رسید پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const employeeId =
+        document.getElementById(
+            "paymentEmployeeId"
+        ).value;
+
+
+    const employee =
+        employees.find(
+            item =>
+                String(
+                    item.Id ?? item.id
+                ) === String(employeeId)
+        );
+
+
+    if (!employee) {
+
+        showMessage(
+            "❌ اطلاعات کارمند پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const receiptNumber =
+        "EMP-" +
+        payment.Id;
+
+
+    const receiptWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=800,height=700"
+        );
+
+
+    if (!receiptWindow) {
+
+        showMessage(
+            "❌ مرورگر اجازه باز کردن صفحه چاپ را نداد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    receiptWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html lang="fa" dir="rtl">
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                رسید پرداخت کارمند
+            </title>
+
+            <style>
+
+                body {
+                    font-family: Tahoma, Arial, sans-serif;
+                    margin: 0;
+                    padding: 30px;
+                    background: white;
+                    color: #222;
+                }
+
+                .receipt {
+                    max-width: 650px;
+                    margin: auto;
+                    border: 2px solid #222;
+                    padding: 30px;
+                }
+
+                .header {
+                    text-align: center;
+                    border-bottom: 2px solid #222;
+                    padding-bottom: 15px;
+                    margin-bottom: 20px;
+                }
+
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 25px;
+                }
+
+                .header p {
+                    margin: 0;
+                    font-size: 14px;
+                }
+
+                .receipt-title {
+                    text-align: center;
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin: 20px 0;
+                }
+
+                .info {
+                    margin-bottom: 20px;
+                }
+
+                .row {
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #ddd;
+                    padding: 12px 0;
+                }
+
+                .label {
+                    font-weight: bold;
+                }
+
+                .amount {
+                    font-size: 24px;
+                    font-weight: bold;
+                    text-align: center;
+                    border: 2px solid #222;
+                    padding: 15px;
+                    margin: 25px 0;
+                }
+
+                .footer {
+                    text-align: center;
+                    margin-top: 35px;
+                    border-top: 1px solid #ddd;
+                    padding-top: 15px;
+                    font-size: 13px;
+                }
+
+                .signatures {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 50px;
+                    margin-top: 60px;
+                    text-align: center;
+                }
+
+                @media print {
+
+                    body {
+                        padding: 0;
+                    }
+
+                    .receipt {
+                        border: 2px solid #222;
+                    }
+
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class="receipt">
+
+                <div class="header">
+
+                    <h1>
+                        نمایشگاه پرده کابورا
+                    </h1>
+
+                    <p>
+                        سیستم حسابداری کارمندان
+                    </p>
+
+                </div>
+
+                <div class="receipt-title">
+                    🧾 رسید پرداخت معاش
+                </div>
+
+                <div class="info">
+
+                    <div class="row">
+
+                        <span class="label">
+                            شماره رسید:
+                        </span>
+
+                        <span>
+                            ${receiptNumber}
+                        </span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <span class="label">
+                            نام کارمند:
+                        </span>
+
+                        <span>
+                            ${escapeHtml(
+                                employee.FullName || "-"
+                            )}
+                        </span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <span class="label">
+                            وظیفه:
+                        </span>
+
+                        <span>
+                            ${escapeHtml(
+                                employee.Position || "-"
+                            )}
+                        </span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <span class="label">
+                            تاریخ پرداخت:
+                        </span>
+
+                        <span>
+                            ${formatDate(
+                                payment.PaymentDate
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="amount">
+
+                    مبلغ پرداخت‌شده:
+
+                    <br><br>
+
+                    ${money(payment.Amount)}
+
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        توضیحات:
+                    </span>
+
+                    <span>
+                        ${escapeHtml(
+                            payment.Description || "-"
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="signatures">
+
+                    <div>
+                        امضای پرداخت‌کننده
+                        <br><br><br>
+                        __________________
+                    </div>
+
+                    <div>
+                        امضای کارمند
+                        <br><br><br>
+                        __________________
+                    </div>
+
+                </div>
+
+                <div class="footer">
+
+                    این رسید مربوط به پرداخت معاش کارمند است.
+
+                </div>
+
+            </div>
+
+            <script>
+
+                window.onload = function() {
+
+                    setTimeout(function() {
+
+                        window.print();
+
+                    }, 500);
+
+                };
+
+            <\/script>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    receiptWindow.document.close();
+
+}
+
+
+// =========================================================
+// لغو ویرایش پرداخت
+// =========================================================
+
+function cancelPaymentEdit() {
+
+    resetPaymentForm();
+
+}
+
+
+function resetPaymentForm() {
+
+    document.getElementById(
+        "paymentId"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentAmount"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentDate"
+    ).value = getToday();
+
+
+    document.getElementById(
+        "paymentSaveBtn"
+    ).textContent =
+        "💾 ثبت پرداخت";
+
+}
+
+
+// =========================================================
+// شروع صفحه
+// =========================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        document.getElementById(
+            "hireDate"
+        ).value = getToday();
+
+
+        document.getElementById(
+            "paymentDate"
+        ).value = getToday();
+
+
+        document.getElementById(
+            "accountMonth"
+        ).value = getCurrentMonth();
+
+
+        loadEmployees();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

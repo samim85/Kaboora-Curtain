@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>خریدها و مصارف - نمایشگاه پرده کابورا</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:#f4f6f9;
+    color:#222;
+}
+
+.container{
+    width:95%;
+    max-width:1450px;
+    margin:25px auto;
+}
+
+.header{
+    background:linear-gradient(135deg,#1f2937,#374151);
+    color:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    margin:0 0 8px;
+    font-size:28px;
+}
+
+.header p{
+    margin:0;
+    opacity:.9;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    text-decoration:none;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+.btn-blue{background:#2563eb;color:white}
+.btn-green{background:#16a34a;color:white}
+.btn-orange{background:#f59e0b;color:white}
+.btn-gray{background:#6b7280;color:white}
+
+.btn:hover{opacity:.9}
+
+.message{
+    display:none;
+    padding:13px;
+    border-radius:8px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.month-box{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.month-box h2{
+    margin-top:0;
+    padding-bottom:12px;
+    border-bottom:2px solid #eee;
+}
+
+.month-grid{
+    display:grid;
+    grid-template-columns:minmax(220px,1fr) auto auto;
+    gap:12px;
+    align-items:end;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.summary-card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.summary-card h3{
+    margin:0 0 12px;
+    color:#555;
+    font-size:16px;
+}
+
+.summary-amount{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.purchase-total{color:#2563eb}
+.expense-total{color:#dc2626}
+.grand-total{color:#7c3aed}
+
+.nav-box{
+    background:white;
+    border-radius:14px;
+    padding:10px;
+    margin-bottom:18px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.nav-tab{
+    border:none;
+    background:#f3f4f6;
+    color:#374151;
+    padding:14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-family:Tahoma,Arial,sans-serif;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.nav-tab.active{
+    background:#1f2937;
+    color:white;
+}
+
+.section{
+    display:none;
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.section.active{display:block}
+
+.section h2{
+    margin-top:0;
+    padding-bottom:12px;
+    border-bottom:2px solid #eee;
+}
+
+.form-box{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.form-title{
+    font-weight:bold;
+    margin-bottom:15px;
+    font-size:17px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:
+        1.6fr 1fr 1fr 1.1fr 1.1fr 1.8fr auto auto;
+    gap:10px;
+    align-items:end;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    margin-bottom:7px;
+    font-weight:bold;
+    color:#444;
+}
+
+input,select{
+    width:100%;
+    padding:11px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+    font-family:Tahoma,Arial,sans-serif;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:#2563eb;
+}
+
+.save-btn,.cancel-btn{
+    height:43px;
+    white-space:nowrap;
+}
+
+.save-btn{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:#6b7280;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    display:none;
+}
+
+.editing-note{
+    display:none;
+    color:#2563eb;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1050px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px 8px;
+    text-align:center;
+    white-space:nowrap;
+}
+
+th{
+    background:#1f2937;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f9fafb;
+}
+
+.amount-cell{
+    font-weight:bold;
+    color:#15803d;
+}
+
+.total-cell{
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#777;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+}
+
+.action-buttons{
+    display:flex;
+    gap:5px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.edit-btn{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.search-box{
+    margin-bottom:15px;
+}
+
+.search-box input{
+    max-width:450px;
+}
+
+.card{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+}
+
+@media(max-width:1250px){
+    .form-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+}
+
+@media(max-width:900px){
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .month-grid{
+        grid-template-columns:1fr;
+    }
+
+    .nav-box{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    .container{
+        width:97%;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media print{
+    body{
+        background:white;
+    }
+
+    .buttons,
+    .month-box,
+    .nav-box,
+    .form-box,
+    .search-box{
+        display:none!important;
+    }
+
+    .container{
+        width:100%;
+        max-width:none;
+    }
+
+    .summary-card,
+    .section{
+        box-shadow:none;
+    }
+
+    .section{
+        display:block!important;
+    }
+}
+/* =========================================================
+   KABOORA CURTAIN
+   Responsive Design
+   فقط تغییر اندازه و ظاهر
+========================================================= */
+
+/* کامپیوترهای بزرگ */
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1450px;
+    }
+
+    .header {
+        padding: 28px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+}
+
+
+/* لپتاپ */
+@media (max-width: 1200px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .summary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+/* تبلت */
+@media (max-width: 900px) {
+
+    .container {
+        width: 94%;
+        margin: 18px auto;
+    }
+
+    .header {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .month-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .month-grid button {
+        width: 100%;
+    }
+
+    .nav-box {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section {
+        padding: 16px;
+    }
+
+    .form-box {
+        padding: 15px;
+    }
+
+}
+
+
+/* موبایل */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 96%;
+        margin: 10px auto;
+    }
+
+    .header {
+        padding: 17px 12px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .header p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 11px 8px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .month-box {
+        padding: 14px;
+        border-radius: 11px;
+        margin-bottom: 12px;
+    }
+
+    .month-box h2 {
+        font-size: 17px;
+    }
+
+    .month-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-bottom: 12px;
+    }
+
+    .summary-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+    .summary-card h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .summary-amount {
+        font-size: 20px;
+    }
+
+    .nav-box {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 8px;
+        margin-bottom: 12px;
+    }
+
+    .nav-tab {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .section {
+        padding: 13px;
+        border-radius: 11px;
+        margin-bottom: 15px;
+    }
+
+    .section h2 {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .form-box {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .form-title {
+        font-size: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    input,
+    select {
+        padding: 11px;
+        font-size: 14px;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+        height: 43px;
+    }
+
+    .search-box input {
+        max-width: none;
+        width: 100%;
+    }
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 950px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+    }
+
+    .action-buttons {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .edit-btn,
+    .delete-btn {
+        padding: 7px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .card {
+        padding: 13px;
+    }
+
+}
+
+
+/* موبایل خیلی کوچک */
+@media (max-width: 360px) {
+
+    .container {
+        width: 98%;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        padding: 13px;
+    }
+
+    .summary-amount {
+        font-size: 18px;
+    }
+
+    .nav-tab {
+        font-size: 13px;
+    }
+
+    .section h2 {
+        font-size: 16px;
+    }
+
+    table {
+        min-width: 900px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 7px 5px;
+    }
+
+}
+
+
+/* جلوگیری از بیرون‌زدگی متن */
+.header,
+.month-box,
+.summary-card,
+.section,
+.form-box,
+.card {
+    overflow-wrap: anywhere;
+}
+
+
+/* لمس بهتر دکمه‌ها در موبایل */
+button,
+a {
+    touch-action: manipulation;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>🏢 خریدها و مصارف نمایشگاه</h1>
+    <p>نمایشگاه پرده کابورا</p>
+</div>
+
+<div class="buttons">
+
+<a href="index.html" class="btn btn-blue">
+    🏠 صفحه اصلی
+</a>
+
+<a href="bills.html" class="btn btn-blue">
+    🧾 ثبت بل
+</a>
+
+<button class="btn btn-orange" onclick="loadAll()">
+    🔄 بروزرسانی
+</button>
+
+<button class="btn btn-green" onclick="window.print()">
+    🖨️ چاپ
+</button>
+</div>
+
+<div id="message" class="message"></div>
+
+<div class="month-box">
+<h2>📅 حساب ماهانه</h2>
+
+<div class="month-grid">
+
+    <div class="form-group">
+        <label>ماه حساب</label>
+
+        <input
+            type="month"
+            id="accountMonth">
+    </div>
+
+    <button
+        class="btn btn-blue"
+        style="height:43px;"
+        onclick="loadAll()">
+        🔍 نمایش ماه
+    </button>
+
+    <button
+        class="btn btn-gray"
+        style="height:43px;"
+        onclick="showAllMonths()">
+        📊 همه ماه‌ها
+    </button>
+
+</div>
+
+
+</div>
+
+<div class="summary">
+
+<div class="summary-card">
+    <h3>🛒 مجموع خریدها</h3>
+
+    <div
+        id="totalPurchases"
+        class="summary-amount purchase-total">
+        0 افغانی
+    </div>
+</div>
+
+<div class="summary-card">
+    <h3>💸 مجموع مصارف</h3>
+
+    <div
+        id="totalExpenses"
+        class="summary-amount expense-total">
+        0 افغانی
+    </div>
+</div>
+
+<div class="summary-card">
+    <h3>📊 مجموع هزینه‌ها</h3>
+
+    <div
+        id="grandTotal"
+        class="summary-amount grand-total">
+        0 افغانی
+    </div>
+</div>
+
+</div>
+
+<div class="nav-box">
+
+<button
+    class="nav-tab active"
+    onclick="showSection('purchasesSection',this)">
+    🛒 خریدها
+</button>
+
+<button
+    class="nav-tab"
+    onclick="showSection('expensesSection',this)">
+    💸 مصارف
+</button>
+
+<button
+    class="nav-tab"
+    onclick="showSection('monthlySection',this)">
+    📊 حساب ماهانه
+</button>
+
+
+</div>
+
+<!-- ================= خریدها ================= -->
+
+<div id="purchasesSection" class="section active">
+
+<h2>🛒 خریدهای نمایشگاه</h2>
+
+<div class="form-box">
+
+    <div
+        id="purchaseEditingNote"
+        class="editing-note">
+        ✏️ در حال ویرایش خرید
+    </div>
+
+    <div
+        id="purchaseFormTitle"
+        class="form-title">
+        ➕ ثبت خرید جدید
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>نام کالا</label>
+
+            <input
+                type="text"
+                id="purchaseItemName"
+                placeholder="مثلاً پارچه">
+        </div>
+
+        <div class="form-group">
+            <label>تعداد</label>
+
+            <input
+                type="number"
+                id="purchaseQuantity"
+                min="0"
+                step="0.01"
+                placeholder="مثلاً 20">
+        </div>
+
+        <div class="form-group">
+            <label>واحد</label>
+
+            <input
+                type="text"
+                id="purchaseUnit"
+                placeholder="مثلاً متر">
+        </div>
+
+        <div class="form-group">
+            <label>قیمت واحد</label>
+
+            <input
+                type="number"
+                id="purchaseUnitPrice"
+                min="0"
+                step="0.01"
+                placeholder="مثلاً 500">
+        </div>
+
+        <div class="form-group">
+            <label>تاریخ خرید</label>
+
+            <input
+                type="date"
+                id="purchaseDate">
+        </div>
+
+        <div class="form-group">
+            <label>توضیحات</label>
+
+            <input
+                type="text"
+                id="purchaseDescription"
+                placeholder="مثلاً خرید نقدی">
+        </div>
+
+        <button
+            id="purchaseSaveBtn"
+            class="save-btn"
+            onclick="savePurchase()">
+            💾 ثبت خرید
+        </button>
+
+        <button
+            id="purchaseCancelBtn"
+            class="cancel-btn"
+            onclick="cancelPurchaseEdit()">
+            ❌ لغو
+        </button>
+
+    </div>
+</div>
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="purchaseSearch"
+        placeholder="جستجوی کالا یا توضیحات...">
+
+</div>
+
+<div class="table-wrapper">
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ردیف</th>
+            <th>نام کالا</th>
+            <th>تعداد</th>
+            <th>واحد</th>
+            <th>قیمت واحد</th>
+            <th>مبلغ کل</th>
+            <th>تاریخ خرید</th>
+            <th>توضیحات</th>
+            <th>عملیات</th>
+        </tr>
+
+        </thead>
+
+        <!-- مهم: این ID باید purchasesTable باشد -->
+        <tbody id="purchasesTable">
+
+            <tr>
+                <td colspan="9" class="loading">
+                    در حال دریافت اطلاعات...
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+<!-- ================= مصارف ================= -->
+
+<div id="expensesSection" class="section">
+
+<h2>💸 مصارف عمومی نمایشگاه</h2>
+
+<div class="form-box">
+
+    <div
+        id="expenseEditingNote"
+        class="editing-note">
+        ✏️ در حال ویرایش مصرف
+    </div>
+
+    <div
+        id="expenseFormTitle"
+        class="form-title">
+        ➕ ثبت مصرف جدید
+    </div>
+
+    <div
+        class="form-grid"
+        style="
+            grid-template-columns:
+            1.5fr 1fr 1fr 2fr auto auto;
+        ">
+
+        <div class="form-group">
+            <label>نوع مصرف</label>
+
+            <input
+                type="text"
+                id="expenseType"
+                placeholder="مثلاً کرایه">
+        </div>
+
+        <div class="form-group">
+            <label>مبلغ</label>
+
+            <input
+                type="number"
+                id="expenseAmount"
+                min="0"
+                step="0.01"
+                placeholder="مثلاً 3000">
+        </div>
+
+        <div class="form-group">
+            <label>تاریخ مصرف</label>
+
+            <input
+                type="date"
+                id="expenseDate">
+        </div>
+
+        <div class="form-group">
+            <label>توضیحات</label>
+
+            <input
+                type="text"
+                id="expenseDescription"
+                placeholder="مثلاً کرایه انتقال کالا">
+        </div>
+
+        <button
+            id="expenseSaveBtn"
+            class="save-btn"
+            onclick="saveExpense()">
+            💾 ثبت مصرف
+        </button>
+
+        <button
+            id="expenseCancelBtn"
+            class="cancel-btn"
+            onclick="cancelExpenseEdit()">
+            ❌ لغو
+        </button>
+
+    </div>
+
+</div>
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="expenseSearch"
+        placeholder="جستجوی نوع مصرف یا توضیحات...">
+
+</div>
+
+<div class="table-wrapper">
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ردیف</th>
+            <th>نوع مصرف</th>
+            <th>مبلغ</th>
+            <th>تاریخ</th>
+            <th>توضیحات</th>
+            <th>عملیات</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="expensesTable">
+
+            <tr>
+                <td colspan="6" class="loading">
+                    در حال دریافت اطلاعات...
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+```
+
+</div>
+
+<!-- ================= حساب ماهانه ================= -->
+
+<div id="monthlySection" class="section">
+
+```
+<h2>📊 حساب ماهانه</h2>
+
+<div class="summary">
+
+    <div class="summary-card">
+
+        <h3>🛒 خریدهای ماه</h3>
+
+        <div
+            id="monthlyPurchases"
+            class="summary-amount purchase-total">
+            0 افغانی
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h3>💸 مصارف ماه</h3>
+
+        <div
+            id="monthlyExpenses"
+            class="summary-amount expense-total">
+            0 افغانی
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h3>📌 هزینه کل ماه</h3>
+
+        <div
+            id="monthlyGrandTotal"
+            class="summary-amount grand-total">
+            0 افغانی
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>ℹ️ معلومات</h3>
+
+    <p>
+        خریدها بر اساس تاریخ خرید و مصارف بر اساس تاریخ مصرف محاسبه می‌شوند.
+    </p>
+
+</div>
+```
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   API
+========================================================= */
+
+const PURCHASES_API = "/api/purchases";
+const EXPENSES_API = "/api/expenses";
+
+
+/* =========================================================
+   متغیرها
+========================================================= */
+
+let purchases = [];
+let expenses = [];
+
+let editingPurchaseId = null;
+let editingExpenseId = null;
+
+let selectedMonth = "";
+
+
+/* =========================================================
+   فرمت مبلغ
+========================================================= */
+
+function formatMoney(value) {
+
+    return Number(value || 0).toLocaleString("fa-AF")
+        + " افغانی";
+
+}
+
+
+/* =========================================================
+   فرمت عدد
+========================================================= */
+
+function formatNumber(value) {
+
+    return Number(value || 0).toLocaleString("fa-AF");
+
+}
+
+
+/* =========================================================
+   فرمت تاریخ
+========================================================= */
+
+function formatDate(value) {
+
+    if (!value) return "-";
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) return "-";
+
+    return date.toLocaleDateString("fa-AF");
+
+}
+
+
+/* =========================================================
+   جلوگیری از HTML خطرناک
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   پیام
+========================================================= */
+
+function showMessage(text,type) {
+
+    const box = document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className = "message " + type;
+
+    box.style.display = "block";
+
+    setTimeout(() => {
+
+        box.style.display = "none";
+
+    },4000);
+
+}
+
+
+/* =========================================================
+   Navigation
+========================================================= */
+
+function showSection(sectionId,button) {
+
+    document
+        .querySelectorAll(".section")
+        .forEach(section => {
+
+            section.classList.remove("active");
+
+        });
+
+
+    const section =
+        document.getElementById(sectionId);
+
+    if (section) {
+
+        section.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav-tab")
+        .forEach(tab => {
+
+            tab.classList.remove("active");
+
+        });
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   تاریخ امروز
+========================================================= */
+
+function setToday(elementId) {
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+
+    const month =
+        String(now.getMonth()+1).padStart(2,"0");
+
+    const day =
+        String(now.getDate()).padStart(2,"0");
+
+    const element =
+        document.getElementById(elementId);
+
+    if (element) {
+
+        element.value =
+            `${year}-${month}-${day}`;
+
+    }
+
+}
+
+
+/* =========================================================
+   ماه جاری
+========================================================= */
+
+function setCurrentMonth() {
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+
+    const month =
+        String(now.getMonth()+1).padStart(2,"0");
+
+    const element =
+        document.getElementById("accountMonth");
+
+    if (element) {
+
+        element.value =
+            `${year}-${month}`;
+
+    }
+
+}
+
+
+/* =========================================================
+   همه ماه‌ها
+========================================================= */
+
+function showAllMonths() {
+
+    selectedMonth = "";
+
+    document.getElementById("accountMonth").value = "";
+
+    loadAll();
+
+}
+
+
+/* =========================================================
+   نمایش خریدها
+========================================================= */
+
+function renderPurchases(list) {
+
+    /*
+       بسیار مهم:
+       ID جدول در HTML برابر purchasesTable است.
+    */
+
+    const tbody =
+        document.getElementById("purchasesTable");
+
+
+    if (!tbody) {
+
+        console.error(
+            "❌ عنصر purchasesTable در HTML پیدا نشد."
+        );
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    if (!Array.isArray(list) || list.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="9"
+                    class="empty">
+
+                    برای این ماه خریدی ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach((purchase,index) => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        const quantity =
+            Number(purchase.Quantity || 0);
+
+
+        const unitPrice =
+            Number(purchase.UnitPrice || 0);
+
+
+        const totalAmount =
+            Number(purchase.TotalAmount || 0);
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${formatNumber(index + 1)}
+            </td>
+
+            <td>
+                ${escapeHtml(purchase.ItemName)}
+            </td>
+
+            <td>
+                ${formatNumber(quantity)}
+            </td>
+
+            <td>
+                ${escapeHtml(purchase.Unit || "-")}
+            </td>
+
+            <td class="amount-cell">
+                ${formatMoney(unitPrice)}
+            </td>
+
+            <td class="total-cell">
+                ${formatMoney(totalAmount)}
+            </td>
+
+            <td>
+                ${formatDate(purchase.PurchaseDate)}
+            </td>
+
+            <td>
+                ${escapeHtml(
+                    purchase.Description || "-"
+                )}
+            </td>
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="edit-btn"
+                        type="button"
+                        onclick="editPurchase(${purchase.Id})">
+
+                        ✏️ ویرایش
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        type="button"
+                        onclick="deletePurchase(${purchase.Id})">
+
+                        🗑️ حذف
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* =========================================================
+   دریافت خریدها
+========================================================= */
+
+async function loadPurchases() {
+
+    let url = PURCHASES_API;
+
+
+    if (selectedMonth) {
+
+        url +=
+            "?month=" +
+            encodeURIComponent(selectedMonth);
+
+    }
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "خطا در دریافت خریدها"
+        );
+
+    }
+
+
+    const result =
+        await response.json();
+
+
+    /*
+       API خریدها مستقیماً آرایه برمی‌گرداند.
+    */
+
+    purchases =
+        Array.isArray(result)
+            ? result
+            : (
+                Array.isArray(result.purchases)
+                    ? result.purchases
+                    : []
+            );
+
+
+    renderPurchases(purchases);
+
+
+    return purchases;
+
+}
+
+
+/* =========================================================
+   دریافت مصارف
+========================================================= */
+
+async function loadExpenses() {
+
+    let url = EXPENSES_API;
+
+
+    if (selectedMonth) {
+
+        url +=
+            "?month=" +
+            encodeURIComponent(selectedMonth);
+
+    }
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "خطا در دریافت مصارف"
+        );
+
+    }
+
+
+    const result =
+        await response.json();
+
+
+    /*
+       API مصارف Object برمی‌گرداند
+       و لیست داخل result.expenses است.
+    */
+
+    expenses =
+        Array.isArray(result.expenses)
+            ? result.expenses
+            : [];
+
+
+    renderExpenses(expenses);
+
+
+    return expenses;
+
+}
+
+
+/* =========================================================
+   نمایش مصارف
+========================================================= */
+
+function renderExpenses(list) {
+
+    const tbody =
+        document.getElementById("expensesTable");
+
+
+    if (!tbody) {
+
+        console.error(
+            "❌ عنصر expensesTable پیدا نشد."
+        );
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    if (!Array.isArray(list) || list.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty">
+
+                    برای این ماه مصرفی ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach((expense,index) => {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${formatNumber(index + 1)}
+            </td>
+
+            <td>
+                ${escapeHtml(
+                    expense.ExpenseType
+                )}
+            </td>
+
+            <td class="amount-cell">
+                ${formatMoney(
+                    expense.Amount
+                )}
+            </td>
+
+            <td>
+                ${formatDate(
+                    expense.ExpenseDate
+                )}
+            </td>
+
+            <td>
+                ${escapeHtml(
+                    expense.Description || "-"
+                )}
+            </td>
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="edit-btn"
+                        type="button"
+                        onclick="editExpense(${expense.Id})">
+
+                        ✏️ ویرایش
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        type="button"
+                        onclick="deleteExpense(${expense.Id})">
+
+                        🗑️ حذف
+
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* =========================================================
+   ثبت یا ویرایش خرید
+========================================================= */
+
+async function savePurchase() {
+
+    const itemName =
+        document
+            .getElementById("purchaseItemName")
+            .value
+            .trim();
+
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "purchaseQuantity"
+            ).value
+        );
+
+
+    const unit =
+        document
+            .getElementById("purchaseUnit")
+            .value
+            .trim();
+
+
+    const unitPrice =
+        Number(
+            document.getElementById(
+                "purchaseUnitPrice"
+            ).value
+        );
+
+
+    const purchaseDate =
+        document.getElementById(
+            "purchaseDate"
+        ).value;
+
+
+    const description =
+        document
+            .getElementById(
+                "purchaseDescription"
+            )
+            .value
+            .trim();
+
+
+    if (!itemName) {
+
+        showMessage(
+            "❌ نام کالا را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+
+        showMessage(
+            "❌ تعداد خرید را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+
+        showMessage(
+            "❌ قیمت واحد نامعتبر است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!purchaseDate) {
+
+        showMessage(
+            "❌ تاریخ خرید را انتخاب کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        let url = PURCHASES_API;
+
+        let method = "POST";
+
+
+        if (editingPurchaseId !== null) {
+
+            url =
+                PURCHASES_API +
+                "/" +
+                editingPurchaseId;
+
+            method = "PUT";
+
+        }
+
+
+        /*
+           TotalAmount ارسال نمی‌شود.
+           چون TotalAmount در SQL Server
+           ستون Computed است.
+        */
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method:method,
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        ItemName:itemName,
+
+                        Quantity:quantity,
+
+                        Unit:unit,
+
+                        UnitPrice:unitPrice,
+
+                        PurchaseDate:purchaseDate,
+
+                        Description:description
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در ذخیره خرید"
+            );
+
+        }
+
+
+        showMessage(
+
+            editingPurchaseId !== null
+                ? "✅ خرید با موفقیت ویرایش شد."
+                : "✅ خرید با موفقیت ثبت شد.",
+
+            "success"
+
+        );
+
+
+        clearPurchaseForm();
+
+
+        await loadAll();
+
+
+    } catch(error) {
+
+        console.error(
+            "❌ Purchase error:",
+            error
+        );
+
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   شروع ویرایش خرید
+========================================================= */
+
+function editPurchase(id) {
+
+    const purchase =
+        purchases.find(
+            item =>
+                Number(item.Id) === Number(id)
+        );
+
+
+    if (!purchase) {
+
+        showMessage(
+            "❌ خرید پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    editingPurchaseId =
+        Number(purchase.Id);
+
+
+    document.getElementById(
+        "purchaseItemName"
+    ).value =
+        purchase.ItemName || "";
+
+
+    document.getElementById(
+        "purchaseQuantity"
+    ).value =
+        purchase.Quantity || "";
+
+
+    document.getElementById(
+        "purchaseUnit"
+    ).value =
+        purchase.Unit || "";
+
+
+    document.getElementById(
+        "purchaseUnitPrice"
+    ).value =
+        purchase.UnitPrice || "";
+
+
+    document.getElementById(
+        "purchaseDate"
+    ).value =
+        purchase.PurchaseDate
+            ? String(purchase.PurchaseDate)
+                .substring(0,10)
+            : "";
+
+
+    document.getElementById(
+        "purchaseDescription"
+    ).value =
+        purchase.Description || "";
+
+
+    document.getElementById(
+        "purchaseSaveBtn"
+    ).textContent =
+        "💾 ذخیره ویرایش";
+
+
+    document.getElementById(
+        "purchaseCancelBtn"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "purchaseEditingNote"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "purchaseFormTitle"
+    ).textContent =
+        "✏️ ویرایش خرید";
+
+
+    showSection(
+        "purchasesSection",
+        document.querySelectorAll(".nav-tab")[0]
+    );
+
+
+    document.getElementById(
+        "purchaseItemName"
+    ).focus();
+
+}
+
+
+/* =========================================================
+   لغو ویرایش خرید
+========================================================= */
+
+function cancelPurchaseEdit(showMsg=true) {
+
+    clearPurchaseForm();
+
+
+    if (showMsg) {
+
+        showMessage(
+            "ویرایش خرید لغو شد.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   پاک کردن فرم خرید
+========================================================= */
+
+function clearPurchaseForm() {
+
+    editingPurchaseId = null;
+
+
+    document.getElementById(
+        "purchaseItemName"
+    ).value = "";
+
+
+    document.getElementById(
+        "purchaseQuantity"
+    ).value = "";
+
+
+    document.getElementById(
+        "purchaseUnit"
+    ).value = "";
+
+
+    document.getElementById(
+        "purchaseUnitPrice"
+    ).value = "";
+
+
+    document.getElementById(
+        "purchaseDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "purchaseSaveBtn"
+    ).textContent =
+        "💾 ثبت خرید";
+
+
+    document.getElementById(
+        "purchaseCancelBtn"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "purchaseEditingNote"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "purchaseFormTitle"
+    ).textContent =
+        "➕ ثبت خرید جدید";
+
+
+    setToday("purchaseDate");
+
+}
+
+
+/* =========================================================
+   حذف خرید
+========================================================= */
+
+async function deletePurchase(id) {
+
+    const confirmed =
+        confirm(
+            "آیا مطمئن هستید که می‌خواهید این خرید حذف شود؟"
+        );
+
+
+    if (!confirmed) return;
+
+
+    try {
+
+        const response =
+            await fetch(
+                PURCHASES_API + "/" + id,
+                {
+                    method:"DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در حذف خرید"
+            );
+
+        }
+
+
+        showMessage(
+            "✅ خرید حذف شد.",
+            "success"
+        );
+
+
+        await loadAll();
+
+
+    } catch(error) {
+
+        console.error(error);
+
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ثبت یا ویرایش مصرف
+========================================================= */
+
+async function saveExpense() {
+
+    const typeInput =
+        document.getElementById("expenseType");
+
+    const amountInput =
+        document.getElementById("expenseAmount");
+
+    const dateInput =
+        document.getElementById("expenseDate");
+
+    const descriptionInput =
+        document.getElementById("expenseDescription");
+
+
+    if (
+        !typeInput ||
+        !amountInput ||
+        !dateInput ||
+        !descriptionInput
+    ) {
+
+        showMessage(
+            "❌ یکی از فیلدهای مصرف پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const expenseType =
+        typeInput.value.trim();
+
+
+    const amount =
+        Number(amountInput.value);
+
+
+    const expenseDate =
+        dateInput.value;
+
+
+    const description =
+        descriptionInput.value.trim();
+
+
+    if (expenseType === "") {
+
+        showMessage(
+            "❌ لطفاً نوع مصرف را وارد کنید.",
+            "error"
+        );
+
+        typeInput.focus();
+
+        return;
+
+    }
+
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+
+        showMessage(
+            "❌ لطفاً مبلغ معتبر وارد کنید.",
+            "error"
+        );
+
+        amountInput.focus();
+
+        return;
+
+    }
+
+
+    if (expenseDate === "") {
+
+        showMessage(
+            "❌ لطفاً تاریخ مصرف را انتخاب کنید.",
+            "error"
+        );
+
+        dateInput.focus();
+
+        return;
+
+    }
+
+
+    try {
+
+        let url = EXPENSES_API;
+
+        let method = "POST";
+
+
+        if (editingExpenseId !== null) {
+
+            url =
+                EXPENSES_API +
+                "/" +
+                editingExpenseId;
+
+            method = "PUT";
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method:method,
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        ExpenseType:
+                            expenseType,
+
+                        Amount:
+                            amount,
+
+                        ExpenseDate:
+                            expenseDate,
+
+                        Description:
+                            description
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در ثبت مصرف"
+            );
+
+        }
+
+
+        showMessage(
+
+            editingExpenseId !== null
+                ? "✅ مصرف با موفقیت ویرایش شد."
+                : "✅ مصرف با موفقیت ثبت شد.",
+
+            "success"
+
+        );
+
+
+        clearExpenseForm();
+
+
+        await loadAll();
+
+
+    } catch(error) {
+
+        console.error(
+            "❌ Expense error:",
+            error
+        );
+
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   شروع ویرایش مصرف
+========================================================= */
+
+function editExpense(id) {
+
+    const expense =
+        expenses.find(
+            item =>
+                Number(item.Id) === Number(id)
+        );
+
+
+    if (!expense) {
+
+        showMessage(
+            "❌ مصرف پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    editingExpenseId =
+        Number(expense.Id);
+
+
+    document.getElementById(
+        "expenseType"
+    ).value =
+        expense.ExpenseType || "";
+
+
+    document.getElementById(
+        "expenseAmount"
+    ).value =
+        expense.Amount || "";
+
+
+    document.getElementById(
+        "expenseDate"
+    ).value =
+        expense.ExpenseDate
+            ? String(expense.ExpenseDate)
+                .substring(0,10)
+            : "";
+
+
+    document.getElementById(
+        "expenseDescription"
+    ).value =
+        expense.Description || "";
+
+
+    document.getElementById(
+        "expenseSaveBtn"
+    ).textContent =
+        "💾 ذخیره ویرایش";
+
+
+    document.getElementById(
+        "expenseCancelBtn"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "expenseEditingNote"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "expenseFormTitle"
+    ).textContent =
+        "✏️ ویرایش مصرف";
+
+
+    showSection(
+        "expensesSection",
+        document.querySelectorAll(".nav-tab")[1]
+    );
+
+
+    document.getElementById(
+        "expenseType"
+    ).focus();
+
+}
+
+
+/* =========================================================
+   لغو ویرایش مصرف
+========================================================= */
+
+function cancelExpenseEdit(showMsg=true) {
+
+    clearExpenseForm();
+
+
+    if (showMsg) {
+
+        showMessage(
+            "ویرایش مصرف لغو شد.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   پاک کردن فرم مصرف
+========================================================= */
+
+function clearExpenseForm() {
+
+    editingExpenseId = null;
+
+
+    document.getElementById(
+        "expenseType"
+    ).value = "";
+
+
+    document.getElementById(
+        "expenseAmount"
+    ).value = "";
+
+
+    document.getElementById(
+        "expenseDescription"
+    ).value = "";
+
+
+    document.getElementById(
+        "expenseSaveBtn"
+    ).textContent =
+        "💾 ثبت مصرف";
+
+
+    document.getElementById(
+        "expenseCancelBtn"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "expenseEditingNote"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "expenseFormTitle"
+    ).textContent =
+        "➕ ثبت مصرف جدید";
+
+
+    setToday("expenseDate");
+
+}
+
+
+/* =========================================================
+   حذف مصرف
+========================================================= */
+
+async function deleteExpense(id) {
+
+    const confirmed =
+        confirm(
+            "آیا مطمئن هستید که می‌خواهید این مصرف حذف شود؟"
+        );
+
+
+    if (!confirmed) return;
+
+
+    try {
+
+        const response =
+            await fetch(
+                EXPENSES_API + "/" + id,
+                {
+                    method:"DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در حذف مصرف"
+            );
+
+        }
+
+
+        showMessage(
+            "✅ مصرف حذف شد.",
+            "success"
+        );
+
+
+        await loadAll();
+
+
+    } catch(error) {
+
+        console.error(error);
+
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   محاسبه خلاصه
+========================================================= */
+
+function updateSummary() {
+
+    const purchaseTotal =
+        purchases.reduce(
+            (sum,item) =>
+                sum +
+                Number(item.TotalAmount || 0),
+            0
+        );
+
+
+    const expenseTotal =
+        expenses.reduce(
+            (sum,item) =>
+                sum +
+                Number(item.Amount || 0),
+            0
+        );
+
+
+    const grandTotal =
+        purchaseTotal +
+        expenseTotal;
+
+
+    document.getElementById(
+        "totalPurchases"
+    ).textContent =
+        formatMoney(purchaseTotal);
+
+
+    document.getElementById(
+        "totalExpenses"
+    ).textContent =
+        formatMoney(expenseTotal);
+
+
+    document.getElementById(
+        "grandTotal"
+    ).textContent =
+        formatMoney(grandTotal);
+
+
+    document.getElementById(
+        "monthlyPurchases"
+    ).textContent =
+        formatMoney(purchaseTotal);
+
+
+    document.getElementById(
+        "monthlyExpenses"
+    ).textContent =
+        formatMoney(expenseTotal);
+
+
+    document.getElementById(
+        "monthlyGrandTotal"
+    ).textContent =
+        formatMoney(grandTotal);
+
+}
+
+
+/* =========================================================
+   جستجوی خرید
+========================================================= */
+
+document
+    .getElementById("purchaseSearch")
+    .addEventListener("input",function(){
+
+        const search =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            purchases.filter(purchase => {
+
+                return (
+
+                    String(
+                        purchase.ItemName || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        purchase.Description || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+            });
+
+
+        renderPurchases(filtered);
+
+    });
+
+
+/* =========================================================
+   جستجوی مصرف
+========================================================= */
+
+document
+    .getElementById("expenseSearch")
+    .addEventListener("input",function(){
+
+        const search =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            expenses.filter(expense => {
+
+                return (
+
+                    String(
+                        expense.ExpenseType || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        expense.Description || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+            });
+
+
+        renderExpenses(filtered);
+
+    });
+
+
+/* =========================================================
+   بارگذاری همه اطلاعات
+========================================================= */
+
+async function loadAll() {
+
+    try {
+
+        selectedMonth =
+            document.getElementById(
+                "accountMonth"
+            ).value;
+
+
+        await Promise.all([
+
+            loadPurchases(),
+
+            loadExpenses()
+
+        ]);
+
+
+        updateSummary();
+
+
+    } catch(error) {
+
+        console.error(error);
+
+
+        showMessage(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   شروع صفحه
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        setCurrentMonth();
+
+        setToday("purchaseDate");
+
+        setToday("expenseDate");
+
+        loadAll();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

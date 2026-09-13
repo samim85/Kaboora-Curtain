@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>داشبورد - نمایشگاه پرده کابورا</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f3f5f8;
+            color: #222;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: linear-gradient(135deg, #17202a, #263746);
+            color: white;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #d5dce2;
+            font-size: 15px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 25px auto 50px;
+        }
+
+        .section-title {
+            margin: 30px 0 15px;
+            font-size: 21px;
+            color: #263746;
+            border-right: 5px solid #263746;
+            padding-right: 12px;
+        }
+
+        /* ================= SUMMARY CARDS ================= */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px 16px;
+    min-height: 95px;
+    border: 1px solid #e5e8eb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+}
+
+.card-title {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 9px;
+}
+
+.card-value {
+    font-size: 19px;
+    font-weight: bold;
+    color: #17202a;
+}
+
+        /* ================= MONTH ================= */
+
+        .month-box {
+            margin-top: 25px;
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+        }
+
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .month-item {
+            background: #f7f8fa;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #e6e8eb;
+        }
+
+        .month-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .month-item span {
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        /* ================= FINAL BALANCE ================= */
+
+        .final-box {
+            margin-top: 25px;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+        }
+
+        .final-balance {
+            text-align: center;
+            padding: 25px;
+            border-radius: 14px;
+            background: #f7f8fa;
+        }
+
+        .final-balance .label {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .final-balance .amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .positive {
+            color: #16803c;
+        }
+
+        .negative {
+            color: #c62828;
+        }
+
+        .balanced {
+            color: #555;
+        }
+
+        /* ================= REPORT ROW ================= */
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .report-item {
+            background: #fff;
+            padding: 17px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .report-item strong {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 7px;
+        }
+
+        .report-item span {
+            font-weight: bold;
+        }
+
+        /* ================= MENU ================= */
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .menu-card {
+            background: white;
+            text-decoration: none;
+            color: #222;
+            padding: 25px 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #e3e6e9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            background: #f8fafc;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .menu-description {
+            color: #777;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .month-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .report-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* ================= آیکن کارت‌ها ================= */
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #68717a;
+    margin-bottom: 9px;
+}
+
+.card-title::first-letter {
+    font-size: 17px;
+}
+
+.summary-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::after {
+    content: "";
+    position: absolute;
+    left: -18px;
+    bottom: -18px;
+    width: 55px;
+    height: 55px;
+    background: #f3f5f7;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.card-title,
+.card-value {
+    position: relative;
+    z-index: 1;
+}
+/* =========================================================
+   RESPONSIVE CSS
+   تنظیم کامل موبایل، تبلت و کامپیوتر
+   ========================================================= */
+
+/* ---------- کامپیوتر بزرگ ---------- */
+
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1500px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* ---------- لپتاپ ---------- */
+
+@media (max-width: 1200px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .month-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* ---------- تبلت ---------- */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 22px 15px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    .container {
+        width: 92%;
+        margin: 20px auto 35px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        margin: 25px 0 13px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .summary-card {
+        min-height: 90px;
+        padding: 14px;
+    }
+
+    .card-title {
+        font-size: 12px;
+    }
+
+    .card-value {
+        font-size: 17px;
+    }
+
+    .month-box {
+        padding: 15px;
+    }
+
+    .month-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .month-item {
+        padding: 15px 10px;
+    }
+
+    .month-item strong {
+        font-size: 12px;
+    }
+
+    .month-item span {
+        font-size: 17px;
+    }
+
+    .final-box {
+        padding: 15px;
+    }
+
+    .final-balance {
+        padding: 20px 12px;
+    }
+
+    .final-balance .amount {
+        font-size: 27px;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .menu-card {
+        padding: 20px 10px;
+    }
+
+    .menu-icon {
+        font-size: 28px;
+    }
+
+    .menu-title {
+        font-size: 14px;
+    }
+
+    .menu-description {
+        font-size: 11px;
+    }
+
+    footer {
+        padding: 20px 10px;
+        font-size: 11px;
+    }
+}
+
+
+/* ---------- موبایل ---------- */
+
+@media (max-width: 550px) {
+
+    body {
+        font-size: 14px;
+        overflow-x: hidden;
+    }
+
+    header {
+        padding: 18px 10px;
+    }
+
+    header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    header p {
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .container {
+        width: 94%;
+        margin: 15px auto 30px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        margin: 20px 0 12px;
+        padding-right: 8px;
+    }
+
+    /* کارت‌های خلاصه */
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .summary-card {
+        min-height: auto;
+        padding: 13px 14px;
+        border-radius: 10px;
+    }
+
+    .card-title {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .card-value {
+        font-size: 17px;
+        word-break: break-word;
+    }
+
+    /* خلاصه مالی */
+
+    .month-box {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .month-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .month-item {
+        padding: 13px 10px;
+        border-radius: 10px;
+    }
+
+    .month-item strong {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .month-item span {
+        font-size: 16px;
+    }
+
+    /* تراز */
+
+    .final-box {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .final-balance {
+        padding: 20px 10px;
+        border-radius: 10px;
+    }
+
+    .final-balance .label {
+        font-size: 13px;
+    }
+
+    .final-balance .amount {
+        font-size: 24px;
+        word-break: break-word;
+    }
+
+    .status {
+        font-size: 13px;
+    }
+
+    /* منوی سیستم */
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .menu-card {
+        padding: 17px 12px;
+        border-radius: 11px;
+    }
+
+    .menu-icon {
+        font-size: 27px;
+        margin-bottom: 7px;
+    }
+
+    .menu-title {
+        font-size: 14px;
+    }
+
+    .menu-description {
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    footer {
+        padding: 18px 8px;
+        line-height: 1.8;
+    }
+}
+
+
+/* ---------- موبایل خیلی کوچک ---------- */
+
+@media (max-width: 360px) {
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    header p {
+        font-size: 11px;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .section-title {
+        font-size: 15px;
+    }
+
+    .card-value {
+        font-size: 15px;
+    }
+
+    .final-balance .amount {
+        font-size: 21px;
+    }
+
+    .menu-title {
+        font-size: 13px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>نمایشگاه پرده کابورا</h1>
+        <p>داشبورد مدیریت و حسابداری</p>
+    </header>
+
+    <main class="container">
+
+        <!-- ================= خلاصه کلی ================= -->
+
+        <h2 class="section-title">📊 خلاصه کلی</h2>
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <div class="card-title">💰 مجموع فروش</div>
+                <div class="card-value" id="totalSales">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">🧾 تعداد بل‌ها</div>
+                <div class="card-value" id="totalBills">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">💵 مجموع رسیدها</div>
+                <div class="card-value" id="totalReceipts">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">📌 باقی‌مانده مشتریان</div>
+                <div class="card-value" id="totalBalance">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">🛒 مجموع خریدها</div>
+                <div class="card-value" id="totalPurchases">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">💸 مجموع مصارف</div>
+                <div class="card-value" id="totalExpenses">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">✂️ حساب خیاط</div>
+                <div class="card-value" id="tailorBalance">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">👥 تعداد کل مشتریان</div>
+                <div class="card-value" id="totalCustomers">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">📅 فروش ماه جاری</div>
+                <div class="card-value" id="monthlySales">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">📆 فروش امروز</div>
+                <div class="card-value" id="todaySales">0 افغانی</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">🧾 بل‌های امروز</div>
+                <div class="card-value" id="todayBills">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-title">⚖️ تراز نهایی نمایشگاه</div>
+                <div class="card-value" id="finalBalance">0 افغانی</div>
+            </div>
+
+        </div>
+
+
+        <!-- ================= خلاصه ماه جاری ================= -->
+
+        <h2 class="section-title">📅 خلاصه مالی ماه جاری</h2>
+
+        <div class="month-box">
+
+            <div class="month-grid">
+
+                <div class="month-item">
+                    <strong>فروش ماه جاری</strong>
+                    <span id="reportSales">0 افغانی</span>
+                </div>
+
+                <div class="month-item">
+                    <strong>رسید مشتریان</strong>
+                    <span id="reportReceipts">0 افغانی</span>
+                </div>
+
+                <div class="month-item">
+                    <strong>خرید ماه جاری</strong>
+                    <span id="reportPurchases">0 افغانی</span>
+                </div>
+
+                <div class="month-item">
+                    <strong>مصارف ماه جاری</strong>
+                    <span id="reportExpenses">0 افغانی</span>
+                </div>
+
+                <div class="month-item">
+                    <strong>حساب خیاط</strong>
+                    <span id="reportTailor">0 افغانی</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= تراز ================= -->
+
+        <div class="final-box">
+
+            <div class="final-balance">
+
+                <div class="label">
+                    ⚖️ تراز ماه جاری
+                </div>
+
+                <div class="amount" id="monthlyFinalBalance">
+                    0 افغانی
+                </div>
+
+                <div class="status balanced" id="monthlyFinancialStatus">
+                    وضعیت مالی
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= منوی سیستم ================= -->
+
+        <h2 class="section-title">🗂️ بخش‌های سیستم</h2>
+
+        <div class="menu-grid">
+
+            <a href="/bills.html" class="menu-card">
+                <div class="menu-icon">🧾</div>
+                <div class="menu-title">ثبت بل</div>
+                <div class="menu-description">
+                    ثبت و جستجوی بل مشتریان
+                </div>
+            </a>
+
+            <a href="/customers.html" class="menu-card">
+                <div class="menu-icon">👥</div>
+                <div class="menu-title">مشتریان</div>
+                <div class="menu-description">
+                    مدیریت مشتریان و حساب‌ها
+                </div>
+            </a>
+
+            <a href="/expenses.html" class="menu-card">
+                <div class="menu-icon">🛒</div>
+                <div class="menu-title">خرید و مصارف</div>
+                <div class="menu-description">
+                    ثبت خریدها و مصارف نمایشگاه
+                </div>
+            </a>
+
+            <a href="/tailor.html" class="menu-card">
+                <div class="menu-icon">✂️</div>
+                <div class="menu-title">حساب خیاط</div>
+                <div class="menu-description">
+                    دستمزد و پرداخت‌های خیاط
+                </div>
+            </a>
+
+            <a href="/employees.html" class="menu-card">
+                <div class="menu-icon">👨‍💼</div>
+                <div class="menu-title">کارمندان</div>
+                <div class="menu-description">
+                    معاش، رسید و حساب کارمندان
+                </div>
+            </a>
+
+            <a href="/payments.html" class="menu-card">
+                <div class="menu-icon">💵</div>
+                <div class="menu-title">رسیدها</div>
+                <div class="menu-description">
+                    مدیریت پرداخت‌های مشتریان
+                </div>
+            </a>
+
+            <a href="/reports.html" class="menu-card">
+                <div class="menu-icon">📊</div>
+                <div class="menu-title">گزارشات</div>
+                <div class="menu-description">
+                    گزارش مالی ماهانه
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+        © نمایشگاه پرده کابورا — سیستم مدیریت و حسابداری
+    </footer>
+
+
+    <script>
+
+        const API = "";
+
+        function money(value) {
+            return Number(value || 0).toLocaleString("fa-AF") + " افغانی";
+        }
+
+        function number(value) {
+            return Number(value || 0).toLocaleString("fa-AF");
+        }
+
+        function setMoney(id, value) {
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.textContent = money(value);
+            }
+        }
+
+        function setNumber(id, value) {
+            const element = document.getElementById(id);
+
+            if (element) {
+                element.textContent = number(value);
+            }
+        }
+
+        function getMonth() {
+            const date = new Date();
+
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+
+            return `${year}-${month}`;
+        }
+
+        function getToday() {
+            const date = new Date();
+
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        /* =====================================================
+           بارگذاری داشبورد
+        ===================================================== */
+
+        async function loadDashboard() {
+
+            try {
+
+                /* ================= BILLS ================= */
+
+                const billsResponse =
+                    await fetch(`${API}/api/bills`);
+
+                const billsData =
+                    await billsResponse.json();
+
+                const bills = Array.isArray(billsData)
+                    ? billsData
+                    : (billsData.bills || []);
+
+                let totalSales = 0;
+                let totalReceipts = 0;
+                let totalBalance = 0;
+
+                let monthlySales = 0;
+                let todaySales = 0;
+                let todayBills = 0;
+
+                const currentMonth = getMonth();
+                const today = getToday();
+
+                bills.forEach(bill => {
+
+                    const total =
+                        Number(
+                            bill.TotalAmount ??
+                            bill.totalAmount ??
+                            0
+                        );
+
+                    const receipt =
+                        Number(
+                            bill.ReceiptAmount ??
+                            bill.receiptAmount ??
+                            0
+                        );
+
+                    const balance =
+                        Number(
+                            bill.BalanceAmount ??
+                            bill.balanceAmount ??
+                            (total - receipt)
+                        );
+
+                    const billDate =
+                        String(
+                            bill.BillDate ??
+                            bill.billDate ??
+                            ""
+                        ).substring(0, 10);
+
+                    totalSales += total;
+                    totalReceipts += receipt;
+                    totalBalance += balance;
+
+                    if (billDate.substring(0, 7) === currentMonth) {
+                        monthlySales += total;
+                    }
+
+                    if (billDate === today) {
+                        todaySales += total;
+                        todayBills++;
+                    }
+
+                });
+
+                setMoney("totalSales", totalSales);
+                setNumber("totalBills", bills.length);
+                setMoney("totalReceipts", totalReceipts);
+                setMoney("totalBalance", totalBalance);
+
+                setMoney("monthlySales", monthlySales);
+                setMoney("todaySales", todaySales);
+                setNumber("todayBills", todayBills);
+
+
+                /* ================= CUSTOMERS ================= */
+
+                const customersResponse =
+                    await fetch(`${API}/api/customers`);
+
+                const customersData =
+                    await customersResponse.json();
+
+                const customers =
+                    Array.isArray(customersData)
+                        ? customersData
+                        : (customersData.customers || []);
+
+                setNumber(
+                    "totalCustomers",
+                    customers.length
+                );
+
+
+                /* ================= PURCHASES ================= */
+
+                const purchasesResponse =
+                    await fetch(`${API}/api/purchases`);
+
+                const purchasesData =
+                    await purchasesResponse.json();
+
+                const purchases =
+                    Array.isArray(purchasesData)
+                        ? purchasesData
+                        : (purchasesData.purchases || []);
+
+                let totalPurchases = 0;
+                let monthlyPurchases = 0;
+
+                purchases.forEach(item => {
+
+                    const amount =
+                        Number(item.TotalAmount || 0);
+
+                    const date =
+                        String(item.PurchaseDate || "")
+                            .substring(0, 10);
+
+                    totalPurchases += amount;
+
+                    if (
+                        date.substring(0, 7) === currentMonth
+                    ) {
+                        monthlyPurchases += amount;
+                    }
+
+                });
+
+                setMoney(
+                    "totalPurchases",
+                    totalPurchases
+                );
+
+                setMoney(
+                    "reportPurchases",
+                    monthlyPurchases
+                );
+
+
+                /* ================= EXPENSES ================= */
+
+                const expensesResponse =
+                    await fetch(`${API}/api/expenses`);
+
+                const expensesData =
+                    await expensesResponse.json();
+
+                const expenses =
+                    Array.isArray(expensesData)
+                        ? expensesData
+                        : (expensesData.expenses || []);
+
+                let totalExpenses = 0;
+                let monthlyExpenses = 0;
+
+                expenses.forEach(item => {
+
+                    const amount =
+                        Number(item.Amount || 0);
+
+                    const date =
+                        String(
+                            item.ExpenseDate || ""
+                        ).substring(0, 10);
+
+                    totalExpenses += amount;
+
+                    if (
+                        date.substring(0, 7) === currentMonth
+                    ) {
+                        monthlyExpenses += amount;
+                    }
+
+                });
+
+                setMoney(
+                    "totalExpenses",
+                    totalExpenses
+                );
+
+                setMoney(
+                    "reportExpenses",
+                    monthlyExpenses
+                );
+
+
+                /* ================= TAILOR ================= */
+
+                let tailorTotal = 0;
+                let monthlyTailor = 0;
+
+                try {
+
+                    const tailorResponse =
+                        await fetch(
+                            `${API}/api/tailor/account`
+                        );
+
+                    const tailorData =
+                        await tailorResponse.json();
+
+                    tailorTotal =
+                        Number(
+                            tailorData?.summary
+                                ?.TotalTailorAmount || 0
+                        );
+
+                } catch (error) {
+
+                    console.error(
+                        "Tailor error:",
+                        error
+                    );
+
+                }
+
+
+                try {
+
+                    const tailorMonthResponse =
+                        await fetch(
+                            `${API}/api/tailor/account?month=${currentMonth}`
+                        );
+
+                    const tailorMonthData =
+                        await tailorMonthResponse.json();
+
+                    monthlyTailor =
+                        Number(
+                            tailorMonthData?.summary
+                                ?.TotalTailorAmount || 0
+                        );
+
+                } catch (error) {
+
+                    console.error(
+                        "Monthly tailor error:",
+                        error
+                    );
+
+                }
+
+                setMoney(
+                    "tailorBalance",
+                    tailorTotal
+                );
+
+                setMoney(
+                    "reportTailor",
+                    monthlyTailor
+                );
+
+
+                /* ================= MONTHLY RECEIPTS ================= */
+
+                let monthlyReceipts = 0;
+
+                bills.forEach(bill => {
+
+                    const receipt =
+                        Number(
+                            bill.ReceiptAmount ??
+                            bill.receiptAmount ??
+                            0
+                        );
+
+                    const date =
+                        String(
+                            bill.BillDate ??
+                            bill.billDate ??
+                            ""
+                        ).substring(0, 10);
+
+                    if (
+                        date.substring(0, 7) === currentMonth
+                    ) {
+                        monthlyReceipts += receipt;
+                    }
+
+                });
+
+                setMoney(
+                    "reportReceipts",
+                    monthlyReceipts
+                );
+
+                setMoney(
+                    "reportSales",
+                    monthlySales
+                );
+
+
+                /* ================= FINAL BALANCE ================= */
+
+                const finalBalance =
+                    totalSales -
+                    totalPurchases -
+                    totalExpenses -
+                    tailorTotal;
+
+                setMoney(
+                    "finalBalance",
+                    finalBalance
+                );
+
+
+                const monthlyFinalBalance =
+                    monthlySales -
+                    monthlyPurchases -
+                    monthlyExpenses -
+                    monthlyTailor;
+
+                setMoney(
+                    "monthlyFinalBalance",
+                    monthlyFinalBalance
+                );
+
+
+                /* ================= STATUS ================= */
+
+                const finalElement =
+                    document.getElementById(
+                        "finalBalance"
+                    );
+
+                const monthlyElement =
+                    document.getElementById(
+                        "monthlyFinalBalance"
+                    );
+
+                const statusElement =
+                    document.getElementById(
+                        "monthlyFinancialStatus"
+                    );
+
+
+                function applyStatus(
+                    element,
+                    amount
+                ) {
+
+                    if (!element) return;
+
+                    element.classList.remove(
+                        "positive",
+                        "negative",
+                        "balanced"
+                    );
+
+                    if (amount > 0) {
+
+                        element.classList.add(
+                            "positive"
+                        );
+
+                    } else if (amount < 0) {
+
+                        element.classList.add(
+                            "negative"
+                        );
+
+                    } else {
+
+                        element.classList.add(
+                            "balanced"
+                        );
+                    }
+                }
+
+
+                applyStatus(
+                    finalElement,
+                    finalBalance
+                );
+
+
+                applyStatus(
+                    monthlyElement,
+                    monthlyFinalBalance
+                );
+
+
+                if (statusElement) {
+
+                    statusElement.classList.remove(
+                        "positive",
+                        "negative",
+                        "balanced"
+                    );
+
+                    if (monthlyFinalBalance > 0) {
+
+                        statusElement.textContent =
+                            "وضعیت: سود";
+
+                        statusElement.classList.add(
+                            "positive"
+                        );
+
+                    } else if (
+                        monthlyFinalBalance < 0
+                    ) {
+
+                        statusElement.textContent =
+                            "وضعیت: منفی";
+
+                        statusElement.classList.add(
+                            "negative"
+                        );
+
+                    } else {
+
+                        statusElement.textContent =
+                            "وضعیت: متعادل";
+
+                        statusElement.classList.add(
+                            "balanced"
+                        );
+                    }
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Dashboard error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           شروع
+        ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadDashboard
+        );
+
+    </script>
+
+</body>
+
+</html>

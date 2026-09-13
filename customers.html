@@ -1,0 +1,3880 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        مشتریان - نمایشگاه پرده کابورا
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1250px;
+            margin: 25px auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: .9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .07);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-size: 15px;
+            cursor: pointer;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        .save-btn {
+            background: #2563eb;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .reset-btn {
+            background: #e5e7eb;
+            margin-right: 8px;
+            margin-top: 20px;
+        }
+
+        .cancel-edit-btn {
+            background: #6b7280;
+            color: white;
+            margin-right: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            max-width: 450px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tr.customer-row {
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        tr.customer-row:hover {
+            background: #eef5ff;
+        }
+
+        .account-btn {
+            background: #059669;
+            color: white;
+            padding: 7px 13px;
+            font-size: 13px;
+        }
+
+        .account-btn:hover {
+            background: #047857;
+        }
+
+        .edit-customer-btn {
+            background: #f59e0b;
+            color: white;
+            padding: 7px 13px;
+            font-size: 13px;
+        }
+
+        .edit-customer-btn:hover {
+            background: #d97706;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            background: #6b7280;
+            color: white;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        /* =========================
+           حساب مشتری
+        ========================= */
+
+        #accountSection {
+            display: none;
+        }
+
+        .customer-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .customer-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .info-box small {
+            display: block;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .info-box strong {
+            font-size: 17px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+        }
+
+        .summary-box .title {
+            color: #6b7280;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .summary-box .amount {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .total-box .amount {
+            color: #1d4ed8;
+        }
+
+        .receipt-box .amount {
+            color: #059669;
+        }
+
+        .balance-box .amount {
+            color: #dc2626;
+        }
+
+        .paid {
+            color: #059669 !important;
+        }
+
+        .unpaid {
+            color: #dc2626 !important;
+        }
+
+        .bill-number {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .details-btn {
+            background: #2563eb;
+            color: white;
+            padding: 7px 12px;
+            font-size: 13px;
+        }
+        .delete-customer-btn {
+    background: #dc2626;
+    color: white;
+    padding: 7px 13px;
+    font-size: 13px;
+}
+
+.delete-customer-btn:hover {
+    background: #b91c1c;
+}
+        .account-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .account-title h2 {
+            margin: 0;
+        }
+
+        /* =========================
+           Navigation حساب
+        ========================= */
+
+        .account-nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .06);
+        }
+
+        .nav-tab {
+            background: #f3f4f6;
+            color: #374151;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-tab.active {
+            background: #1f2937;
+            color: white;
+        }
+
+        .account-tab {
+            display: none;
+        }
+
+        .account-tab.active {
+            display: block;
+        }
+
+        /* =========================
+           رسید
+        ========================= */
+
+        .receipt-form-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .receipt-form-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .receipt-form-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1.8fr auto auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .receipt-save {
+            background: #059669;
+            color: white;
+            height: 42px;
+            white-space: nowrap;
+        }
+
+        .receipt-cancel {
+            background: #6b7280;
+            color: white;
+            height: 42px;
+            white-space: nowrap;
+            display: none;
+        }
+
+        .editing-note {
+            display: none;
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .operations {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
+            padding: 7px 12px;
+            font-size: 13px;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            padding: 7px 12px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1050px) {
+
+            .receipt-form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .form-grid,
+            .customer-info-grid,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .account-title {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .account-nav {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 97%;
+            }
+
+            .receipt-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media print {
+
+            .header,
+            #customerRegisterCard,
+            #customersSection,
+            .account-nav,
+            .receipt-form-box,
+            .back-btn,
+            .operations {
+                display: none !important;
+            }
+
+            #accountSection {
+                display: block !important;
+            }
+
+            .account-tab {
+                display: block !important;
+            }
+
+            .container {
+                width: 100%;
+                max-width: none;
+            }
+
+            body {
+                background: white;
+            }
+
+        }
+/* =========================================================
+   KABOORA CURTAIN
+   RESPONSIVE CSS - CUSTOMERS
+   موبایل + تبلت + لپتاپ + کامپیوتر
+   ========================================================= */
+
+/* ---------- کامپیوتر بزرگ ---------- */
+
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1400px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .customer-info-grid,
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .account-nav {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* ---------- لپتاپ ---------- */
+
+@media (max-width: 1200px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .receipt-form-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .receipt-save,
+    .receipt-cancel {
+        width: 100%;
+    }
+
+}
+
+
+/* ---------- تبلت ---------- */
+
+@media (max-width: 900px) {
+
+    .container {
+        width: 94%;
+        margin: 20px auto 35px;
+    }
+
+    .header {
+        padding: 22px 15px;
+        border-radius: 13px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .header p {
+        font-size: 13px;
+    }
+
+    .card {
+        padding: 18px;
+        border-radius: 13px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .customer-info-grid,
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .account-title {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .account-nav {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .nav-tab {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .receipt-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .receipt-save,
+    .receipt-cancel {
+        width: 100%;
+    }
+
+    input,
+    select {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+}
+
+
+/* ---------- موبایل ---------- */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow-x: hidden;
+        font-size: 14px;
+    }
+
+    .container {
+        width: 94%;
+        margin: 15px auto 30px;
+    }
+
+    .header {
+        padding: 18px 10px;
+        margin-bottom: 15px;
+        border-radius: 11px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .header p {
+        font-size: 12px;
+        margin-top: 5px;
+        line-height: 1.7;
+    }
+
+    .card {
+        padding: 14px;
+        margin-bottom: 14px;
+        border-radius: 11px;
+    }
+
+    .card h2 {
+        font-size: 17px;
+        margin-bottom: 15px;
+    }
+
+    .card h3 {
+        font-size: 15px;
+    }
+
+    /* فرم مشتری */
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    input,
+    select {
+        padding: 10px;
+        font-size: 14px;
+        min-height: 42px;
+    }
+
+    .save-btn,
+    .reset-btn,
+    .cancel-edit-btn {
+        width: 100%;
+        margin: 7px 0 0;
+        min-height: 42px;
+    }
+
+    /* جستجو */
+
+    .search-box {
+        margin-bottom: 12px;
+    }
+
+    .search-box input {
+        max-width: none;
+        width: 100%;
+    }
+
+    /* جدول */
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    table {
+        min-width: 720px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 9px 7px;
+    }
+
+    /* دکمه‌های عملیات */
+
+    .action-group,
+    .operations {
+        gap: 5px;
+    }
+
+    .account-btn,
+    .edit-customer-btn,
+    .delete-customer-btn,
+    .details-btn,
+    .edit-btn,
+    .delete-btn {
+        padding: 7px 9px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    /* اطلاعات مشتری */
+
+    .customer-info {
+        padding: 11px;
+        margin-bottom: 14px;
+    }
+
+    .customer-info-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .info-box {
+        padding: 12px;
+        border-radius: 9px;
+    }
+
+    .info-box small {
+        font-size: 11px;
+    }
+
+    .info-box strong {
+        font-size: 14px;
+        word-break: break-word;
+    }
+
+    /* خلاصه حساب */
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-bottom: 14px;
+    }
+
+    .summary-box {
+        padding: 15px 10px;
+        border-radius: 10px;
+    }
+
+    .summary-box .title {
+        font-size: 12px;
+        margin-bottom: 7px;
+    }
+
+    .summary-box .amount {
+        font-size: 19px;
+        word-break: break-word;
+    }
+
+    /* منوی حساب */
+
+    .account-title {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .account-title h2 {
+        font-size: 17px;
+    }
+
+    .back-btn {
+        width: 100%;
+        min-height: 42px;
+    }
+
+    .account-nav {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 7px;
+        border-radius: 10px;
+        margin-bottom: 14px;
+    }
+
+    .nav-tab {
+        width: 100%;
+        padding: 11px 8px;
+        font-size: 13px;
+    }
+
+    /* فرم رسید */
+
+    .receipt-form-box {
+        padding: 13px;
+        border-radius: 10px;
+        margin-bottom: 14px;
+    }
+
+    .receipt-form-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .receipt-form-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .receipt-save,
+    .receipt-cancel {
+        width: 100%;
+        height: 42px;
+        margin-top: 3px;
+    }
+
+    .editing-note {
+        font-size: 12px;
+    }
+
+    /* پیام */
+
+    .status {
+        font-size: 12px;
+        line-height: 1.8;
+        padding: 9px;
+    }
+
+}
+
+
+/* ---------- موبایل خیلی کوچک ---------- */
+
+@media (max-width: 360px) {
+
+    .container {
+        width: 95%;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .card {
+        padding: 11px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+
+    input,
+    select {
+        font-size: 13px;
+    }
+
+    .summary-box .amount {
+        font-size: 17px;
+    }
+
+    table {
+        min-width: 680px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 8px 5px;
+    }
+
+    .account-btn,
+    .edit-customer-btn,
+    .delete-customer-btn,
+    .details-btn,
+    .edit-btn,
+    .delete-btn {
+        font-size: 10px;
+        padding: 6px 7px;
+    }
+
+}
+
+
+/* ---------- جلوگیری از بیرون‌زدگی متن ---------- */
+
+.customer-info,
+.info-box,
+.summary-box,
+.card,
+.receipt-form-box {
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- لمس بهتر در موبایل ---------- */
+
+@media (max-width: 600px) {
+
+    button,
+    input,
+    select {
+        touch-action: manipulation;
+    }
+
+    button {
+        min-height: 40px;
+    }
+
+}
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =========================
+         Header
+    ========================= -->
+
+    <div class="header">
+
+        <h1>
+            نمایشگاه پرده کابورا
+        </h1>
+
+        <p>
+            مدیریت مشتریان و حساب مشتری
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         ثبت / ویرایش مشتری
+    ========================= -->
+
+    <div
+        class="card"
+        id="customerRegisterCard">
+
+        <h2 id="customerFormTitle">
+            👤 ثبت مشتری جدید
+        </h2>
+
+
+        <form id="customerForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="fullName">
+                        نام مشتری *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="نام کامل مشتری"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        شماره تماس
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="07xxxxxxxx"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="address">
+                        آدرس
+                    </label>
+
+                    <input
+                        type="text"
+                        id="address"
+                        placeholder="آدرس مشتری"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="save-btn"
+                id="customerSaveBtn">
+
+                💾 ثبت مشتری
+
+            </button>
+
+
+            <button
+                type="reset"
+                class="reset-btn"
+                id="customerResetBtn">
+
+                پاک کردن
+
+            </button>
+
+
+            <button
+                type="button"
+                class="cancel-edit-btn"
+                id="cancelCustomerEditBtn"
+                onclick="cancelCustomerEdit()">
+
+                ❌ لغو ویرایش
+
+            </button>
+
+
+        </form>
+
+
+        <div
+            id="status"
+            class="status">
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         لیست مشتریان
+    ========================= -->
+
+    <div
+        class="card"
+        id="customersSection">
+
+        <h2>
+            📋 لیست مشتریان
+        </h2>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="جستجوی نام، شماره تماس یا آدرس..."
+            >
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        شماره
+                    </th>
+
+                    <th>
+                        نام مشتری
+                    </th>
+
+                    <th>
+                        شماره تماس
+                    </th>
+
+                    <th>
+                        آدرس
+                    </th>
+
+                    <th>
+                        تاریخ ثبت
+                    </th>
+
+                    <th>
+                        عملیات
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="customersTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         حساب مشتری
+    ========================= -->
+
+    <div
+        class="card"
+        id="accountSection">
+
+
+        <div class="account-title">
+
+            <h2>
+                📊 حساب مشتری
+            </h2>
+
+            <button
+                class="back-btn"
+                onclick="closeAccount()">
+
+                ← بازگشت به مشتریان
+
+            </button>
+
+        </div>
+
+
+        <!-- اطلاعات مشتری -->
+
+        <div class="customer-info">
+
+            <div class="customer-info-grid">
+
+                <div class="info-box">
+
+                    <small>
+                        نام مشتری
+                    </small>
+
+                    <strong id="accountCustomerName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <small>
+                        شماره تماس
+                    </small>
+
+                    <strong id="accountCustomerPhone">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <small>
+                        آدرس
+                    </small>
+
+                    <strong id="accountCustomerAddress">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- خلاصه حساب -->
+
+        <div class="summary-grid">
+
+            <div class="summary-box total-box">
+
+                <div class="title">
+                    مجموع بل‌ها
+                </div>
+
+                <div
+                    class="amount"
+                    id="totalAmount">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box receipt-box">
+
+                <div class="title">
+                    مجموع رسیدها
+                </div>
+
+                <div
+                    class="amount"
+                    id="totalReceipt">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-box balance-box">
+
+                <div class="title">
+                    بیلانس
+                </div>
+
+                <div
+                    class="amount"
+                    id="totalBalance">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+
+        <div class="account-nav">
+
+            <button
+                class="nav-tab active"
+                onclick="
+                    showAccountTab(
+                        'summaryTab',
+                        this
+                    )
+                ">
+
+                📊 خلاصه حساب
+
+            </button>
+
+
+            <button
+                class="nav-tab"
+                onclick="
+                    showAccountTab(
+                        'billsTab',
+                        this
+                    )
+                ">
+
+                🧾 بل‌ها
+
+            </button>
+
+
+            <button
+                class="nav-tab"
+                onclick="
+                    showAccountTab(
+                        'receiptsTab',
+                        this
+                    )
+                ">
+
+                💵 رسیدها
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             خلاصه
+        ========================= -->
+
+        <div
+            id="summaryTab"
+            class="account-tab active">
+
+            <div class="card">
+
+                <h3>
+                    📊 خلاصه حساب مشتری
+                </h3>
+
+
+                <div class="customer-info-grid">
+
+
+                    <div class="info-box">
+
+                        <small>
+                            تعداد بل‌ها
+                        </small>
+
+                        <strong id="billCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <small>
+                            تعداد رسیدها
+                        </small>
+
+                        <strong id="receiptCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <small>
+                            وضعیت حساب
+                        </small>
+
+                        <strong id="accountStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             بل‌ها
+        ========================= -->
+
+        <div
+            id="billsTab"
+            class="account-tab">
+
+            <div class="card">
+
+                <h3>
+                    🧾 بل‌های مشتری
+                </h3>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                شماره بل
+                            </th>
+
+                            <th>
+                                تاریخ
+                            </th>
+
+                            <th>
+                                تاریخ تحویل
+                            </th>
+
+                            <th>
+                                مجموع
+                            </th>
+
+                            <th>
+                                رسید
+                            </th>
+
+                            <th>
+                                بیلانس
+                            </th>
+
+                            <th>
+                                عملیات
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="customerBillsBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             رسیدها
+        ========================= -->
+
+        <div
+            id="receiptsTab"
+            class="account-tab">
+
+
+            <!-- فرم رسید -->
+
+            <div
+                class="receipt-form-box">
+
+
+                <div
+                    class="receipt-form-title"
+                    id="receiptFormTitle">
+
+                    ➕ ثبت رسید مشتری
+
+                </div>
+
+
+                <div
+                    id="editingNote"
+                    class="editing-note">
+
+                    ✏️ در حال ویرایش رسید
+
+                </div>
+
+
+                <div class="receipt-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            بل
+                        </label>
+
+                        <select
+                            id="receiptBillId">
+
+                            <option value="">
+                                انتخاب بل
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            مبلغ
+                        </label>
+
+                        <input
+                            type="number"
+                            id="receiptAmount"
+                            min="1"
+                            placeholder="مثلاً 3000">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            تاریخ
+                        </label>
+
+                        <input
+                            type="date"
+                            id="receiptDate">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            توضیحات
+                        </label>
+
+                        <input
+                            type="text"
+                            id="receiptDescription"
+                            placeholder="مثلاً نقد گرفت">
+
+                    </div>
+
+
+                    <button
+                        id="receiptSaveBtn"
+                        class="receipt-save"
+                        onclick="saveReceipt()">
+
+                        💾 ثبت رسید
+
+                    </button>
+
+
+                    <button
+                        id="receiptCancelBtn"
+                        class="receipt-cancel"
+                        onclick="cancelReceiptEdit()">
+
+                        ❌ لغو
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- جدول رسیدها -->
+
+            <div class="card">
+
+                <h3>
+                    💵 سابقه رسیدهای مشتری
+                </h3>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                ردیف
+                            </th>
+
+                            <th>
+                                شماره بل
+                            </th>
+
+                            <th>
+                                تاریخ
+                            </th>
+
+                            <th>
+                                مبلغ
+                            </th>
+
+                            <th>
+                                توضیحات
+                            </th>
+
+                            <th>
+                                عملیات
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="customerPaymentsBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   API
+========================================================= */
+
+const API_URL =
+    "/api/customers";
+
+
+/* =========================================================
+   متغیرها
+========================================================= */
+
+let customers = [];
+
+let currentCustomerId = null;
+
+let currentCustomerBills = [];
+
+let currentCustomerPayments = [];
+
+let editingPaymentId = null;
+
+let editingCustomerId = null;
+
+
+/* =========================================================
+   پیام
+========================================================= */
+
+function showStatus(
+    message,
+    type
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        "status " + type;
+
+
+    status.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        status.style.display =
+            "none";
+
+    }, 4000);
+
+}
+
+
+/* =========================================================
+   فرمت پول
+========================================================= */
+
+function formatMoney(value) {
+
+    return Number(
+        value || 0
+    )
+        .toLocaleString("fa-AF")
+        +
+        " افغانی";
+
+}
+
+
+/* =========================================================
+   فرمت عدد
+========================================================= */
+
+function formatNumber(value) {
+
+    return Number(
+        value || 0
+    )
+        .toLocaleString("fa-AF");
+
+}
+
+
+/* =========================================================
+   تاریخ
+========================================================= */
+
+function formatDate(
+    dateValue
+) {
+
+    if (!dateValue) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(dateValue);
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "fa-AF"
+    );
+
+}
+
+
+/* =========================================================
+   جلوگیری از HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   دریافت مشتریان
+========================================================= */
+
+async function loadCustomers() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "خطا در دریافت مشتریان"
+            );
+
+        }
+
+
+        customers =
+            await response.json();
+
+
+        renderCustomers(
+            customers
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "❌ اتصال به سرور برقرار نشد",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   نمایش مشتریان
+========================================================= */
+
+function renderCustomers(
+    list
+) {
+
+    const tbody =
+        document.getElementById(
+            "customersTableBody"
+        );
+
+
+    tbody.innerHTML =
+        "";
+
+
+    if (
+        list.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty">
+
+                    هنوز هیچ مشتری ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(
+        customer => {
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.className =
+                "customer-row";
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${customer.Id}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        customer.FullName
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        customer.Phone
+                        ||
+                        "-"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        customer.Address
+                        ||
+                        "-"
+                    )}
+                </td>
+
+                <td>
+                    ${formatDate(
+                        customer.CreatedAt
+                    )}
+                </td>
+
+                <td>
+
+                   <div
+    class="action-group">
+
+    <button
+        class="account-btn"
+        onclick="
+            openCustomerAccount(
+                ${customer.Id}
+            )
+        ">
+
+        📊 حساب
+
+    </button>
+
+
+    <button
+        class="edit-customer-btn"
+        onclick="
+            editCustomer(
+                ${customer.Id}
+            )
+        ">
+
+        ✏️ ویرایش
+
+    </button>
+
+
+    <button
+        class="delete-customer-btn"
+        onclick="
+            deleteCustomer(
+                ${customer.Id}
+            )
+        ">
+
+        🗑️ حذف
+
+    </button>
+
+</div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ثبت یا ویرایش مشتری
+========================================================= */
+
+document
+    .getElementById(
+        "customerForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const fullName =
+                document
+                    .getElementById(
+                        "fullName"
+                    )
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById(
+                        "phone"
+                    )
+                    .value
+                    .trim();
+
+
+            const address =
+                document
+                    .getElementById(
+                        "address"
+                    )
+                    .value
+                    .trim();
+
+
+            if (!fullName) {
+
+                showStatus(
+                    "⚠️ نام مشتری را وارد کنید",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                let url =
+                    API_URL;
+
+                let method =
+                    "POST";
+
+
+                if (
+                    editingCustomerId !== null
+                ) {
+
+                    url =
+                        `${API_URL}/${editingCustomerId}`;
+
+                    method =
+                        "PUT";
+
+                }
+
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+
+                            method:
+                                method,
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    FullName:
+                                        fullName,
+
+                                    Phone:
+                                        phone
+                                        ||
+                                        null,
+
+                                    Address:
+                                        address
+                                        ||
+                                        null
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error
+                        ||
+                        "خطا در ذخیره مشتری"
+                    );
+
+                }
+
+
+                if (
+                    editingCustomerId !== null
+                ) {
+
+                    showStatus(
+                        "✅ اطلاعات مشتری با موفقیت ویرایش شد",
+                        "success"
+                    );
+
+                } else {
+
+                    showStatus(
+                        "✅ مشتری با موفقیت ثبت شد",
+                        "success"
+                    );
+
+                }
+
+
+                cancelCustomerEdit(
+                    false
+                );
+
+
+                await loadCustomers();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showStatus(
+                    "❌ " +
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   شروع ویرایش مشتری
+========================================================= */
+
+function editCustomer(
+    customerId
+) {
+
+    const customer =
+        customers.find(
+            item =>
+                Number(
+                    item.Id
+                ) ===
+                Number(
+                    customerId
+                )
+        );
+
+
+    if (!customer) {
+
+        showStatus(
+            "❌ مشتری پیدا نشد",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    editingCustomerId =
+        Number(
+            customer.Id
+        );
+
+
+    document.getElementById(
+        "fullName"
+    ).value =
+        customer.FullName
+        ||
+        "";
+
+
+    document.getElementById(
+        "phone"
+    ).value =
+        customer.Phone
+        ||
+        "";
+
+
+    document.getElementById(
+        "address"
+    ).value =
+        customer.Address
+        ||
+        "";
+
+
+    document.getElementById(
+        "customerFormTitle"
+    ).textContent =
+        "✏️ ویرایش اطلاعات مشتری";
+
+
+    document.getElementById(
+        "customerSaveBtn"
+    ).textContent =
+        "💾 ذخیره ویرایش";
+
+
+    document.getElementById(
+        "cancelCustomerEditBtn"
+    ).style.display =
+        "inline-block";
+
+
+    document.getElementById(
+        "fullName"
+    ).focus();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   لغو ویرایش مشتری
+========================================================= */
+
+function cancelCustomerEdit(
+    showMessage = true
+) {
+
+    editingCustomerId =
+        null;
+
+
+    document.getElementById(
+        "customerForm"
+    ).reset();
+
+
+    document.getElementById(
+        "customerFormTitle"
+    ).textContent =
+        "👤 ثبت مشتری جدید";
+
+
+    document.getElementById(
+        "customerSaveBtn"
+    ).textContent =
+        "💾 ثبت مشتری";
+
+
+    document.getElementById(
+        "cancelCustomerEditBtn"
+    ).style.display =
+        "none";
+
+
+    if (showMessage) {
+
+        showStatus(
+            "ویرایش لغو شد.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   جستجوی مشتری
+========================================================= */
+/* =========================================================
+   حذف مشتری
+========================================================= */
+
+async function deleteCustomer(customerId) {
+
+    const customer =
+        customers.find(
+            item =>
+                Number(item.Id) ===
+                Number(customerId)
+        );
+
+
+    if (!customer) {
+
+        showStatus(
+            "❌ مشتری پیدا نشد",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `آیا مطمئن هستید که می‌خواهید مشتری «${customer.FullName}» را حذف کنید؟`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${customerId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در حذف مشتری"
+            );
+
+        }
+
+
+        showStatus(
+            "✅ مشتری با موفقیت حذف شد",
+            "success"
+        );
+
+
+        await loadCustomers();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "❌ " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        function() {
+
+            const search =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtered =
+                customers.filter(
+                    customer => {
+
+                        return (
+
+                            (
+                                customer.FullName
+                                ||
+                                ""
+                            )
+                                .toLowerCase()
+                                .includes(
+                                    search
+                                )
+
+                            ||
+
+                            (
+                                customer.Phone
+                                ||
+                                ""
+                            )
+                                .toLowerCase()
+                                .includes(
+                                    search
+                                )
+
+                            ||
+
+                            (
+                                customer.Address
+                                ||
+                                ""
+                            )
+                                .toLowerCase()
+                                .includes(
+                                    search
+                                )
+
+                        );
+
+                    }
+                );
+
+
+            renderCustomers(
+                filtered
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   باز کردن حساب مشتری
+========================================================= */
+
+async function openCustomerAccount(
+    customerId
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${customerId}/account`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error
+                ||
+                "خطا در دریافت حساب مشتری"
+            );
+
+        }
+
+
+        currentCustomerId =
+            Number(
+                customerId
+            );
+
+
+        const customer =
+            data.customer;
+
+
+        const summary =
+            data.summary;
+
+
+        currentCustomerBills =
+            data.bills
+            ||
+            [];
+
+
+        document.getElementById(
+            "accountCustomerName"
+        ).textContent =
+            customer.FullName
+            ||
+            "-";
+
+
+        document.getElementById(
+            "accountCustomerPhone"
+        ).textContent =
+            customer.Phone
+            ||
+            "-";
+
+
+        document.getElementById(
+            "accountCustomerAddress"
+        ).textContent =
+            customer.Address
+            ||
+            "-";
+
+
+        document.getElementById(
+            "totalAmount"
+        ).textContent =
+            formatMoney(
+                summary.TotalAmount
+            );
+
+
+        document.getElementById(
+            "totalReceipt"
+        ).textContent =
+            formatMoney(
+                summary.ReceiptAmount
+            );
+
+
+        const balance =
+            Number(
+                summary.BalanceAmount
+                ||
+                0
+            );
+
+
+        const balanceElement =
+            document.getElementById(
+                "totalBalance"
+            );
+
+
+        balanceElement.textContent =
+            formatMoney(
+                balance
+            );
+
+
+        if (
+            balance <= 0
+        ) {
+
+            balanceElement
+                .classList
+                .add("paid");
+
+
+            balanceElement
+                .classList
+                .remove(
+                    "unpaid"
+                );
+
+        } else {
+
+            balanceElement
+                .classList
+                .add("unpaid");
+
+
+            balanceElement
+                .classList
+                .remove(
+                    "paid"
+                );
+
+        }
+
+
+        document.getElementById(
+            "billCount"
+        ).textContent =
+            formatNumber(
+                currentCustomerBills.length
+            );
+
+
+        await loadCustomerPayments();
+
+
+        document.getElementById(
+            "receiptCount"
+        ).textContent =
+            formatNumber(
+                currentCustomerPayments.length
+            );
+
+
+        updateAccountStatus(
+            balance
+        );
+
+
+        renderCustomerBills(
+            currentCustomerBills
+        );
+
+
+        populateReceiptBills(
+            currentCustomerBills
+        );
+
+
+        showAccountTab(
+            "summaryTab",
+            document.querySelector(
+                ".nav-tab"
+            )
+        );
+
+
+        document.getElementById(
+            "customersSection"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "customerRegisterCard"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "accountSection"
+        ).style.display =
+            "block";
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior:
+                "smooth"
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "❌ " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   وضعیت حساب
+========================================================= */
+
+function updateAccountStatus(
+    balance
+) {
+
+    const element =
+        document.getElementById(
+            "accountStatus"
+        );
+
+
+    if (
+        balance > 0
+    ) {
+
+        element.textContent =
+            "مشتری بدهکار است";
+
+
+        element.style.color =
+            "#dc2626";
+
+    } else if (
+        balance < 0
+    ) {
+
+        element.textContent =
+            "مشتری اضافه پرداخت دارد";
+
+
+        element.style.color =
+            "#f59e0b";
+
+    } else {
+
+        element.textContent =
+            "حساب تسویه است";
+
+
+        element.style.color =
+            "#059669";
+
+    }
+
+}
+
+
+/* =========================================================
+   Navigation حساب
+========================================================= */
+
+function showAccountTab(
+    tabId,
+    button
+) {
+
+    document
+        .querySelectorAll(
+            ".account-tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const selected =
+        document.getElementById(
+            tabId
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".nav-tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   نمایش بل‌ها
+========================================================= */
+
+function renderCustomerBills(
+    bills
+) {
+
+    const tbody =
+        document.getElementById(
+            "customerBillsBody"
+        );
+
+
+    tbody.innerHTML =
+        "";
+
+
+    if (
+        bills.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="empty">
+
+                    برای این مشتری هنوز هیچ بلی ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    bills.forEach(
+        bill => {
+
+            const balance =
+                Number(
+                    bill.BalanceAmount
+                    ||
+                    0
+                );
+
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML = `
+
+                <td
+                    class="bill-number">
+
+                    بل شماره
+                    ${formatNumber(
+                        bill.BillNumber
+                    )}
+
+                </td>
+
+
+                <td>
+                    ${formatDate(
+                        bill.BillDate
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatDate(
+                        bill.DeliveryDate
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatMoney(
+                        bill.TotalAmount
+                    )}
+                </td>
+
+
+                <td>
+                    ${formatMoney(
+                        bill.ReceiptAmount
+                    )}
+                </td>
+
+
+                <td
+                    class="${
+                        balance <= 0
+                            ? "paid"
+                            : "unpaid"
+                    }">
+
+                    ${formatMoney(
+                        balance
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="details-btn"
+                        onclick="
+                            openBill(
+                                ${bill.Id}
+                            )
+                        ">
+
+                        👁 جزئیات
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   دریافت رسیدهای مشتری
+========================================================= */
+
+async function loadCustomerPayments() {
+
+    if (
+        !currentCustomerId
+    ) {
+
+        currentCustomerPayments =
+            [];
+
+        return;
+
+    }
+
+
+    const response =
+        await fetch(
+            `${API_URL}/${currentCustomerId}/payments`
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error
+            ||
+            "خطا در دریافت رسیدها"
+        );
+
+    }
+
+
+    currentCustomerPayments =
+        data
+        ||
+        [];
+
+
+    renderCustomerPayments(
+        currentCustomerPayments
+    );
+
+}
+
+
+/* =========================================================
+   نمایش رسیدها
+========================================================= */
+
+function renderCustomerPayments(
+    payments
+) {
+
+    const tbody =
+        document.getElementById(
+            "customerPaymentsBody"
+        );
+
+
+    tbody.innerHTML =
+        "";
+
+
+    if (
+        payments.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty">
+
+                    هنوز هیچ رسیدی برای این مشتری ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    payments.forEach(
+        (payment, index) => {
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${formatNumber(
+                        index + 1
+                    )}
+                </td>
+
+
+                <td
+                    class="bill-number">
+
+                    بل شماره
+                    ${formatNumber(
+                        payment.BillNumber
+                    )}
+
+                </td>
+
+
+                <td>
+                    ${formatDate(
+                        payment.PaymentDate
+                    )}
+                </td>
+
+
+                <td
+                    class="paid">
+
+                    ${formatMoney(
+                        payment.Amount
+                    )}
+
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                        payment.Description
+                        ||
+                        "-"
+                    )}
+                </td>
+
+
+                <td>
+
+                    <div
+                        class="operations">
+
+
+                        <button
+                            class="edit-btn"
+                            onclick='editReceipt(
+                                ${JSON.stringify(
+                                    payment
+                                )}
+                            )'>
+
+                            ✏️ ویرایش
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="
+                                deleteReceipt(
+                                    ${payment.Id}
+                                )
+                            ">
+
+                            🗑️ حذف
+
+                        </button>
+
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   پر کردن بل‌ها برای رسید
+========================================================= */
+
+function populateReceiptBills(
+    bills
+) {
+
+    const select =
+        document.getElementById(
+            "receiptBillId"
+        );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            انتخاب بل
+        </option>
+
+    `;
+
+
+    bills.forEach(
+        bill => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                bill.Id;
+
+
+            option.textContent =
+                `بل ${formatNumber(
+                    bill.BillNumber
+                )} - بیلانس ${formatMoney(
+                    bill.BalanceAmount
+                )}`;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ثبت / ویرایش رسید
+========================================================= */
+
+async function saveReceipt() {
+
+    if (
+        !currentCustomerId
+    ) {
+
+        showStatus(
+            "❌ مشتری انتخاب نشده است",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const billId =
+        Number(
+            document.getElementById(
+                "receiptBillId"
+            ).value
+        );
+
+
+    const amount =
+        Number(
+            document.getElementById(
+                "receiptAmount"
+            ).value
+        );
+
+
+    const paymentDate =
+        document.getElementById(
+            "receiptDate"
+        ).value;
+
+
+    const description =
+        document.getElementById(
+            "receiptDescription"
+        ).value
+            .trim();
+
+
+    if (
+        !billId
+    ) {
+
+        showStatus(
+            "❌ لطفاً بل را انتخاب کنید",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !amount
+        ||
+        amount <= 0
+    ) {
+
+        showStatus(
+            "❌ مبلغ رسید باید بیشتر از صفر باشد",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !paymentDate
+    ) {
+
+        showStatus(
+            "❌ تاریخ رسید را انتخاب کنید",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        let url =
+            `${API_URL}/${currentCustomerId}/payments`;
+
+
+        let method =
+            "POST";
+
+
+        if (
+            editingPaymentId !== null
+        ) {
+
+            url =
+                `${API_URL}/${currentCustomerId}/payments/${editingPaymentId}`;
+
+            method =
+                "PUT";
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+
+                    method:
+                        method,
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            BillId:
+                                billId,
+
+                            Amount:
+                                amount,
+
+                            PaymentDate:
+                                paymentDate,
+
+                            Description:
+                                description
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                result.error
+                ||
+                "خطا در ذخیره رسید"
+            );
+
+        }
+
+
+        showStatus(
+
+            editingPaymentId !== null
+                ?
+                "✅ رسید با موفقیت ویرایش شد"
+                :
+                "✅ رسید با موفقیت ثبت شد",
+
+            "success"
+
+        );
+
+
+        cancelReceiptEdit(
+            false
+        );
+
+
+        await refreshCustomerAccount();
+
+
+        showAccountTab(
+
+            "receiptsTab",
+
+            document.querySelectorAll(
+                ".nav-tab"
+            )[2]
+
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "❌ " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ویرایش رسید
+========================================================= */
+
+function editReceipt(
+    payment
+) {
+
+    editingPaymentId =
+        Number(
+            payment.Id
+        );
+
+
+    const select =
+        document.getElementById(
+            "receiptBillId"
+        );
+
+
+    select.value =
+        String(
+            payment.BillId
+        );
+
+
+    document.getElementById(
+        "receiptAmount"
+    ).value =
+        Number(
+            payment.Amount || 0
+        );
+
+
+    document.getElementById(
+        "receiptDate"
+    ).value =
+        payment.PaymentDate
+            ?
+            String(
+                payment.PaymentDate
+            ).substring(
+                0,
+                10
+            )
+            :
+            "";
+
+
+    document.getElementById(
+        "receiptDescription"
+    ).value =
+        payment.Description
+        ||
+        "";
+
+
+    document.getElementById(
+        "receiptSaveBtn"
+    ).textContent =
+        "💾 ذخیره ویرایش";
+
+
+    document.getElementById(
+        "receiptCancelBtn"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "editingNote"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "receiptFormTitle"
+    ).textContent =
+        "✏️ ویرایش رسید مشتری";
+
+
+    showAccountTab(
+
+        "receiptsTab",
+
+        document.querySelectorAll(
+            ".nav-tab"
+        )[2]
+
+    );
+
+
+    document.getElementById(
+        "receiptAmount"
+    ).focus();
+
+}
+
+
+/* =========================================================
+   لغو ویرایش رسید
+========================================================= */
+
+function cancelReceiptEdit(
+    showMessage = true
+) {
+
+    editingPaymentId =
+        null;
+
+
+    document.getElementById(
+        "receiptBillId"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "receiptAmount"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "receiptDescription"
+    ).value =
+        "";
+
+
+    setReceiptToday();
+
+
+    document.getElementById(
+        "receiptSaveBtn"
+    ).textContent =
+        "💾 ثبت رسید";
+
+
+    document.getElementById(
+        "receiptCancelBtn"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "editingNote"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "receiptFormTitle"
+    ).textContent =
+        "➕ ثبت رسید مشتری";
+
+
+    if (
+        showMessage
+    ) {
+
+        showStatus(
+            "ویرایش لغو شد.",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   حذف رسید
+========================================================= */
+
+async function deleteReceipt(
+    paymentId
+) {
+
+    const answer =
+        confirm(
+            "آیا مطمئن هستید که می‌خواهید این رسید حذف شود؟"
+        );
+
+
+    if (!answer) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${currentCustomerId}/payments/${paymentId}`,
+                {
+                    method:
+                        "DELETE"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                result.error
+                ||
+                "خطا در حذف رسید"
+            );
+
+        }
+
+
+        showStatus(
+            "✅ رسید با موفقیت حذف شد",
+            "success"
+        );
+
+
+        await refreshCustomerAccount();
+
+
+        showAccountTab(
+
+            "receiptsTab",
+
+            document.querySelectorAll(
+                ".nav-tab"
+            )[2]
+
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "❌ " +
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   بروزرسانی حساب مشتری
+========================================================= */
+
+async function refreshCustomerAccount() {
+
+    if (
+        !currentCustomerId
+    ) {
+
+        return;
+
+    }
+
+
+    await openCustomerAccount(
+        currentCustomerId
+    );
+
+}
+
+
+/* =========================================================
+   باز کردن جزئیات بل
+========================================================= */
+
+function openBill(
+    billId
+) {
+
+    window.open(
+        `/bill-details.html?id=${billId}`,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   بازگشت به مشتریان
+========================================================= */
+
+function closeAccount() {
+
+    currentCustomerId =
+        null;
+
+
+    currentCustomerBills =
+        [];
+
+
+    currentCustomerPayments =
+        [];
+
+
+    cancelReceiptEdit(
+        false
+    );
+
+
+    document.getElementById(
+        "accountSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "customersSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "customerRegisterCard"
+    ).style.display =
+        "block";
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   تاریخ امروز رسید
+========================================================= */
+
+function setReceiptToday() {
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "receiptDate"
+    ).value =
+        `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   شروع
+========================================================= */
+
+setReceiptToday();
+
+loadCustomers();
+
+</script>
+
+</body>
+
+</html>

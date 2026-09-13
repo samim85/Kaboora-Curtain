@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>جزئیات بل - نمایشگاه پرده کابورا</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f3f5;
+            font-family: Tahoma, Arial, sans-serif;
+            color: #222;
+        }
+
+        .page {
+            width: 95%;
+            max-width: 1100px;
+            margin: 25px auto;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toolbar button {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            background: #6b7280;
+            color: white;
+        }
+
+        .print-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .bill {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, .08);
+        }
+
+        .bill-header {
+            text-align: center;
+            border-bottom: 2px solid #1f2937;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .bill-header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: #1f2937;
+        }
+
+        .bill-header p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .bill-number-box {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 9px 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 14px;
+            background: #fafafa;
+        }
+
+        .info-box small {
+            display: block;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .info-box strong {
+            font-size: 15px;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section-title {
+            background: #1f2937;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px 8px 0 0;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dfe3e8;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #f3f4f6;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .empty {
+            padding: 25px;
+            color: #6b7280;
+        }
+
+        .amount {
+            font-weight: bold;
+        }
+
+        .total-row {
+            background: #eef5ff !important;
+            font-weight: bold;
+        }
+
+        /* =========================
+           خلاصه بل - فقط 3 بخش
+        ========================= */
+
+        .summary {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .summary-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .summary-box .title {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .summary-box .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .total-value {
+            color: #2563eb;
+        }
+
+        .receipt-value {
+            color: #059669;
+        }
+
+        .balance-value {
+            color: #dc2626;
+        }
+
+        .paid {
+            color: #059669 !important;
+        }
+
+        .unpaid {
+            color: #dc2626 !important;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 15px;
+            font-size: 18px;
+        }
+
+        .error {
+            text-align: center;
+            padding: 30px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 850px) {
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .page {
+                width: 97%;
+                margin: 10px auto;
+            }
+
+            .bill {
+                padding: 15px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toolbar button {
+                width: 100%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .bill-header h1 {
+                font-size: 23px;
+            }
+
+        }
+
+       @media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 8mm;
+    }
+
+    html,
+    body {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    body {
+        font-family: Tahoma, Arial, sans-serif;
+        font-size: 10px;
+    }
+
+    .page {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .toolbar {
+        display: none !important;
+    }
+
+    .bill {
+        width: 100%;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        background: white;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .bill-header {
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+    }
+
+    .bill-header h1 {
+        font-size: 23px;
+        margin-bottom: 5px;
+    }
+
+    .bill-header p {
+        font-size: 12px;
+    }
+
+    .bill-number-box {
+        margin-top: 8px;
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+
+    .info-grid {
+        gap: 7px;
+        margin-bottom: 10px;
+    }
+
+    .info-box {
+        padding: 7px;
+        border-radius: 5px;
+    }
+
+    .info-box small {
+        margin-bottom: 4px;
+        font-size: 9px;
+    }
+
+    .info-box strong {
+        font-size: 10px;
+    }
+
+    .section {
+        margin-top: 10px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .section-title {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    table {
+        width: 100%;
+        min-width: 0;
+        font-size: 8px;
+        page-break-inside: avoid;
+    }
+
+    th,
+    td {
+        padding: 4px 3px;
+        line-height: 1.2;
+    }
+
+    .empty {
+        padding: 10px;
+    }
+
+    .summary {
+        margin-top: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
+        page-break-inside: avoid;
+    }
+
+    .summary-box {
+        padding: 9px;
+    }
+
+    .summary-box .title {
+        font-size: 9px;
+        margin-bottom: 4px;
+    }
+
+    .summary-box .value {
+        font-size: 13px;
+    }
+
+    .footer {
+        margin-top: 12px;
+        padding-top: 8px;
+        font-size: 9px;
+    }
+
+}
+/* =========================================================
+   KABOORA CURTAIN
+   Responsive Design - Mobile / Tablet / Desktop
+   فقط تغییر ظاهری و اندازه‌ها
+========================================================= */
+
+/* صفحه‌های بزرگ */
+@media (min-width: 1400px) {
+
+    .page {
+        max-width: 1200px;
+    }
+
+    .bill {
+        padding: 35px;
+    }
+
+    .bill-header h1 {
+        font-size: 32px;
+    }
+
+}
+
+
+/* لپتاپ و تبلت بزرگ */
+@media (max-width: 1100px) {
+
+    .page {
+        width: 94%;
+    }
+
+    .bill {
+        padding: 25px;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* تبلت */
+@media (max-width: 850px) {
+
+    .page {
+        width: 94%;
+        margin: 18px auto;
+    }
+
+    .bill {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .bill-header h1 {
+        font-size: 26px;
+    }
+
+    .bill-header p {
+        font-size: 14px;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .info-box {
+        padding: 12px;
+    }
+
+    .section {
+        margin-top: 20px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        padding: 11px 13px;
+    }
+
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .toolbar button {
+        padding: 10px 15px;
+    }
+
+}
+
+
+/* موبایل */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .page {
+        width: 96%;
+        margin: 10px auto;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .toolbar button {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .bill {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .bill-header {
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .bill-header h1 {
+        font-size: 21px;
+        line-height: 1.6;
+    }
+
+    .bill-header p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .bill-number-box {
+        margin-top: 10px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .info-box {
+        padding: 11px;
+        border-radius: 8px;
+    }
+
+    .info-box small {
+        font-size: 11px;
+    }
+
+    .info-box strong {
+        font-size: 13px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+    }
+
+    .section {
+        margin-top: 18px;
+    }
+
+    .section-title {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 700px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+        white-space: nowrap;
+    }
+
+    .empty {
+        padding: 20px 10px;
+        white-space: normal;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .summary-box {
+        padding: 14px;
+    }
+
+    .summary-box .title {
+        font-size: 12px;
+    }
+
+    .summary-box .value {
+        font-size: 18px;
+    }
+
+    .footer {
+        margin-top: 20px;
+        font-size: 11px;
+        line-height: 1.8;
+    }
+
+}
+
+
+/* موبایل خیلی کوچک */
+@media (max-width: 360px) {
+
+    .page {
+        width: 98%;
+    }
+
+    .bill {
+        padding: 9px;
+    }
+
+    .bill-header h1 {
+        font-size: 19px;
+    }
+
+    .bill-header p {
+        font-size: 11px;
+    }
+
+    .section-title {
+        font-size: 13px;
+    }
+
+    table {
+        min-width: 650px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 7px 5px;
+    }
+
+    .summary-box .value {
+        font-size: 16px;
+    }
+
+}
+
+
+/* جلوگیری از بیرون‌زدگی متن */
+.info-box,
+.summary-box,
+.footer {
+    overflow-wrap: anywhere;
+}
+
+
+/* لمس بهتر دکمه‌ها در موبایل */
+button {
+    touch-action: manipulation;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- =========================
+         دکمه‌ها
+    ========================= -->
+
+    <div class="toolbar">
+
+        <button
+            class="back-btn"
+            onclick="window.close()">
+
+            ← بستن
+
+        </button>
+
+        <button
+            class="print-btn"
+            onclick="window.print()">
+
+            🖨️ چاپ بل
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         لودینگ
+    ========================= -->
+
+    <div
+        id="loading"
+        class="loading">
+
+        ⏳ در حال دریافت اطلاعات بل...
+
+    </div>
+
+
+    <!-- =========================
+         خطا
+    ========================= -->
+
+    <div
+        id="errorBox"
+        class="error"
+        style="display:none;">
+
+    </div>
+
+
+    <!-- =========================
+         بل
+    ========================= -->
+
+    <div
+        id="billContainer"
+        class="bill"
+        style="display:none;">
+
+
+        <!-- =========================
+             سر بل
+        ========================= -->
+
+        <div class="bill-header">
+
+            <h1>
+                نمایشگاه پرده کابورا
+            </h1>
+
+            <p>
+                بزرگترین نمایشگاه پرده کابورا
+            </p>
+
+            <div
+                id="billNumber"
+                class="bill-number-box">
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             اطلاعات مشتری
+        ========================= -->
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <small>
+                    نام مشتری
+                </small>
+
+                <strong id="customerName">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>
+                    شماره تماس
+                </small>
+
+                <strong id="customerPhone">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>
+                    تاریخ بل
+                </small>
+
+                <strong id="billDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <small>
+                    تاریخ تحویل
+                </small>
+
+                <strong id="deliveryDate">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             آدرس مشتری
+        ========================= -->
+
+        <div class="info-box">
+
+            <small>
+                آدرس مشتری
+            </small>
+
+            <strong id="customerAddress">
+                -
+            </strong>
+
+        </div>
+
+
+        <!-- =========================
+             تشک و بالشت
+        ========================= -->
+
+        <div
+            class="section"
+            id="mattressSection">
+
+            <div class="section-title">
+
+                🛏️ تشک و بالشت
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ردیف</th>
+
+                        <th>نوع دوخت</th>
+
+                        <th>تشک</th>
+
+                        <th>بالشت</th>
+
+                        <th>بالشت کوچک</th>
+
+                        <th>بالشت رول</th>
+
+                        <th>متراژ پارچه</th>
+
+                        <th>قیمت پارچه</th>
+
+                        <th>دستمزد</th>
+
+                        <th>مبلغ</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="mattressBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             پرده و جالی
+        ========================= -->
+
+        <div
+            class="section"
+            id="curtainSection">
+
+            <div class="section-title">
+
+                🪟 پرده و جالی
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ردیف</th>
+
+                        <th>نوع دوخت</th>
+
+                        <th>متراژ جالی</th>
+
+                        <th>قیمت جالی</th>
+
+                        <th>متراژ پارچه</th>
+
+                        <th>قیمت پارچه</th>
+
+                        <th>دستمزد</th>
+
+                        <th>مبلغ</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="curtainBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             رسیدها
+        ========================= -->
+
+        <div
+            class="section"
+            id="paymentsSection">
+
+            <div class="section-title">
+
+                💵 رسیدهای پرداختی
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ردیف</th>
+
+                        <th>تاریخ</th>
+
+                        <th>مبلغ</th>
+
+                        <th>توضیحات</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="paymentsBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             خلاصه بل
+             فقط مجموع، رسید و باقی‌مانده
+        ========================= -->
+
+        <div class="summary">
+
+
+            <!-- مجموع بل -->
+
+            <div class="summary-box">
+
+                <div class="title">
+
+                    مجموع بل
+
+                </div>
+
+                <div
+                    class="value total-value"
+                    id="totalAmount">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+
+            <!-- مجموع رسید -->
+
+            <div class="summary-box">
+
+                <div class="title">
+
+                    مجموع رسید
+
+                </div>
+
+                <div
+                    class="value receipt-value"
+                    id="receiptAmount">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+
+            <!-- باقی مانده -->
+
+            <div class="summary-box">
+
+                <div class="title">
+
+                    باقی‌مانده
+
+                </div>
+
+                <div
+                    class="value balance-value"
+                    id="balanceAmount">
+
+                    0 افغانی
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             پاورقی
+        ========================= -->
+
+        <div class="footer">
+
+            با تشکر از انتخاب شما
+
+            <br>
+
+            نمایشگاه پرده کابورا
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   دریافت شناسه بل از URL
+========================================================= */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const billId =
+    Number(
+        urlParams.get("id")
+    );
+
+
+/* =========================================================
+   فرمت پول
+========================================================= */
+
+function formatMoney(value) {
+
+    return Number(
+        value || 0
+    ).toLocaleString("fa-AF")
+    + " افغانی";
+
+}
+
+
+/* =========================================================
+   فرمت عدد
+========================================================= */
+
+function formatNumber(value) {
+
+    return Number(
+        value || 0
+    ).toLocaleString("fa-AF");
+
+}
+
+
+/* =========================================================
+   فرمت تاریخ
+========================================================= */
+
+function formatDate(value) {
+
+    if (!value) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "fa-AF"
+    );
+
+}
+
+
+/* =========================================================
+   جلوگیری از HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   نوع دوخت تشک
+========================================================= */
+
+function getMattressTypes(item) {
+
+    const types = [];
+
+
+    if (item.Simple) {
+
+        types.push("ساده");
+
+    }
+
+
+    if (item.SajafDar) {
+
+        types.push("سجاف‌دار");
+
+    }
+
+
+    if (item.Boxi) {
+
+        types.push("باکسی");
+
+    }
+
+
+    if (item.DesignDar) {
+
+        types.push("دیزاین‌دار");
+
+    }
+
+
+    if (item.ZirPoosh) {
+
+        types.push("زیرپوش");
+
+    }
+
+
+    return types.length
+        ? types.join("، ")
+        : "-";
+
+}
+
+
+/* =========================================================
+   نوع دوخت پرده
+========================================================= */
+
+function getCurtainTypes(item) {
+
+    const types = [];
+
+
+    if (item.Ringdar) {
+
+        types.push("رینگدار");
+
+    }
+
+
+    if (item.Plyti) {
+
+        types.push("پلیتی");
+
+    }
+
+
+    if (item.SePlyte) {
+
+        types.push("سه پلیته");
+
+    }
+
+
+    if (item.Minimal) {
+
+        types.push("مینیمال");
+
+    }
+
+
+    if (item.Iranian) {
+
+        types.push("دوخت ایرانی");
+
+    }
+
+
+    if (item.PoshtPardeyi) {
+
+        types.push("پشت پرده‌ای");
+
+    }
+
+
+    return types.length
+        ? types.join("، ")
+        : "-";
+
+}
+
+
+/* =========================================================
+   نمایش تشک
+========================================================= */
+
+function renderMattressItems(items) {
+
+    const tbody =
+        document.getElementById(
+            "mattressBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (
+        !Array.isArray(items)
+        ||
+        items.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="10"
+                    class="empty">
+
+                    برای این بل تشک یا بالشتی ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    items.forEach(
+        (item, index) => {
+
+
+            /*
+             * مبلغ مشتری:
+             *
+             * متراژ پارچه × قیمت پارچه
+             * +
+             * دستمزد مشتری
+             *
+             * توجه:
+             * دستمزد خیاط داخلی در این صفحه
+             * نمایش داده نمی‌شود.
+             */
+
+            const fabricMeters =
+                Number(
+                    item.FabricMeters || 0
+                );
+
+
+            const fabricPrice =
+                Number(
+                    item.FabricPrice || 0
+                );
+
+
+            const sewingPrice =
+                Number(
+                    item.SewingPrice || 0
+                );
+
+
+            const amount =
+                (
+                    fabricMeters *
+                    fabricPrice
+                )
+                +
+                sewingPrice;
+
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${formatNumber(
+                        index + 1
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        getMattressTypes(item)
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        item.MattressCount
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        item.PillowCount
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        item.SmallPillowCount
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        item.RollPillowCount
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        fabricMeters
+                    )}
+                    متر
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        fabricPrice
+                    )}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        sewingPrice
+                    )}
+                </td>
+
+                <td class="amount">
+
+                    ${formatMoney(
+                        amount
+                    )}
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   نمایش پرده
+========================================================= */
+
+function renderCurtainItems(items) {
+
+    const tbody =
+        document.getElementById(
+            "curtainBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (
+        !Array.isArray(items)
+        ||
+        items.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    برای این بل پرده‌ای ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    items.forEach(
+        (item, index) => {
+
+
+            const jaliMeters =
+                Number(
+                    item.JaliMeters || 0
+                );
+
+
+            const jaliPrice =
+                Number(
+                    item.JaliPrice || 0
+                );
+
+
+            const fabricMeters =
+                Number(
+                    item.FabricMeters || 0
+                );
+
+
+            const fabricPrice =
+                Number(
+                    item.FabricPrice || 0
+                );
+
+
+            const sewingPrice =
+                Number(
+                    item.SewingPrice || 0
+                );
+
+
+            /*
+             * مبلغ مشتری
+             *
+             * جالی:
+             * متراژ × قیمت جالی
+             *
+             * دستمزد جالی:
+             * متراژ × دستمزد
+             *
+             * پارچه:
+             * متراژ × قیمت پارچه
+             *
+             * دستمزد پارچه:
+             * متراژ × دستمزد
+             */
+
+            const jaliTotal =
+                jaliMeters *
+                jaliPrice;
+
+
+            const jaliSewing =
+                jaliMeters *
+                sewingPrice;
+
+
+            const fabricTotal =
+                fabricMeters *
+                fabricPrice;
+
+
+            const fabricSewing =
+                fabricMeters *
+                sewingPrice;
+
+
+            const amount =
+                jaliTotal
+                +
+                jaliSewing
+                +
+                fabricTotal
+                +
+                fabricSewing;
+
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${formatNumber(
+                        index + 1
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        getCurtainTypes(item)
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        jaliMeters
+                    )}
+                    متر
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        jaliPrice
+                    )}
+                </td>
+
+                <td>
+                    ${formatNumber(
+                        fabricMeters
+                    )}
+                    متر
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        fabricPrice
+                    )}
+                </td>
+
+                <td>
+                    ${formatMoney(
+                        sewingPrice
+                    )}
+                </td>
+
+                <td class="amount">
+
+                    ${formatMoney(
+                        amount
+                    )}
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   نمایش رسیدها
+========================================================= */
+
+function renderPayments(payments) {
+
+    const tbody =
+        document.getElementById(
+            "paymentsBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (
+        !Array.isArray(payments)
+        ||
+        payments.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="empty">
+
+                    هنوز رسیدی برای این بل ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    payments.forEach(
+        (payment, index) => {
+
+
+            const tr =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${formatNumber(
+                        index + 1
+                    )}
+                </td>
+
+                <td>
+                    ${formatDate(
+                        payment.PaymentDate
+                    )}
+                </td>
+
+                <td class="amount paid">
+
+                    ${formatMoney(
+                        payment.Amount
+                    )}
+
+                </td>
+
+                <td>
+
+                    ${escapeHtml(
+                        payment.Description
+                        ||
+                        "-"
+                    )}
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                tr
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   دریافت جزئیات بل
+========================================================= */
+
+async function loadBillDetails() {
+
+    if (
+        !billId
+        ||
+        billId <= 0
+    ) {
+
+        throw new Error(
+            "شناسه بل در آدرس پیدا نشد."
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            `/api/bills/${billId}`
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error
+            ||
+            "خطا در دریافت جزئیات بل"
+        );
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =========================================================
+   نمایش بل
+========================================================= */
+
+function renderBill(data) {
+
+    const bill =
+        data.bill;
+
+
+    const mattressItems =
+        data.mattressItems
+        ||
+        [];
+
+
+    const curtainItems =
+        data.curtainItems
+        ||
+        [];
+
+
+    const payments =
+        data.payments
+        ||
+        [];
+
+
+    /* =========================
+       اطلاعات اصلی
+    ========================= */
+
+    document.getElementById(
+        "billNumber"
+    ).textContent =
+        "بل شماره " +
+        formatNumber(
+            bill.BillNumber
+        );
+
+
+    document.getElementById(
+        "customerName"
+    ).textContent =
+        bill.CustomerName
+        ||
+        "-";
+
+
+    document.getElementById(
+        "customerPhone"
+    ).textContent =
+        bill.Phone
+        ||
+        "-";
+
+
+    document.getElementById(
+        "customerAddress"
+    ).textContent =
+        bill.Address
+        ||
+        "-";
+
+
+    document.getElementById(
+        "billDate"
+    ).textContent =
+        formatDate(
+            bill.BillDate
+        );
+
+
+    document.getElementById(
+        "deliveryDate"
+    ).textContent =
+        formatDate(
+            bill.DeliveryDate
+        );
+
+
+    /* =========================
+       جدول‌ها
+    ========================= */
+
+    renderMattressItems(
+        mattressItems
+    );
+
+
+    renderCurtainItems(
+        curtainItems
+    );
+
+
+    renderPayments(
+        payments
+    );
+
+
+    /* =========================
+       خلاصه بل
+    ========================= */
+
+    const totalAmount =
+        Number(
+            bill.TotalAmount || 0
+        );
+
+
+    const receiptAmount =
+        Number(
+            bill.ReceiptAmount || 0
+        );
+
+
+    const balanceAmount =
+        Number(
+            bill.BalanceAmount || 0
+        );
+
+
+    /* مجموع بل */
+
+    document.getElementById(
+        "totalAmount"
+    ).textContent =
+        formatMoney(
+            totalAmount
+        );
+
+
+    /* مجموع رسید */
+
+    document.getElementById(
+        "receiptAmount"
+    ).textContent =
+        formatMoney(
+            receiptAmount
+        );
+
+
+    /* باقی‌مانده */
+
+    const balanceElement =
+        document.getElementById(
+            "balanceAmount"
+        );
+
+
+    balanceElement.textContent =
+        formatMoney(
+            balanceAmount
+        );
+
+
+    if (
+        balanceAmount <= 0
+    ) {
+
+        balanceElement.classList.add(
+            "paid"
+        );
+
+        balanceElement.classList.remove(
+            "unpaid"
+        );
+
+    } else {
+
+        balanceElement.classList.add(
+            "unpaid"
+        );
+
+        balanceElement.classList.remove(
+            "paid"
+        );
+
+    }
+
+
+    /* =========================
+       نمایش نهایی
+    ========================= */
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "billContainer"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   شروع
+========================================================= */
+
+(async function() {
+
+    try {
+
+        const data =
+            await loadBillDetails();
+
+
+        renderBill(
+            data
+        );
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+        const errorBox =
+            document.getElementById(
+                "errorBox"
+            );
+
+
+        errorBox.textContent =
+            "❌ " +
+            error.message;
+
+
+        errorBox.style.display =
+            "block";
+
+    }
+
+})();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,3292 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        حساب خیاط - نمایشگاه پرده کابورا
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            background: #f4f6f9;
+
+            color: #222;
+
+        }
+
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1450px;
+
+            margin: 25px auto;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1f2937,
+                    #374151
+                );
+
+            color: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .header h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size: 28px;
+
+        }
+
+
+        .header p {
+
+            margin: 0;
+
+            opacity: .9;
+
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .btn {
+
+            border: none;
+
+            padding:
+                11px 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            text-decoration: none;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+        }
+
+
+        .btn-blue {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        .btn-green {
+
+            background: #16a34a;
+
+            color: white;
+
+        }
+
+
+        .btn-orange {
+
+            background: #f59e0b;
+
+            color: white;
+
+        }
+
+
+        .btn-gray {
+
+            background: #6b7280;
+
+            color: white;
+
+        }
+
+
+        .btn-red {
+
+            background: #dc2626;
+
+            color: white;
+
+            padding:
+                7px 12px;
+
+        }
+
+
+        .btn:hover {
+
+            opacity: .9;
+
+        }
+
+
+        /* =========================
+           پیام
+        ========================= */
+
+        .message {
+
+            display: none;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+
+            font-weight: bold;
+
+        }
+
+
+        .success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+        }
+
+
+        .error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+        }
+
+
+        /* =========================
+           انتخاب ماه
+        ========================= */
+
+        .month-box {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, .08);
+
+        }
+
+
+        .month-box h2 {
+
+            margin-top: 0;
+
+            padding-bottom: 12px;
+
+            border-bottom:
+                2px solid #eee;
+
+        }
+
+
+        .month-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(220px, 1fr)
+                auto
+                auto;
+
+            gap: 12px;
+
+            align-items: end;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #444;
+
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 11px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+        }
+
+
+        .month-button {
+
+            height: 43px;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* =========================
+           خلاصه حساب
+        ========================= */
+
+        .summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, .08);
+
+        }
+
+
+        .card h3 {
+
+            margin:
+                0 0 12px;
+
+            font-size: 16px;
+
+            color: #555;
+
+        }
+
+
+        .amount {
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            direction: rtl;
+
+        }
+
+
+        .total {
+
+            color: #2563eb;
+
+        }
+
+
+        .paid {
+
+            color: #16a34a;
+
+        }
+
+
+        .remaining {
+
+            color: #dc2626;
+
+        }
+
+
+        .remaining.zero {
+
+            color: #16a34a;
+
+        }
+
+
+        /* =========================
+           فرم پرداخت
+        ========================= */
+
+        .payment-box {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, .08);
+
+        }
+
+
+        .payment-box h2 {
+
+            margin-top: 0;
+
+            padding-bottom: 12px;
+
+            border-bottom:
+                2px solid #eee;
+
+        }
+
+
+        .editing-title {
+
+            display: none;
+
+            color: #2563eb;
+
+            font-size: 15px;
+
+            margin-bottom: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .payment-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr
+                2fr
+                auto
+                auto;
+
+            gap: 12px;
+
+            align-items: end;
+
+        }
+
+
+        .save-payment,
+        .cancel-edit {
+
+            border: none;
+
+            padding:
+                11px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            height: 43px;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            white-space: nowrap;
+
+        }
+
+
+        .save-payment {
+
+            background: #16a34a;
+
+            color: white;
+
+        }
+
+
+        .cancel-edit {
+
+            background: #6b7280;
+
+            color: white;
+
+            display: none;
+
+        }
+
+
+        /* =========================
+           Navigation
+        ========================= */
+
+        .details-nav {
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 10px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, .08);
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+        }
+
+
+        .nav-tab {
+
+            border: none;
+
+            background: #f3f4f6;
+
+            color: #374151;
+
+            padding: 14px 12px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            transition: .2s;
+
+        }
+
+
+        .nav-tab:hover {
+
+            background: #e5e7eb;
+
+        }
+
+
+        .nav-tab.active {
+
+            background: #1f2937;
+
+            color: white;
+
+        }
+
+
+        /* =========================
+           بخش جدول
+        ========================= */
+
+        .section {
+
+            display: none;
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, .08);
+
+        }
+
+
+        .section.active {
+
+            display: block;
+
+        }
+
+
+        .section h2 {
+
+            margin-top: 0;
+
+            padding-bottom: 12px;
+
+            border-bottom:
+                2px solid #eee;
+
+        }
+
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+
+        }
+
+
+        th,
+        td {
+
+            border:
+                1px solid #ddd;
+
+            padding:
+                10px 8px;
+
+            text-align: center;
+
+            white-space: nowrap;
+
+        }
+
+
+        th {
+
+            background: #1f2937;
+
+            color: white;
+
+        }
+
+
+        tr:nth-child(even) {
+
+            background: #f9fafb;
+
+        }
+
+
+        .amount-cell {
+
+            font-weight: bold;
+
+            color: #15803d;
+
+        }
+
+
+        .type-badge {
+
+            display: inline-block;
+
+            padding:
+                5px 13px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            color: #3730a3;
+
+            font-weight: bold;
+
+        }
+
+
+        .empty {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777;
+
+        }
+
+
+        .loading {
+
+            text-align: center;
+
+            padding: 25px;
+
+        }
+
+
+        .action-buttons {
+
+            display: flex;
+
+            gap: 6px;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        /* =========================
+           موبایل
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .payment-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .month-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .summary {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .payment-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .month-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .details-nav {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .container {
+
+                width: 97%;
+
+            }
+
+        }
+
+
+        /* =========================
+           چاپ
+        ========================= */
+
+        @media print {
+
+            body {
+
+                background: white;
+
+            }
+
+
+            .buttons,
+            .month-box,
+            .payment-box,
+            .details-nav {
+
+                display: none !important;
+
+            }
+
+
+            .container {
+
+                width: 100%;
+
+                max-width: none;
+
+            }
+
+
+            .card,
+            .section {
+
+                box-shadow: none;
+
+            }
+
+
+            .section {
+
+                display: block !important;
+
+            }
+
+        }
+        /* =========================================================
+   KABOORA CURTAIN
+   RESPONSIVE DESIGN - TAILOR
+   فقط تنظیم اندازه برای کامپیوتر، تبلت و موبایل
+========================================================= */
+
+/* کامپیوترهای بزرگ */
+@media (min-width: 1400px) {
+
+    .container {
+        max-width: 1450px;
+    }
+
+    .header {
+        padding: 28px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+}
+
+
+/* لپتاپ */
+@media (max-width: 1200px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .payment-grid {
+        grid-template-columns:
+            1fr 1fr 2fr auto auto;
+    }
+
+    .month-grid {
+        grid-template-columns:
+            1fr auto auto;
+    }
+
+    .summary {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+/* تبلت */
+@media (max-width: 900px) {
+
+    .container {
+        width: 94%;
+        margin: 18px auto;
+    }
+
+    .header {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .month-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .month-grid .form-group {
+        grid-column: 1 / -1;
+    }
+
+    .month-button {
+        width: 100%;
+    }
+
+    .summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .payment-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .payment-grid .form-group:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+
+    .save-payment,
+    .cancel-edit {
+        width: 100%;
+    }
+
+    .details-nav {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .section {
+        padding: 16px;
+    }
+
+}
+
+
+/* موبایل */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 96%;
+        margin: 10px auto;
+    }
+
+    .header {
+        padding: 17px 12px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .header p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* دکمه‌های بالای صفحه */
+    .buttons {
+        display: grid;
+        grid-template-columns:
+            1fr 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .buttons .btn {
+        width: 100%;
+        text-align: center;
+        padding: 11px 7px;
+        font-size: 13px;
+    }
+
+    /* پیام */
+    .message {
+        font-size: 13px;
+        padding: 11px;
+    }
+
+    /* انتخاب ماه */
+    .month-box {
+        padding: 14px;
+        border-radius: 11px;
+        margin-bottom: 12px;
+    }
+
+    .month-box h2 {
+        font-size: 17px;
+        line-height: 1.6;
+    }
+
+    .month-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .month-grid .form-group {
+        grid-column: auto;
+    }
+
+    .month-button {
+        width: 100%;
+        height: 43px;
+    }
+
+    /* خلاصه حساب */
+    .summary {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-bottom: 15px;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+    .card h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .amount {
+        font-size: 20px;
+    }
+
+    /* فرم پرداخت */
+    .payment-box {
+        padding: 13px;
+        border-radius: 11px;
+        margin-bottom: 14px;
+    }
+
+    .payment-box h2 {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .editing-title {
+        font-size: 13px;
+    }
+
+    .payment-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .payment-grid .form-group:nth-child(3) {
+        grid-column: auto;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input {
+        padding: 11px;
+        font-size: 14px;
+    }
+
+    .save-payment,
+    .cancel-edit {
+        width: 100%;
+        height: 43px;
+        font-size: 14px;
+    }
+
+    /* تب‌ها */
+    .details-nav {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 8px;
+        margin-bottom: 12px;
+    }
+
+    .nav-tab {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    /* بخش جدول */
+    .section {
+        padding: 13px;
+        border-radius: 11px;
+        margin-bottom: 15px;
+    }
+
+    .section h2 {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    /* جدول قابل اسکرول */
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 850px;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 8px 6px;
+    }
+
+    .type-badge {
+        padding: 4px 9px;
+        font-size: 11px;
+    }
+
+    .action-buttons {
+        flex-wrap: nowrap;
+        gap: 5px;
+    }
+
+    .action-buttons .btn,
+    .action-buttons .btn-red {
+        padding: 7px 9px !important;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+}
+
+
+/* موبایل خیلی کوچک */
+@media (max-width: 360px) {
+
+    .container {
+        width: 98%;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 13px;
+    }
+
+    .amount {
+        font-size: 18px;
+    }
+
+    .month-box h2,
+    .payment-box h2,
+    .section h2 {
+        font-size: 16px;
+    }
+
+    .nav-tab {
+        font-size: 13px;
+    }
+
+    table {
+        min-width: 820px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 7px 5px;
+    }
+
+}
+
+
+/* جلوگیری از بیرون‌زدگی متن */
+.header,
+.month-box,
+.card,
+.payment-box,
+.section,
+.message {
+    overflow-wrap: anywhere;
+}
+
+
+/* لمس بهتر دکمه‌ها */
+button,
+a {
+    touch-action: manipulation;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =========================
+         عنوان
+    ========================= -->
+
+    <div class="header">
+
+        <h1>
+            🧵 حساب خیاط
+        </h1>
+
+        <p>
+            نمایشگاه پرده کابورا
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         دکمه‌ها
+    ========================= -->
+
+    <div class="buttons">
+
+        <a
+            href="index.html"
+            class="btn btn-blue">
+
+            🏠 صفحه اصلی
+
+        </a>
+
+
+        <a
+            href="bills.html"
+            class="btn btn-blue">
+
+            🧾 ثبت بل
+
+        </a>
+
+
+        <button
+            class="btn btn-orange"
+            onclick="loadAll()">
+
+            🔄 بروزرسانی
+
+        </button>
+
+
+        <button
+            class="btn btn-green"
+            onclick="window.print()">
+
+            🖨️ چاپ حساب
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         پیام
+    ========================= -->
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <!-- =========================
+         انتخاب ماه
+    ========================= -->
+
+    <div class="month-box">
+
+        <h2>
+            📅 انتخاب ماه حساب
+        </h2>
+
+
+        <div class="month-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    ماه حساب
+                </label>
+
+                <input
+                    type="month"
+                    id="accountMonth">
+
+            </div>
+
+
+            <button
+                class="btn btn-blue month-button"
+                onclick="loadAll()">
+
+                🔍 نمایش ماه
+
+            </button>
+
+
+            <button
+                class="btn btn-gray month-button"
+                onclick="showAllMonths()">
+
+                📊 همه ماه‌ها
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         خلاصه حساب
+    ========================= -->
+
+    <div class="summary">
+
+
+        <div class="card">
+
+            <h3>
+                💰 مجموع دستمزد
+            </h3>
+
+            <div
+                class="amount total"
+                id="totalTailor">
+
+                0 افغانی
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                💵 پرداخت‌شده
+            </h3>
+
+            <div
+                class="amount paid"
+                id="totalPaid">
+
+                0 افغانی
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                📌 بیلانس
+            </h3>
+
+            <div
+                class="amount remaining"
+                id="totalRemaining">
+
+                0 افغانی
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         ثبت / ویرایش پرداخت
+    ========================= -->
+
+    <div class="payment-box">
+
+
+        <h2 id="paymentTitle">
+
+            ➕ ثبت پرداخت به خیاط
+
+        </h2>
+
+
+        <div
+            id="editingTitle"
+            class="editing-title">
+
+            ✏️ در حال ویرایش پرداخت
+
+        </div>
+
+
+        <div class="payment-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    مبلغ پرداخت
+                </label>
+
+                <input
+                    type="number"
+                    id="paymentAmount"
+                    min="1"
+                    placeholder="مثلاً 3000">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    تاریخ پرداخت
+                </label>
+
+                <input
+                    type="date"
+                    id="paymentDate">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    توضیحات
+                </label>
+
+                <input
+                    type="text"
+                    id="paymentDescription"
+                    placeholder="مثلاً نقد گرفت">
+
+            </div>
+
+
+            <button
+                id="savePaymentBtn"
+                class="save-payment"
+                onclick="savePayment()">
+
+                💾 ثبت پرداخت
+
+            </button>
+
+
+            <button
+                id="cancelEditBtn"
+                class="cancel-edit"
+                onclick="cancelEdit()">
+
+                ❌ لغو
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         Navigation
+    ========================= -->
+
+    <div class="details-nav">
+
+
+        <button
+            class="nav-tab active"
+            onclick="
+                showSection(
+                    'mattressSection',
+                    this
+                )
+            ">
+
+            🛏️ توشک و بالشت
+
+        </button>
+
+
+        <button
+            class="nav-tab"
+            onclick="
+                showSection(
+                    'curtainSection',
+                    this
+                )
+            ">
+
+            🪟 پرده و جالی
+
+        </button>
+
+
+        <button
+            class="nav-tab"
+            onclick="
+                showSection(
+                    'paymentsSection',
+                    this
+                )
+            ">
+
+            💵 سابقه پرداخت‌ها
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =========================
+         توشک و بالشت
+    ========================= -->
+
+    <div
+        id="mattressSection"
+        class="section active">
+
+
+        <h2>
+            🛏️ جزئیات توشک و بالشت
+        </h2>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        شماره بل
+                    </th>
+
+                    <th>
+                        تاریخ
+                    </th>
+
+                    <th>
+                        مشتری
+                    </th>
+
+                    <th>
+                        نوع توشک
+                    </th>
+
+                    <th>
+                        تعداد توشک
+                    </th>
+
+                    <th>
+                        بالشت
+                    </th>
+
+                    <th>
+                        بالشت کوچک
+                    </th>
+
+                    <th>
+                        بالشت رول
+                    </th>
+
+                    <th>
+                        نرخ خیاط
+                    </th>
+
+                    <th>
+                        دستمزد
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="mattressTable">
+
+                <tr>
+
+                    <td
+                        colspan="10"
+                        class="loading">
+
+                        در حال دریافت اطلاعات...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         پرده و جالی
+    ========================= -->
+
+    <div
+        id="curtainSection"
+        class="section">
+
+
+        <h2>
+            🪟 جزئیات پرده و جالی
+        </h2>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        شماره بل
+                    </th>
+
+                    <th>
+                        تاریخ
+                    </th>
+
+                    <th>
+                        مشتری
+                    </th>
+
+                    <th>
+                        نوع پرده
+                    </th>
+
+                    <th>
+                        متر جالی
+                    </th>
+
+                    <th>
+                        متر پارچه
+                    </th>
+
+                    <th>
+                        نرخ خیاط
+                    </th>
+
+                    <th>
+                        دستمزد
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="curtainTable">
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="loading">
+
+                        در حال دریافت اطلاعات...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         پرداخت‌ها
+    ========================= -->
+
+    <div
+        id="paymentsSection"
+        class="section">
+
+
+        <h2>
+            💵 سابقه پرداخت‌های خیاط
+        </h2>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ردیف
+                    </th>
+
+                    <th>
+                        تاریخ پرداخت
+                    </th>
+
+                    <th>
+                        مبلغ
+                    </th>
+
+                    <th>
+                        توضیحات
+                    </th>
+
+                    <th>
+                        عملیات
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody id="paymentsTable">
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="loading">
+
+                        در حال دریافت پرداخت‌ها...
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   متغیرهای اصلی
+========================================================= */
+
+let editingPaymentId = null;
+
+let selectedMonth = '';
+
+
+/* =========================================================
+   فرمت مبلغ
+========================================================= */
+
+function formatMoney(value) {
+
+    const number =
+        Number(value || 0);
+
+
+    return (
+        number.toLocaleString('fa-AF')
+        +
+        ' افغانی'
+    );
+
+}
+
+
+/* =========================================================
+   فرمت عدد
+========================================================= */
+
+function formatNumber(value) {
+
+    return Number(value || 0)
+        .toLocaleString('fa-AF');
+
+}
+
+
+/* =========================================================
+   فرمت تاریخ
+========================================================= */
+
+function formatDate(date) {
+
+    if (!date) {
+
+        return '-';
+
+    }
+
+
+    return new Date(date)
+        .toLocaleDateString('fa-AF');
+
+}
+
+
+/* =========================================================
+   پیام
+========================================================= */
+
+function showMessage(text, type) {
+
+    const box =
+        document.getElementById(
+            'message'
+        );
+
+
+    box.textContent =
+        text;
+
+
+    box.className =
+        'message ' + type;
+
+
+    box.style.display =
+        'block';
+
+
+    setTimeout(() => {
+
+        box.style.display =
+            'none';
+
+    }, 4000);
+
+}
+
+
+/* =========================================================
+   Navigation
+========================================================= */
+
+function showSection(
+    sectionId,
+    button
+) {
+
+    const sections =
+        document.querySelectorAll(
+            '.section'
+        );
+
+
+    sections.forEach(section => {
+
+        section.classList.remove(
+            'active'
+        );
+
+    });
+
+
+    const selectedSection =
+        document.getElementById(
+            sectionId
+        );
+
+
+    selectedSection.classList.add(
+        'active'
+    );
+
+
+    const tabs =
+        document.querySelectorAll(
+            '.nav-tab'
+        );
+
+
+    tabs.forEach(tab => {
+
+        tab.classList.remove(
+            'active'
+        );
+
+    });
+
+
+    button.classList.add(
+        'active'
+    );
+
+}
+
+
+/* =========================================================
+   دریافت همه ماه‌ها
+========================================================= */
+
+function showAllMonths() {
+
+    selectedMonth = '';
+
+
+    document.getElementById(
+        'accountMonth'
+    ).value = '';
+
+
+    loadAll();
+
+}
+
+
+/* =========================================================
+   نوع توشک
+========================================================= */
+
+function getMattressType(item) {
+
+    if (
+        Number(item.Simple) > 0
+    ) {
+
+        return 'ساده';
+
+    }
+
+
+    if (
+        Number(item.SajafDar) > 0
+    ) {
+
+        return 'سجاف‌دار';
+
+    }
+
+
+    if (
+        Number(item.Boxi) > 0
+    ) {
+
+        return 'باکسی';
+
+    }
+
+
+    if (
+        Number(item.DesignDar) > 0
+    ) {
+
+        return 'دیزاین‌دار';
+
+    }
+
+
+    if (
+        Number(item.ZirPoosh) > 0
+    ) {
+
+        return 'زیرپوش';
+
+    }
+
+
+    return '-';
+
+}
+
+
+/* =========================================================
+   نوع پرده
+========================================================= */
+
+function getCurtainType(item) {
+
+    if (
+        Number(item.Ringdar) > 0
+    ) {
+
+        return 'رینگ‌دار';
+
+    }
+
+
+    if (
+        Number(item.Plyti) > 0
+    ) {
+
+        return 'پلیتی';
+
+    }
+
+
+    if (
+        Number(item.SePlyte) > 0
+    ) {
+
+        return 'سه‌پلیته';
+
+    }
+
+
+    if (
+        Number(item.Minimal) > 0
+    ) {
+
+        return 'مینیمال';
+
+    }
+
+
+    if (
+        Number(item.Iranian) > 0
+    ) {
+
+        return 'ایرانی';
+
+    }
+
+
+    if (
+        Number(item.PoshtPardeyi) > 0
+    ) {
+
+        return 'پشت‌پرده‌ای';
+
+    }
+
+
+    return '-';
+
+}
+
+
+/* =========================================================
+   دریافت حساب خیاط
+========================================================= */
+
+async function loadTailorAccount() {
+
+    const month =
+        document.getElementById(
+            'accountMonth'
+        ).value;
+
+
+    selectedMonth =
+        month;
+
+
+    const url =
+        month
+
+            ? '/api/tailor/account?month='
+              +
+              encodeURIComponent(
+                  month
+              )
+
+            : '/api/tailor/account';
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            'خطا در دریافت حساب خیاط'
+        );
+
+    }
+
+
+    return await response.json();
+
+}
+
+
+/* =========================================================
+   نمایش توشک
+========================================================= */
+
+function renderMattress(data) {
+
+    const table =
+        document.getElementById(
+            'mattressTable'
+        );
+
+
+    if (
+        !data.mattressDetails
+        ||
+        data.mattressDetails.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="10"
+                    class="empty">
+
+                    برای این ماه کاری ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = '';
+
+
+    data.mattressDetails.forEach(
+        item => {
+
+            const type =
+                getMattressType(item);
+
+
+            if (type === '-') {
+
+                return;
+
+            }
+
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${formatNumber(
+                            item.BillNumber
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatDate(
+                            item.BillDate
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${item.CustomerName || '-'}
+                    </td>
+
+
+                    <td>
+
+                        <span class="type-badge">
+
+                            ${type}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.MattressCount
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.PillowCount
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.SmallPillowCount
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.RollPillowCount
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatMoney(
+                            item.TailorRate
+                        )}
+                    </td>
+
+
+                    <td class="amount-cell">
+                        ${formatMoney(
+                            item.TailorAmount
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    table.innerHTML =
+        html
+        ||
+        `
+
+            <tr>
+
+                <td
+                    colspan="10"
+                    class="empty">
+
+                    برای این ماه کاری ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+}
+
+
+/* =========================================================
+   نمایش پرده
+========================================================= */
+
+function renderCurtain(data) {
+
+    const table =
+        document.getElementById(
+            'curtainTable'
+        );
+
+
+    if (
+        !data.curtainDetails
+        ||
+        data.curtainDetails.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    برای این ماه کاری ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = '';
+
+
+    data.curtainDetails.forEach(
+        item => {
+
+            const type =
+                getCurtainType(item);
+
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${formatNumber(
+                            item.BillNumber
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatDate(
+                            item.BillDate
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${item.CustomerName || '-'}
+                    </td>
+
+
+                    <td>
+
+                        <span class="type-badge">
+
+                            ${type}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.JaliMeters
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.FabricMeters
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatMoney(
+                            item.TailorRate
+                        )}
+                    </td>
+
+
+                    <td class="amount-cell">
+                        ${formatMoney(
+                            item.TailorAmount
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    table.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   دریافت پرداخت‌ها با ماه
+========================================================= */
+
+async function loadPayments() {
+
+    let url =
+        '/api/tailor/payments';
+
+
+    if (selectedMonth) {
+
+        url +=
+            '?month=' +
+            encodeURIComponent(
+                selectedMonth
+            );
+
+    }
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            'خطا در دریافت پرداخت‌ها'
+        );
+
+    }
+
+
+    return await response.json();
+
+}
+
+
+/* =========================================================
+   نمایش پرداخت‌ها
+========================================================= */
+
+function renderPayments(
+    payments
+) {
+
+    const table =
+        document.getElementById(
+            'paymentsTable'
+        );
+
+
+    if (!payments.length) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty">
+
+                    برای این ماه هیچ پرداختی ثبت نشده است.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        payments
+            .map(
+                (payment, index) => `
+
+                    <tr>
+
+                        <td>
+                            ${formatNumber(
+                                index + 1
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${formatDate(
+                                payment.PaymentDate
+                            )}
+                        </td>
+
+
+                        <td class="amount-cell">
+                            ${formatMoney(
+                                payment.Amount
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${
+                                payment.Description
+                                ||
+                                '-'
+                            }
+                        </td>
+
+
+                        <td>
+
+                            <div
+                                class="action-buttons">
+
+
+                                <button
+                                    class="btn btn-blue"
+                                    style="
+                                        padding:7px 12px;
+                                    "
+                                    onclick='editPayment(
+                                        ${JSON.stringify(
+                                            payment
+                                        )}
+                                    )'>
+
+                                    ✏️ ویرایش
+
+                                </button>
+
+
+                                <button
+                                    class="btn-red"
+                                    onclick="
+                                        deletePayment(
+                                            ${payment.Id}
+                                        )
+                                    ">
+
+                                    🗑️ حذف
+
+                                </button>
+
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `
+            )
+            .join('');
+
+}
+
+
+/* =========================================================
+   ثبت یا ویرایش پرداخت
+========================================================= */
+
+async function savePayment() {
+
+    const amount =
+        Number(
+            document.getElementById(
+                'paymentAmount'
+            ).value
+        );
+
+
+    const paymentDate =
+        document.getElementById(
+            'paymentDate'
+        ).value;
+
+
+    const description =
+        document.getElementById(
+            'paymentDescription'
+        ).value.trim();
+
+
+    if (
+        !amount
+        ||
+        amount <= 0
+    ) {
+
+        showMessage(
+            '❌ لطفاً مبلغ پرداخت را وارد کنید.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    if (!paymentDate) {
+
+        showMessage(
+            '❌ لطفاً تاریخ پرداخت را انتخاب کنید.',
+            'error'
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        let url =
+            '/api/tailor/payments';
+
+
+        let method =
+            'POST';
+
+
+        if (
+            editingPaymentId !== null
+        ) {
+
+            url =
+                '/api/tailor/payments/'
+                +
+                editingPaymentId;
+
+            method =
+                'PUT';
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method:
+
+                        method,
+
+                    headers: {
+
+                        'Content-Type':
+                            'application/json'
+
+                    },
+
+                    body: JSON.stringify({
+
+                        Amount:
+                            amount,
+
+                        PaymentDate:
+                            paymentDate,
+
+                        Description:
+                            description
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error
+                ||
+                'خطا در ذخیره پرداخت'
+            );
+
+        }
+
+
+        if (
+            editingPaymentId !== null
+        ) {
+
+            showMessage(
+                '✅ پرداخت با موفقیت ویرایش شد.',
+                'success'
+            );
+
+        } else {
+
+            showMessage(
+                '✅ پرداخت خیاط با موفقیت ثبت شد.',
+                'success'
+            );
+
+        }
+
+
+        clearPaymentForm();
+
+
+        await loadAll();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showMessage(
+            '❌ ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   شروع ویرایش پرداخت
+========================================================= */
+
+function editPayment(
+    payment
+) {
+
+    editingPaymentId =
+        Number(
+            payment.Id
+        );
+
+
+    document.getElementById(
+        'paymentAmount'
+    ).value =
+        Number(
+            payment.Amount || 0
+        );
+
+
+    document.getElementById(
+        'paymentDate'
+    ).value =
+        payment.PaymentDate
+
+            ? String(
+                payment.PaymentDate
+            ).substring(
+                0,
+                10
+            )
+
+            : '';
+
+
+    document.getElementById(
+        'paymentDescription'
+    ).value =
+        payment.Description
+        ||
+        '';
+
+
+    document.getElementById(
+        'savePaymentBtn'
+    ).textContent =
+        '💾 ذخیره ویرایش';
+
+
+    document.getElementById(
+        'cancelEditBtn'
+    ).style.display =
+        'block';
+
+
+    document.getElementById(
+        'editingTitle'
+    ).style.display =
+        'block';
+
+
+    document.getElementById(
+        'paymentTitle'
+    ).textContent =
+        '✏️ ویرایش پرداخت خیاط';
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: 'smooth'
+
+    });
+
+
+    document.getElementById(
+        'paymentAmount'
+    ).focus();
+
+}
+
+
+/* =========================================================
+   لغو ویرایش
+========================================================= */
+
+function cancelEdit(
+    showMsg = true
+) {
+
+    clearPaymentForm();
+
+
+    if (showMsg) {
+
+        showMessage(
+            'ویرایش لغو شد.',
+            'success'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   پاک کردن فرم
+========================================================= */
+
+function clearPaymentForm() {
+
+    editingPaymentId =
+        null;
+
+
+    document.getElementById(
+        'paymentAmount'
+    ).value =
+        '';
+
+
+    document.getElementById(
+        'paymentDescription'
+    ).value =
+        '';
+
+
+    document.getElementById(
+        'savePaymentBtn'
+    ).textContent =
+        '💾 ثبت پرداخت';
+
+
+    document.getElementById(
+        'cancelEditBtn'
+    ).style.display =
+        'none';
+
+
+    document.getElementById(
+        'editingTitle'
+    ).style.display =
+        'none';
+
+
+    document.getElementById(
+        'paymentTitle'
+    ).textContent =
+        '➕ ثبت پرداخت به خیاط';
+
+
+    setToday();
+
+}
+
+
+/* =========================================================
+   حذف پرداخت
+========================================================= */
+
+async function deletePayment(
+    id
+) {
+
+    const confirmDelete =
+        confirm(
+            'آیا مطمئن هستید که می‌خواهید این پرداخت را حذف کنید؟'
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                '/api/tailor/payments/'
+                +
+                id,
+                {
+                    method:
+                        'DELETE'
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error
+                ||
+                'خطا در حذف پرداخت'
+            );
+
+        }
+
+
+        showMessage(
+            '✅ پرداخت حذف شد.',
+            'success'
+        );
+
+
+        await loadAll();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showMessage(
+            '❌ ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   بارگذاری همه اطلاعات
+========================================================= */
+
+async function loadAll() {
+
+    try {
+
+
+        /*
+         * حساب خیاط
+         */
+
+        const data =
+            await loadTailorAccount();
+
+
+        /*
+         * مجموع دستمزد
+         */
+
+        const total =
+            Number(
+                data.summary
+                    .TotalTailorAmount
+                ||
+                0
+            );
+
+
+        /*
+         * پرداخت‌های انتخاب‌شده
+         */
+
+        const payments =
+            await loadPayments();
+
+
+        /*
+         * مجموع پرداخت
+         */
+
+        const paid =
+            payments.reduce(
+                (
+                    sum,
+                    item
+                ) =>
+                    sum
+                    +
+                    Number(
+                        item.Amount || 0
+                    ),
+                0
+            );
+
+
+        /*
+         * بیلانس
+         *
+         * مثبت:
+         * خیاط هنوز طلب دارد
+         *
+         * منفی:
+         * پرداخت بیشتر از دستمزد
+         */
+
+        const remaining =
+            total - paid;
+
+
+        /*
+         * مجموع دستمزد
+         */
+
+        document.getElementById(
+            'totalTailor'
+        ).textContent =
+            formatMoney(total);
+
+
+        /*
+         * پرداخت‌شده
+         */
+
+        document.getElementById(
+            'totalPaid'
+        ).textContent =
+            formatMoney(paid);
+
+
+        /*
+         * بیلانس
+         */
+
+        const remainingElement =
+            document.getElementById(
+                'totalRemaining'
+            );
+
+
+        remainingElement.textContent =
+            formatMoney(
+                remaining
+            );
+
+
+        if (
+            remaining === 0
+        ) {
+
+            remainingElement
+                .classList
+                .add('zero');
+
+        } else {
+
+            remainingElement
+                .classList
+                .remove('zero');
+
+        }
+
+
+        /*
+         * جدول‌ها
+         */
+
+        renderMattress(
+            data
+        );
+
+
+        renderCurtain(
+            data
+        );
+
+
+        renderPayments(
+            payments
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showMessage(
+            '❌ ' + error.message,
+            'error'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   تاریخ امروز برای فرم پرداخت
+========================================================= */
+
+function setToday() {
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        )
+        .padStart(
+            2,
+            '0'
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        )
+        .padStart(
+            2,
+            '0'
+        );
+
+
+    document.getElementById(
+        'paymentDate'
+    ).value =
+        `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   ماه جاری
+========================================================= */
+
+function setCurrentMonth() {
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        )
+        .padStart(
+            2,
+            '0'
+        );
+
+
+    document.getElementById(
+        'accountMonth'
+    ).value =
+        `${year}-${month}`;
+
+}
+
+
+/* =========================================================
+   شروع صفحه
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        /*
+         * ماه جاری به صورت پیش‌فرض
+         */
+
+        setCurrentMonth();
+
+
+        /*
+         * تاریخ امروز
+         */
+
+        setToday();
+
+
+        /*
+         * دریافت اطلاعات
+         */
+
+        loadAll();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
