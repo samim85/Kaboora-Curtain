@@ -622,6 +622,101 @@
         font-size: 13px;
     }
 }
+
+        /* ================= حساب کارمند ================= */
+
+        .employee-account {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 25px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e8eb;
+        }
+
+        .employee-account-title {
+            font-size: 20px;
+            color: #263746;
+            border-right: 5px solid #263746;
+            padding-right: 12px;
+            margin: 0 0 18px;
+        }
+
+        .employee-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .employee-info-item {
+            background: #f7f8fa;
+            border: 1px solid #e6e8eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .employee-info-item strong {
+            display: block;
+            color: #68717a;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .employee-info-item span {
+            display: block;
+            color: #17202a;
+            font-weight: bold;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .employee-readonly {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: #f7f8fa;
+            color: #666;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .logout-button {
+            margin-top: 15px;
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 20px;
+            background: #263746;
+            color: white;
+            font-family: inherit;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 550px) {
+            .employee-account {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .employee-info-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .employee-info-item {
+                padding: 12px;
+            }
+
+            .employee-info-item span {
+                font-size: 15px;
+            }
+        }
+
     </style>
 </head>
 
@@ -763,6 +858,57 @@
 
         </div>
 
+
+
+        <!-- ================= حساب کارمند ================= -->
+
+        <section class="employee-account" id="employeeAccount">
+
+            <h2 class="employee-account-title">👤 حساب کارمند من</h2>
+
+            <div class="employee-info-grid">
+
+                <div class="employee-info-item">
+                    <strong>نام کارمند</strong>
+                    <span id="employeeFullName">-</span>
+                </div>
+
+                <div class="employee-info-item">
+                    <strong>شماره تماس</strong>
+                    <span id="employeePhone">-</span>
+                </div>
+
+                <div class="employee-info-item">
+                    <strong>وظیفه</strong>
+                    <span id="employeePosition">-</span>
+                </div>
+
+                <div class="employee-info-item">
+                    <strong>معاش</strong>
+                    <span id="employeeSalary">0 افغانی</span>
+                </div>
+
+                <div class="employee-info-item">
+                    <strong>تاریخ استخدام</strong>
+                    <span id="employeeHireDate">-</span>
+                </div>
+
+                <div class="employee-info-item">
+                    <strong>نام کاربری</strong>
+                    <span id="employeeUsername">-</span>
+                </div>
+
+            </div>
+
+            <div class="employee-readonly">
+                🔒 این اطلاعات فقط برای مشاهده است و کارمند اجازه ویرایش آن را ندارد.
+            </div>
+
+            <button type="button" class="logout-button" onclick="logoutEmployee()">
+                خروج از حساب
+            </button>
+
+        </section>
 
         <!-- ================= منوی سیستم ================= -->
 
@@ -1333,10 +1479,242 @@
            شروع
         ===================================================== */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            loadDashboard
-        );
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const user = checkUserRole();
+
+            if (!user) {
+                return;
+            }
+
+            /*
+             * فقط مدیر داشبورد مالی را بارگذاری می‌کند.
+             * کارمند نباید حتی APIهای مالی را درخواست کند.
+             */
+            if (user.Role === "admin") {
+                loadDashboard();
+            }
+
+        });
+
+
+        /* =====================================================
+           کنترل دسترسی کاربران
+        ===================================================== */
+
+        function checkUserRole() {
+
+            const savedUser =
+                localStorage.getItem("employeeUser");
+
+            if (!savedUser) {
+                window.location.href = "/login.html";
+                return null;
+            }
+
+            let user;
+
+            try {
+
+                user = JSON.parse(savedUser);
+
+            } catch (error) {
+
+                localStorage.removeItem("employeeUser");
+                window.location.href = "/login.html";
+                return null;
+
+            }
+
+
+            /* ================= مدیر ================= */
+
+            if (user.Role === "admin") {
+
+                return user;
+
+            }
+
+
+            /* ================= کارمند ================= */
+
+            if (user.Role === "employee") {
+
+                /* مخفی کردن خلاصه مالی */
+
+                document.querySelectorAll(".summary-grid").forEach(el => {
+                    el.style.display = "none";
+                });
+
+                document.querySelectorAll(".month-box").forEach(el => {
+                    el.style.display = "none";
+                });
+
+                document.querySelectorAll(".final-box").forEach(el => {
+                    el.style.display = "none";
+                });
+
+
+                /* مخفی کردن عنوان‌های خلاصه */
+
+                document.querySelectorAll(".section-title").forEach(title => {
+
+                    if (
+                        title.textContent.includes("خلاصه کلی") ||
+                        title.textContent.includes("خلاصه مالی")
+                    ) {
+                        title.style.display = "none";
+                    }
+
+                });
+
+
+                /* فقط بل و حساب من برای کارمند */
+
+                document.querySelectorAll(".menu-card").forEach(card => {
+
+                    const link =
+                        card.getAttribute("href");
+
+                    if (link !== "/bills.html") {
+                        card.style.display = "none";
+                    }
+
+                });
+
+
+                /* تغییر عنوان */
+
+                const subtitle =
+                    document.querySelector("header p");
+
+                if (subtitle) {
+
+                    subtitle.textContent =
+                        "پنل کارمند — مشاهده و چاپ بل مشتریان";
+
+                }
+
+
+                /* نمایش حساب خود کارمند */
+
+                const account =
+                    document.getElementById("employeeAccount");
+
+                if (account) {
+                    account.style.display = "block";
+                }
+
+
+                /* پر کردن مشخصات از حساب واردشده */
+
+                const fullName =
+                    user.FullName ||
+                    user.fullName ||
+                    "ثبت نشده";
+
+                const phone =
+                    user.Phone ||
+                    user.phone ||
+                    "ثبت نشده";
+
+                const position =
+                    user.Position ||
+                    user.position ||
+                    "کارمند";
+
+                const salary =
+                    Number(
+                        user.Salary ??
+                        user.salary ??
+                        0
+                    );
+
+                const hireDate =
+                    String(
+                        user.HireDate ??
+                        user.hireDate ??
+                        "ثبت نشده"
+                    ).substring(0, 10);
+
+                const username =
+                    user.Username ||
+                    user.username ||
+                    "ثبت نشده";
+
+
+                const fullNameElement =
+                    document.getElementById("employeeFullName");
+
+                const phoneElement =
+                    document.getElementById("employeePhone");
+
+                const positionElement =
+                    document.getElementById("employeePosition");
+
+                const salaryElement =
+                    document.getElementById("employeeSalary");
+
+                const hireDateElement =
+                    document.getElementById("employeeHireDate");
+
+                const usernameElement =
+                    document.getElementById("employeeUsername");
+
+
+                if (fullNameElement) {
+                    fullNameElement.textContent = fullName;
+                }
+
+                if (phoneElement) {
+                    phoneElement.textContent = phone;
+                }
+
+                if (positionElement) {
+                    positionElement.textContent = position;
+                }
+
+                if (salaryElement) {
+                    salaryElement.textContent =
+                        money(salary);
+                }
+
+                if (hireDateElement) {
+                    hireDateElement.textContent =
+                        hireDate === "ثبت نشده"
+                            ? hireDate
+                            : hireDate;
+                }
+
+                if (usernameElement) {
+                    usernameElement.textContent = username;
+                }
+
+
+                return user;
+
+            }
+
+
+            /* نقش ناشناخته */
+
+            localStorage.removeItem("employeeUser");
+            window.location.href = "/login.html";
+            return null;
+
+        }
+
+
+        /* =====================================================
+           خروج از حساب
+        ===================================================== */
+
+        function logoutEmployee() {
+
+            localStorage.removeItem("employeeUser");
+            window.location.href = "/login.html";
+
+        }
 
     </script>
 

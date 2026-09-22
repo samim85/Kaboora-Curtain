@@ -2,6 +2,7 @@ const express = require("express");
 const sql = require("mssql/msnodesqlv8");
 const cors = require("cors");
 require("dotenv").config();
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -44,6 +45,711 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+// =========================================================
+// ویرایش بل مشتری
+// =========================================================
+app.put("/api/bills/:id", async (req, res) => {
+
+    const transaction = new sql.Transaction();
+
+    try {
+
+        const billId = Number(req.params.id);
+
+        if (!billId || billId <= 0) {
+            return res.status(400).json({
+                success: false,
+                error: "شناسه بل نامعتبر است."
+            });
+        }
+
+        const {
+            BillNumber,
+            CustomerId,
+            BillDate,
+            DeliveryDate,
+            TotalAmount,
+            mattressItems = [],
+            curtainItems = []
+        } = req.body;
+
+
+        // -------------------------------------------------
+        // بررسی اطلاعات اصلی
+        // -------------------------------------------------
+
+        if (!BillNumber) {
+            return res.status(400).json({
+                success: false,
+                error: "شماره بل الزامی است."
+            });
+        }
+
+        if (!CustomerId) {
+            return res.status(400).json({
+                success: false,
+                error: "مشتری را انتخاب کنید."
+            });
+        }
+
+        if (!BillDate) {
+            return res.status(400).json({
+                success: false,
+                error: "تاریخ بل الزامی است."
+            });
+        }
+
+
+        const totalAmount = Number(TotalAmount) || 0;
+
+
+        // -------------------------------------------------
+        // شروع Transaction
+        // -------------------------------------------------
+
+        await transaction.begin(sql.ISOLATION_LEVEL.SERIALIZABLE);
+
+
+        // -------------------------------------------------
+        // بررسی وجود بل
+        // -------------------------------------------------
+
+        const billCheck = await new sql.Request(transaction)
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT Id
+                FROM Bills
+                WHERE Id = @BillId
+            `);
+
+
+        if (billCheck.recordset.length === 0) {
+
+            await transaction.rollback();
+
+            return res.status(404).json({
+                success: false,
+                error: "بل پیدا نشد."
+            });
+
+        }
+
+
+        // -------------------------------------------------
+        // بروزرسانی اطلاعات اصلی بل
+        // -------------------------------------------------
+
+        await new sql.Request(transaction)
+
+            .input("BillId", sql.Int, billId)
+
+            .input(
+                "BillNumber",
+                sql.NVarChar(50),
+                BillNumber
+            )
+
+            .input(
+                "CustomerId",
+                sql.Int,
+                Number(CustomerId)
+            )
+
+            .input(
+                "BillDate",
+                sql.Date,
+                BillDate
+            )
+
+            .input(
+                "DeliveryDate",
+                sql.Date,
+                DeliveryDate || null
+            )
+
+            .input(
+                "TotalAmount",
+                sql.Decimal(18, 2),
+                totalAmount
+            )
+
+            .query(`
+                UPDATE Bills
+                SET
+                    BillNumber = @BillNumber,
+                    CustomerId = @CustomerId,
+                    BillDate = @BillDate,
+                    DeliveryDate = @DeliveryDate,
+                    TotalAmount = @TotalAmount
+                WHERE Id = @BillId
+            `);
+
+
+        // -------------------------------------------------
+        // حذف آیتم‌های قبلی
+        // -------------------------------------------------
+
+        await new sql.Request(transaction)
+
+            .input(
+                "BillId",
+                sql.Int,
+                billId
+            )
+
+            .query(`
+                DELETE FROM MattressItems
+                WHERE BillId = @BillId;
+
+                DELETE FROM CurtainItems
+                WHERE BillId = @BillId;
+            `);
+
+
+        // =================================================
+        // ثبت دوباره MattressItems
+        // =================================================
+
+        for (const item of mattressItems) {
+
+            const simple =
+                Number(item.Simple) || 0;
+
+            const sajafDar =
+                Number(item.SajafDar) || 0;
+
+            const boxi =
+                Number(item.Boxi) || 0;
+
+            const designDar =
+                Number(item.DesignDar) || 0;
+
+            const zirPoosh =
+                Number(item.ZirPoosh) || 0;
+
+            const mattressCount =
+                Number(item.MattressCount) || 0;
+
+            const pillowCount =
+                Number(item.PillowCount) || 0;
+
+            const smallPillowCount =
+                Number(item.SmallPillowCount) || 0;
+
+            const rollPillowCount =
+                Number(item.RollPillowCount) || 0;
+
+            const fabricMeters =
+                Number(item.FabricMeters) || 0;
+
+            const fabricPrice =
+                Number(item.FabricPrice) || 0;
+
+            const sewingPrice =
+                Number(item.SewingPrice) || 0;
+
+
+            // -------------------------------------------------
+            // نرخ‌های خیاط
+            // -------------------------------------------------
+
+            const tailorSimplePrice =
+                Number(item.TailorSimplePrice) || 0;
+
+            const tailorSajafDarPrice =
+                Number(item.TailorSajafDarPrice) || 0;
+
+            const tailorBoxiPrice =
+                Number(item.TailorBoxiPrice) || 0;
+
+            const tailorDesignDarPrice =
+                Number(item.TailorDesignDarPrice) || 0;
+
+            const tailorZirPooshPrice =
+                Number(item.TailorZirPooshPrice) || 0;
+
+            const tailorPillowPrice =
+                Number(item.TailorPillowPrice) || 0;
+
+            const tailorSmallPillowPrice =
+                Number(item.TailorSmallPillowPrice) || 0;
+
+            const tailorRollPillowPrice =
+                Number(item.TailorRollPillowPrice) || 0;
+
+
+            // -------------------------------------------------
+            // محاسبه دستمزد خیاط
+            // -------------------------------------------------
+
+            const tailorAmount =
+                (simple * tailorSimplePrice) +
+                (sajafDar * tailorSajafDarPrice) +
+                (boxi * tailorBoxiPrice) +
+                (designDar * tailorDesignDarPrice) +
+                (zirPoosh * tailorZirPooshPrice) +
+                (pillowCount * tailorPillowPrice) +
+                (smallPillowCount * tailorSmallPillowPrice) +
+                (rollPillowCount * tailorRollPillowPrice);
+
+
+            const totalTailorUnits =
+                simple +
+                sajafDar +
+                boxi +
+                designDar +
+                zirPoosh +
+                pillowCount +
+                smallPillowCount +
+                rollPillowCount;
+
+
+            const tailorRate =
+                totalTailorUnits > 0
+                    ? tailorAmount / totalTailorUnits
+                    : 0;
+
+
+            // -------------------------------------------------
+            // مبلغ مشتری
+            // -------------------------------------------------
+
+            const mattressTotal =
+                (fabricMeters * fabricPrice) +
+                sewingPrice;
+
+
+            // -------------------------------------------------
+            // TailorId
+            // اگر خالی باشد NULL ذخیره می‌شود
+            // -------------------------------------------------
+
+            const tailorId =
+                item.TailorId !== null &&
+                item.TailorId !== undefined &&
+                Number(item.TailorId) > 0
+                    ? Number(item.TailorId)
+                    : null;
+
+
+            await new sql.Request(transaction)
+
+                .input(
+                    "BillId",
+                    sql.Int,
+                    billId
+                )
+
+                .input(
+                    "TailorId",
+                    sql.Int,
+                    tailorId
+                )
+
+                .input(
+                    "Simple",
+                    sql.Int,
+                    simple
+                )
+
+                .input(
+                    "SajafDar",
+                    sql.Int,
+                    sajafDar
+                )
+
+                .input(
+                    "Boxi",
+                    sql.Int,
+                    boxi
+                )
+
+                .input(
+                    "DesignDar",
+                    sql.Int,
+                    designDar
+                )
+
+                .input(
+                    "ZirPoosh",
+                    sql.Int,
+                    zirPoosh
+                )
+
+                .input(
+                    "MattressCount",
+                    sql.Int,
+                    mattressCount
+                )
+
+                .input(
+                    "PillowCount",
+                    sql.Int,
+                    pillowCount
+                )
+
+                .input(
+                    "SmallPillowCount",
+                    sql.Int,
+                    smallPillowCount
+                )
+
+                .input(
+                    "RollPillowCount",
+                    sql.Int,
+                    rollPillowCount
+                )
+
+                .input(
+                    "FabricMeters",
+                    sql.Decimal(18, 2),
+                    fabricMeters
+                )
+
+                .input(
+                    "FabricPrice",
+                    sql.Decimal(18, 2),
+                    fabricPrice
+                )
+
+                .input(
+                    "SewingPrice",
+                    sql.Decimal(18, 2),
+                    sewingPrice
+                )
+
+                .input(
+                    "TailorRate",
+                    sql.Decimal(18, 2),
+                    tailorRate
+                )
+
+                .input(
+                    "TailorAmount",
+                    sql.Decimal(18, 2),
+                    tailorAmount
+                )
+
+                .query(`
+                    INSERT INTO MattressItems (
+                        BillId,
+                        TailorId,
+                        Simple,
+                        SajafDar,
+                        Boxi,
+                        DesignDar,
+                        ZirPoosh,
+                        MattressCount,
+                        PillowCount,
+                        SmallPillowCount,
+                        RollPillowCount,
+                        FabricMeters,
+                        FabricPrice,
+                        SewingPrice,
+                        TailorRate,
+                        TailorAmount
+                    )
+                    VALUES (
+                        @BillId,
+                        @TailorId,
+                        @Simple,
+                        @SajafDar,
+                        @Boxi,
+                        @DesignDar,
+                        @ZirPoosh,
+                        @MattressCount,
+                        @PillowCount,
+                        @SmallPillowCount,
+                        @RollPillowCount,
+                        @FabricMeters,
+                        @FabricPrice,
+                        @SewingPrice,
+                        @TailorRate,
+                        @TailorAmount
+                    )
+                    `);
+                };
+            
+            
+    
+        // =================================================
+        // ثبت دوباره CurtainItems
+        // =================================================
+
+        for (const item of curtainItems) {
+
+            const ringdar =
+                Number(item.Ringdar) || 0;
+
+            const plyti =
+                Number(item.Plyti) || 0;
+
+            const sePlyte =
+                Number(item.SePlyte) || 0;
+
+            const minimal =
+                Number(item.Minimal) || 0;
+
+            const iranian =
+                Number(item.Iranian) || 0;
+
+            const poshtPardeyi =
+                Number(item.PoshtPardeyi) || 0;
+
+            const jaliMeters =
+                Number(item.JaliMeters) || 0;
+
+            const jaliPrice =
+                Number(item.JaliPrice) || 0;
+
+            const fabricMeters =
+                Number(item.FabricMeters) || 0;
+
+            const fabricPrice =
+                Number(item.FabricPrice) || 0;
+
+            const sewingPrice =
+                Number(item.SewingPrice) || 0;
+
+
+            // -------------------------------------------------
+            // نرخ خیاط پرده
+            // -------------------------------------------------
+
+            const tailorRate =
+                Number(item.TailorSewingPrice) ||
+                Number(item.TailorRate) ||
+                0;
+
+
+            // -------------------------------------------------
+            // دستمزد خیاط
+            // جالی + پارچه
+            // -------------------------------------------------
+
+            const tailorAmount =
+                (jaliMeters + fabricMeters) *
+                tailorRate;
+
+
+            // -------------------------------------------------
+            // مبلغ مشتری
+            // جالی + پارچه + دوخت
+            // -------------------------------------------------
+
+            const curtainTotal =
+                (jaliMeters * jaliPrice) +
+                (fabricMeters * fabricPrice) +
+                sewingPrice;
+
+
+            // -------------------------------------------------
+            // TailorId
+            // اگر خالی باشد NULL ذخیره می‌شود
+            // -------------------------------------------------
+
+            const tailorId =
+                item.TailorId !== null &&
+                item.TailorId !== undefined &&
+                Number(item.TailorId) > 0
+                    ? Number(item.TailorId)
+                    : null;
+
+
+            await new sql.Request(transaction)
+
+                .input(
+                    "BillId",
+                    sql.Int,
+                    billId
+                )
+
+                .input(
+                    "TailorId",
+                    sql.Int,
+                    tailorId
+                )
+
+                .input(
+                    "Ringdar",
+                    sql.Int,
+                    ringdar
+                )
+
+                .input(
+                    "Plyti",
+                    sql.Int,
+                    plyti
+                )
+
+                .input(
+                    "SePlyte",
+                    sql.Int,
+                    sePlyte
+                )
+
+                .input(
+                    "Minimal",
+                    sql.Int,
+                    minimal
+                )
+
+                .input(
+                    "Iranian",
+                    sql.Int,
+                    iranian
+                )
+
+                .input(
+                    "PoshtPardeyi",
+                    sql.Int,
+                    poshtPardeyi
+                )
+
+                .input(
+                    "JaliMeters",
+                    sql.Decimal(18, 2),
+                    jaliMeters
+                )
+
+                .input(
+                    "JaliPrice",
+                    sql.Decimal(18, 2),
+                    jaliPrice
+                )
+
+                .input(
+                    "FabricMeters",
+                    sql.Decimal(18, 2),
+                    fabricMeters
+                )
+
+                .input(
+                    "FabricPrice",
+                    sql.Decimal(18, 2),
+                    fabricPrice
+                )
+
+                .input(
+                    "SewingPrice",
+                    sql.Decimal(18, 2),
+                    sewingPrice
+                )
+
+                .input(
+                    "TailorRate",
+                    sql.Decimal(18, 2),
+                    tailorRate
+                )
+
+                .input(
+                    "TailorAmount",
+                    sql.Decimal(18, 2),
+                    tailorAmount
+                )
+
+                .query(`
+                    INSERT INTO CurtainItems (
+                        BillId,
+                        TailorId,
+                        Ringdar,
+                        Plyti,
+                        SePlyte,
+                        Minimal,
+                        Iranian,
+                        PoshtPardeyi,
+                        JaliMeters,
+                        JaliPrice,
+                        FabricMeters,
+                        FabricPrice,
+                        SewingPrice,
+                        TailorRate,
+                        TailorAmount
+                    )
+                    VALUES (
+                        @BillId,
+                        @TailorId,
+                        @Ringdar,
+                        @Plyti,
+                        @SePlyte,
+                        @Minimal,
+                        @Iranian,
+                        @PoshtPardeyi,
+                        @JaliMeters,
+                        @JaliPrice,
+                        @FabricMeters,
+                        @FabricPrice,
+                        @SewingPrice,
+                        @TailorRate,
+                        @TailorAmount
+                    )
+                `);
+
+        }
+
+
+        // -------------------------------------------------
+        // پایان Transaction
+        // -------------------------------------------------
+
+        await transaction.commit();
+
+
+        res.json({
+            success: true,
+            message: "بل با موفقیت ویرایش شد.",
+            billId: billId,
+            totalAmount: totalAmount
+        });
+
+
+    } 
+catch (error) {
+
+        console.error(
+            "❌ خطا در ویرایش بل:",
+            error
+        );
+
+
+        try {
+
+            if (transaction._aborted !== true) {
+                await transaction.rollback();
+            }
+
+        } catch (rollbackError) {
+
+            console.error(
+                "❌ خطا در Rollback:",
+                rollbackError
+            );
+
+        }
+
+
+        if (
+            error.number === 2601 ||
+            error.number === 2627
+        ) {
+
+            return res.status(409).json({
+                success: false,
+                error: "شماره بل تکراری است."
+            });
+
+        }
+
+
+        res.status(500).json({
+            success: false,
+            error: "خطا در ویرایش بل.",
+            details: error.message
+        });
+
+    }
+
+});
 // =====================================================
 // API مشتریان
 // =====================================================
@@ -297,7 +1003,7 @@ app.delete("/api/customers/:id", async (req, res) => {
             });
 
         }
-
+    
 
         const pool =
             await sql.connect(dbConfig);
@@ -471,30 +1177,38 @@ app.post("/api/bills", async (req, res) => {
 
     try {
 
-        const {
-            BillNumber,
-            CustomerId,
-            BillDate,
-            DeliveryDate,
+       const {
+    BillNumber,
+    EmployeeId,
+    CustomerId,
+    BillDate,
+    DeliveryDate,
 
-            TotalAmount,
-            ReceiptAmount,
-            PaymentDate,
-            PaymentDescription,
+    TotalAmount,
+    ReceiptAmount,
+    PaymentDate,
+    PaymentDescription,
 
-            mattressItems,
-            curtainItems
-        } = req.body;
-
+    mattressItems,
+    curtainItems
+} = req.body;
         // -------------------------------------------------
         // بررسی اطلاعات اصلی
         // -------------------------------------------------
 
-        if (!BillNumber || !CustomerId || !BillDate) {
-            return res.status(400).json({
-                error: "شماره بل، مشتری و تاریخ بل الزامی است"
-            });
-        }
+        if (!BillNumber || !EmployeeId || !CustomerId || !BillDate) {
+    return res.status(400).json({
+        error: "شماره بل، کارمند، مشتری و تاریخ بل الزامی است"
+    });
+}
+
+const employeeId = Number(EmployeeId);
+
+if (!employeeId || employeeId <= 0) {
+    return res.status(400).json({
+        error: "کارمند ثبت‌کننده بل نامعتبر است"
+    });
+}
 
         const total = Number(TotalAmount || 0);
         const receipt = Number(ReceiptAmount || 0);
@@ -522,6 +1236,11 @@ app.post("/api/bills", async (req, res) => {
         // =================================================
 
         const billRequest = new sql.Request(transaction);
+        billRequest.input(
+    "EmployeeId",
+    sql.Int,
+    employeeId
+);
 
         billRequest.input(
             "BillNumber",
@@ -554,31 +1273,34 @@ app.post("/api/bills", async (req, res) => {
         );
 
         const billResult = await billRequest.query(`
-            INSERT INTO Bills
-            (
-                BillNumber,
-                CustomerId,
-                BillDate,
-                DeliveryDate,
-                TotalAmount
-            )
-            OUTPUT
-                INSERTED.Id,
-                INSERTED.BillNumber,
-                INSERTED.CustomerId,
-                INSERTED.BillDate,
-                INSERTED.DeliveryDate,
-                INSERTED.TotalAmount,
-                INSERTED.CreatedAt
-            VALUES
-            (
-                @BillNumber,
-                @CustomerId,
-                @BillDate,
-                @DeliveryDate,
-                @TotalAmount
-            )
-        `);
+    INSERT INTO Bills
+    (
+        BillNumber,
+        CustomerId,
+        EmployeeId,
+        BillDate,
+        DeliveryDate,
+        TotalAmount
+    )
+    OUTPUT
+        INSERTED.Id,
+        INSERTED.BillNumber,
+        INSERTED.CustomerId,
+        INSERTED.EmployeeId,
+        INSERTED.BillDate,
+        INSERTED.DeliveryDate,
+        INSERTED.TotalAmount,
+        INSERTED.CreatedAt
+    VALUES
+    (
+        @BillNumber,
+        @CustomerId,
+        @EmployeeId,
+        @BillDate,
+        @DeliveryDate,
+        @TotalAmount
+    )
+`);
 
         const bill = billResult.recordset[0];
 
@@ -1074,7 +1796,7 @@ app.post("/api/bills", async (req, res) => {
 
         await transaction.commit();
 
-        res.status(201).json({
+               res.status(201).json({
 
             message: "بل با موفقیت ثبت شد",
 
@@ -1086,413 +1808,45 @@ app.post("/api/bills", async (req, res) => {
         });
 
     } catch (err) {
-
-        try {
-            await transaction.rollback();
-        } catch (rollbackError) {
-            console.error(
-                "❌ Rollback error:",
-                rollbackError
-            );
-        }
-
+    try {
+        await transaction.rollback();
+    } catch (rollbackError) {
         console.error(
-            "❌ Error adding bill:",
-            err
+            "❌ Rollback error:",
+            rollbackError
         );
+    }
 
-        res.status(500).json({
+    console.error(
+        "❌ Error adding bill:",
+        err
+    );
 
-            error: "خطا در ثبت بل",
+    // شماره بل تکراری
+    if (err.number === 2601 || err.number === 2627) {
 
-            details: err.message
+        return res.status(409).json({
+            success: false,
+            error: "این شماره بل قبلاً ثبت شده است. لطفاً شماره دیگری وارد کنید."
         });
+
+    }
+
+    res.status(500).json({
+
+        success: false,
+        error: "خطا در ثبت بل",
+
+        details: err.message
+    });
+
+
     }
 });
 
 // =========================================================
 // نمایش جزئیات کامل یک بل
 // =========================================================
-
-app.get("/api/bills/:id", async (req, res) => {
-
-    try {
-
-        const billId = Number(req.params.id);
-
-        if (!billId || billId <= 0) {
-            return res.status(400).json({
-                error: "شناسه بل نامعتبر است"
-            });
-        }
-
-        const pool = await sql.connect(dbConfig);
-
-        // =================================================
-        // اطلاعات اصلی بل + مشتری
-        // =================================================
-
-        const billResult = await pool.request()
-            .input("BillId", sql.Int, billId)
-            .query(`
-                SELECT
-                    b.Id,
-                    b.BillNumber,
-                    b.CustomerId,
-                    c.FullName AS CustomerName,
-                    c.Phone,
-                    c.Address,
-                    b.BillDate,
-                    b.DeliveryDate,
-                    b.TotalAmount,
-
-                    ISNULL(
-                        (
-                            SELECT SUM(p.Amount)
-                            FROM Payments p
-                            WHERE p.BillId = b.Id
-                        ),
-                        0
-                    ) AS ReceiptAmount,
-
-                    b.TotalAmount -
-                    ISNULL(
-                        (
-                            SELECT SUM(p.Amount)
-                            FROM Payments p
-                            WHERE p.BillId = b.Id
-                        ),
-                        0
-                    ) AS BalanceAmount,
-
-                    b.CreatedAt
-
-                FROM Bills b
-
-                INNER JOIN Customers c
-                    ON c.Id = b.CustomerId
-
-                WHERE b.Id = @BillId
-            `);
-
-        if (billResult.recordset.length === 0) {
-
-            return res.status(404).json({
-                error: "بل پیدا نشد"
-            });
-        }
-
-        // =================================================
-        // تشک و بالشت
-        // =================================================
-
-        const mattressResult = await pool.request()
-            .input("BillId", sql.Int, billId)
-            .query(`
-                SELECT
-                    Id,
-                    BillId,
-                    TailorId,
-                    Simple,
-                    SajafDar,
-                    Boxi,
-                    DesignDar,
-                    ZirPoosh,
-                    MattressCount,
-                    PillowCount,
-                    SmallPillowCount,
-                    RollPillowCount,
-                    FabricMeters,
-                    FabricPrice,
-                    SewingPrice,
-                    TailorRate,
-                    TailorAmount,
-                    CreatedAt
-
-                FROM MattressItems
-
-                WHERE BillId = @BillId
-
-                ORDER BY Id ASC
-            `);
-
-        // =================================================
-        // پرده و جالی
-        // =================================================
-
-        const curtainResult = await pool.request()
-            .input("BillId", sql.Int, billId)
-            .query(`
-                SELECT
-                    Id,
-                    BillId,
-                    TailorId,
-                    Ringdar,
-                    Plyti,
-                    SePlyte,
-                    Minimal,
-                    Iranian,
-                    PoshtPardeyi,
-                    JaliMeters,
-                    JaliPrice,
-                    FabricMeters,
-                    FabricPrice,
-                    SewingPrice,
-                    TailorRate,
-                    TailorAmount,
-                    CreatedAt
-
-                FROM CurtainItems
-
-                WHERE BillId = @BillId
-
-                ORDER BY Id ASC
-            `);
-
-        // =================================================
-        // رسیدها
-        // =================================================
-
-        const paymentsResult = await pool.request()
-            .input("BillId", sql.Int, billId)
-            .query(`
-                SELECT
-                    Id,
-                    BillId,
-                    Amount,
-                    PaymentDate,
-                    Description,
-                    CreatedAt
-
-                FROM Payments
-
-                WHERE BillId = @BillId
-
-                ORDER BY PaymentDate ASC, Id ASC
-            `);
-
-        // =================================================
-        // مجموع دستمزد خیاط
-        // =================================================
-
-        const tailorResult = await pool.request()
-            .input("BillId", sql.Int, billId)
-            .query(`
-                SELECT
-                    ISNULL(
-                        (
-                            SELECT SUM(TailorAmount)
-                            FROM MattressItems
-                            WHERE BillId = @BillId
-                        ),
-                        0
-                    )
-                    +
-                    ISNULL(
-                        (
-                            SELECT SUM(TailorAmount)
-                            FROM CurtainItems
-                            WHERE BillId = @BillId
-                        ),
-                        0
-                    ) AS TailorTotalAmount
-            `);
-
-        res.json({
-
-            bill: billResult.recordset[0],
-
-            mattressItems:
-                mattressResult.recordset,
-
-            curtainItems:
-                curtainResult.recordset,
-
-            payments:
-                paymentsResult.recordset,
-
-            tailorTotal:
-                Number(
-                    tailorResult.recordset[0]
-                        .TailorTotalAmount || 0
-                )
-        });
-
-    } catch (err) {
-
-        console.error(
-            "❌ Error getting bill details:",
-            err
-        );
-
-        res.status(500).json({
-
-            error: "خطا در دریافت جزئیات بل",
-
-            details: err.message
-        });
-    }
-});
-
-// =========================================================
-// حساب مشتری
-// =========================================================
-
-app.get("/api/customers/:id/account", async (req, res) => {
-
-    try {
-
-        const customerId =
-            Number(req.params.id);
-
-        if (!customerId || customerId <= 0) {
-
-            return res.status(400).json({
-                error: "شناسه مشتری نامعتبر است"
-            });
-        }
-
-        const pool =
-            await sql.connect(dbConfig);
-
-        // =================================================
-        // اطلاعات مشتری
-        // =================================================
-
-        const customerResult =
-            await pool.request()
-                .input(
-                    "CustomerId",
-                    sql.Int,
-                    customerId
-                )
-                .query(`
-                    SELECT
-                        Id,
-                        FullName,
-                        Phone,
-                        Address,
-                        CreatedAt
-                    FROM Customers
-                    WHERE Id = @CustomerId
-                `);
-
-        if (customerResult.recordset.length === 0) {
-
-            return res.status(404).json({
-                error: "مشتری پیدا نشد"
-            });
-        }
-
-        // =================================================
-        // بل‌های مشتری
-        // =================================================
-
-        const billsResult =
-            await pool.request()
-                .input(
-                    "CustomerId",
-                    sql.Int,
-                    customerId
-                )
-                .query(`
-                    SELECT
-                        b.Id,
-                        b.BillNumber,
-                        b.BillDate,
-                        b.DeliveryDate,
-                        b.TotalAmount,
-
-                        ISNULL(
-                            (
-                                SELECT SUM(p.Amount)
-                                FROM Payments p
-                                WHERE p.BillId = b.Id
-                            ),
-                            0
-                        ) AS ReceiptAmount,
-
-                        b.TotalAmount -
-                        ISNULL(
-                            (
-                                SELECT SUM(p.Amount)
-                                FROM Payments p
-                                WHERE p.BillId = b.Id
-                            ),
-                            0
-                        ) AS BalanceAmount
-
-                    FROM Bills b
-
-                    WHERE b.CustomerId = @CustomerId
-
-                    ORDER BY b.Id DESC
-                `);
-
-        const bills =
-            billsResult.recordset;
-
-        // =================================================
-        // محاسبه مجموع حساب
-        // =================================================
-
-        let totalAmount = 0;
-        let totalReceipt = 0;
-        let totalBalance = 0;
-
-        bills.forEach(bill => {
-
-            totalAmount +=
-                Number(bill.TotalAmount || 0);
-
-            totalReceipt +=
-                Number(bill.ReceiptAmount || 0);
-
-            totalBalance +=
-                Number(bill.BalanceAmount || 0);
-        });
-
-        res.json({
-
-            customer:
-                customerResult.recordset[0],
-
-            summary: {
-
-                TotalAmount:
-                    totalAmount,
-
-                ReceiptAmount:
-                    totalReceipt,
-
-                BalanceAmount:
-                    totalBalance
-            },
-
-            bills:
-                bills
-        });
-
-    } catch (err) {
-
-        console.error(
-            "❌ Error getting customer account:",
-            err
-        );
-
-        res.status(500).json({
-
-            error: "خطا در دریافت حساب مشتری",
-
-            details: err.message
-        });
-    }
-});
-
-// =========================================================
-// نمایش و جستجوی بل‌ها
-// =========================================================
-
 app.get("/api/bills", async (req, res) => {
 
     try {
@@ -1630,7 +1984,259 @@ app.get("/api/bills", async (req, res) => {
         });
     }
 });
+// =========================================================
+// دریافت جزئیات کامل یک بل
+// =========================================================
 
+app.get("/api/bills/:id", async (req, res) => {
+
+    try {
+
+        const billId = Number(req.params.id);
+
+        if (!billId || billId <= 0) {
+            return res.status(400).json({
+                error: "شناسه بل نامعتبر است"
+            });
+        }
+
+        const pool = await sql.connect(dbConfig);
+
+
+        // -------------------------------------------------
+        // اطلاعات اصلی بل
+        // -------------------------------------------------
+
+        const billResult = await pool.request()
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT
+                    b.Id,
+                    b.BillNumber,
+                    b.CustomerId,
+
+                    c.FullName AS CustomerName,
+                    c.Phone,
+                    c.Address,
+
+                    b.BillDate,
+                    b.DeliveryDate,
+                    b.TotalAmount,
+
+                    ISNULL(
+                        (
+                            SELECT SUM(p.Amount)
+                            FROM Payments p
+                            WHERE p.BillId = b.Id
+                        ),
+                        0
+                    ) AS ReceiptAmount,
+
+                    b.TotalAmount -
+                    ISNULL(
+                        (
+                            SELECT SUM(p.Amount)
+                            FROM Payments p
+                            WHERE p.BillId = b.Id
+                        ),
+                        0
+                    ) AS BalanceAmount,
+
+                    b.CreatedAt
+
+                FROM Bills b
+
+                INNER JOIN Customers c
+                    ON c.Id = b.CustomerId
+
+                WHERE b.Id = @BillId
+            `);
+
+
+        if (billResult.recordset.length === 0) {
+
+            return res.status(404).json({
+                error: "بل پیدا نشد"
+            });
+
+        }
+
+
+        // -------------------------------------------------
+        // اجناس تشک و بالشت
+        // -------------------------------------------------
+
+        const mattressResult = await pool.request()
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT
+                    Id,
+                    BillId,
+                    TailorId,
+
+                    Simple,
+                    SajafDar,
+                    Boxi,
+                    DesignDar,
+                    ZirPoosh,
+
+                    MattressCount,
+                    PillowCount,
+                    SmallPillowCount,
+                    RollPillowCount,
+
+                    FabricMeters,
+                    FabricPrice,
+                    SewingPrice,
+
+                    TailorRate,
+                    TailorAmount,
+
+                    CreatedAt
+
+                FROM MattressItems
+
+                WHERE BillId = @BillId
+
+                ORDER BY Id ASC
+            `);
+
+
+        // -------------------------------------------------
+        // اجناس جالی و پرده
+        // -------------------------------------------------
+
+        const curtainResult = await pool.request()
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT
+                    Id,
+                    BillId,
+                    TailorId,
+
+                    Ringdar,
+                    Plyti,
+                    SePlyte,
+                    Minimal,
+                    Iranian,
+                    PoshtPardeyi,
+
+                    JaliMeters,
+                    JaliPrice,
+
+                    FabricMeters,
+                    FabricPrice,
+
+                    SewingPrice,
+
+                    TailorRate,
+                    TailorAmount,
+
+                    CreatedAt
+
+                FROM CurtainItems
+
+                WHERE BillId = @BillId
+
+                ORDER BY Id ASC
+            `);
+
+
+        // -------------------------------------------------
+        // پرداخت‌های بل
+        // -------------------------------------------------
+
+        const paymentsResult = await pool.request()
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT
+                    Id,
+                    BillId,
+                    Amount,
+                    PaymentDate,
+                    Description,
+                    CreatedAt
+
+                FROM Payments
+
+                WHERE BillId = @BillId
+
+                ORDER BY PaymentDate ASC, Id ASC
+            `);
+
+
+        // -------------------------------------------------
+        // حساب خیاط
+        // -------------------------------------------------
+
+        const tailorResult = await pool.request()
+            .input("BillId", sql.Int, billId)
+            .query(`
+                SELECT
+                    ISNULL(
+                        (
+                            SELECT SUM(TailorAmount)
+                            FROM MattressItems
+                            WHERE BillId = @BillId
+                        ),
+                        0
+                    )
+                    +
+                    ISNULL(
+                        (
+                            SELECT SUM(TailorAmount)
+                            FROM CurtainItems
+                            WHERE BillId = @BillId
+                        ),
+                        0
+                    ) AS TailorTotalAmount
+            `);
+
+
+        // -------------------------------------------------
+        // ارسال نتیجه
+        // -------------------------------------------------
+
+        res.json({
+
+            bill: billResult.recordset[0],
+
+            mattressItems:
+                mattressResult.recordset,
+
+            curtainItems:
+                curtainResult.recordset,
+
+            payments:
+                paymentsResult.recordset,
+
+            tailorTotal:
+                Number(
+                    tailorResult.recordset[0]
+                        .TailorTotalAmount || 0
+                )
+
+        });
+
+
+    } catch (err) {
+
+        console.error(
+            "❌ Error getting bill details:",
+            err
+        );
+
+        res.status(500).json({
+
+            error: "خطا در دریافت جزئیات بل",
+
+            details: err.message
+
+        });
+
+    }
+
+});
 // =====================================================
 // شروع سرور
 // =====================================================
@@ -1642,6 +2248,7 @@ app.get("/api/bills", async (req, res) => {
 // =========================================================
 // حساب خیاط - با فیلتر ماه
 // =========================================================
+
 
 app.get('/api/tailor/account', async (req, res) => {
 
@@ -2252,7 +2859,6 @@ app.get(
 // =========================================================
 // ثبت رسید جدید برای مشتری
 // =========================================================
-
 app.post(
     "/api/customers/:id/payments",
     async (req, res) => {
@@ -3390,6 +3996,7 @@ app.delete("/api/expenses/:id", async (req, res) => {
     }
 });
 
+
 // API کارمندان
 // =========================================================
 
@@ -4280,6 +4887,163 @@ app.delete("/api/employees/:employeeId/payments/:paymentId", async (req, res) =>
 });
 
 
+// ===============================
+// CREATE EMPLOYEE ACCOUNT
+// ===============================
+app.post("/api/create-employee-account", async (req, res) => {
+    try {
+        const { EmployeeId, Username, Password } = req.body;
+
+        if (!EmployeeId || !Username || !Password) {
+            return res.status(400).json({
+                success: false,
+                message: "EmployeeId، Username و Password الزامی است."
+            });
+        }
+
+        const employee = await sql.query`
+            SELECT Id, FullName
+            FROM Employees
+            WHERE Id = ${EmployeeId}
+        `;
+
+        if (employee.recordset.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "کارمند پیدا نشد."
+            });
+        }
+
+        const existing = await sql.query`
+            SELECT Id
+            FROM EmployeeAccounts
+            WHERE Username = ${Username}
+        `;
+
+        if (existing.recordset.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: "این نام کاربری قبلاً استفاده شده است."
+            });
+        }
+
+        const PasswordHash = await bcrypt.hash(Password, 10);
+
+        const result = await sql.query`
+            INSERT INTO EmployeeAccounts
+            (
+                EmployeeId,
+                Username,
+                PasswordHash,
+                Role,
+                IsActive,
+                CreatedAt
+            )
+            OUTPUT
+                INSERTED.Id,
+                INSERTED.EmployeeId,
+                INSERTED.Username,
+                INSERTED.Role
+            VALUES
+            (
+                ${EmployeeId},
+                ${Username},
+                ${PasswordHash},
+                'employee',
+                1,
+                SYSDATETIME()
+            )
+        `;
+
+        res.json({
+            success: true,
+            message: "حساب کارمند با موفقیت ساخته شد.",
+            user: result.recordset[0]
+        });
+
+    } catch (error) {
+        console.error("Create employee account error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "خطا در ساخت حساب کارمند.",
+            error: error.message
+        });
+    }
+});
+
+// ===============================
+// EMPLOYEE LOGIN
+
+app.post("/api/login", async (req, res) => {
+    try {
+
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "نام کاربری و رمز عبور الزامی است."
+            });
+        }
+
+        const result = await sql.query`
+            SELECT
+                EA.Id,
+                EA.EmployeeId,
+                EA.Username,
+                EA.PasswordHash,
+                EA.Role,
+                E.FullName,
+                E.Phone,
+                E.Position
+            FROM EmployeeAccounts EA
+            INNER JOIN Employees E
+                ON EA.EmployeeId = E.Id
+            WHERE EA.Username = ${username}
+              AND EA.IsActive = 1
+        `;
+
+        if (result.recordset.length === 0) {
+            return res.status(401).json({
+                success: false,
+                message: "نام کاربری یا رمز عبور اشتباه است."
+            });
+        }
+
+        const user = result.recordset[0];
+
+        const passwordMatch = await bcrypt.compare(
+            password,
+            user.PasswordHash
+        );
+
+        if (!passwordMatch) {
+            return res.status(401).json({
+                success: false,
+                message: "نام کاربری یا رمز عبور اشتباه است."
+            });
+        }
+
+        delete user.PasswordHash;
+
+        res.json({
+            success: true,
+            message: "ورود موفقانه انجام شد.",
+            user: user
+        });
+
+    } catch (error) {
+
+        console.error("Login error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "خطا در ورود به سیستم.",
+            error: error.message
+        });
+    }
+});
 const PORT =
     process.env.PORT || 3000;
 
@@ -4462,20 +5226,18 @@ app.post("/api/purchases", async (req, res) => {
                 : null
         );
 
-
-        request.input(
-            "UnitPrice",
-            sql.Decimal(18, 2),
-            unitPrice
+                request.input( 
+            "UnitPrice", 
+            sql.Decimal(18, 2), 
+            unitPrice 
+        ); 
+ 
+        request.input( 
+            "PurchaseDate", 
+            sql.Date, 
+            PurchaseDate 
         );
-
-
-        request.input(
-            "PurchaseDate",
-            sql.Date,
-            PurchaseDate
-        );
-
+       
 
         request.input(
             "Description",
@@ -4847,6 +5609,12 @@ app.delete("/api/purchases/:id", async (req, res) => {
 
 });
 
+app.get("/api/test-bill", (req, res) => {
+    res.json({
+        success: true,
+        message: "Bill route system is working"
+    });
+});
 app.listen(PORT, () => {
 
     console.log(

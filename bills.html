@@ -302,6 +302,87 @@
             color: #991b1b;
         }
 
+        /* =====================================================
+           جستجوی بل‌ها
+        ===================================================== */
+
+        .search-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .search-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-search {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-clear-search {
+            background: #6b7280;
+            color: white;
+        }
+
+        .search-results {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .search-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        .search-table th {
+            background: #1f2937;
+            color: white;
+            padding: 12px;
+            white-space: nowrap;
+        }
+
+        .search-table td {
+            padding: 11px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .search-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .search-empty {
+            text-align: center;
+            color: #888;
+            padding: 25px;
+        }
+
+        .search-details-btn {
+            display: inline-block;
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .search-details-btn:hover {
+            background: #15803d;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
         @media (max-width: 1000px) {
             .grid,
             .tailor-rate-grid {
@@ -309,541 +390,197 @@
             }
         }
 
+        @media (max-width: 900px) {
+            .container {
+                width: 94%;
+                margin: 18px auto 30px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 650px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .container {
+                width: 94%;
+                margin: 14px auto 25px;
+            }
+
+            .header {
+                padding: 17px 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 13px;
+            }
+
+            .card h2 {
+                font-size: 17px;
+            }
+
             .grid,
             .summary,
             .tailor-rate-grid {
                 grid-template-columns: 1fr;
             }
 
+            input,
+            select,
+            textarea {
+                font-size: 14px;
+                padding: 10px;
+                min-height: 42px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
             .section-title {
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            .btn-add {
+                width: 100%;
+            }
+
+            .item-row {
+                padding: 12px;
+            }
+
+            .item-header strong {
+                font-size: 14px;
+            }
+
+            .types {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 7px;
+            }
+
+            .type-box {
+                width: 100%;
+                padding: 9px 7px;
+                font-size: 12px;
+                text-align: center;
+            }
+
+            .tailor-box {
+                padding: 12px;
+            }
+
+            .calculation,
+            .tailor-calculation {
+                font-size: 13px;
+                line-height: 1.8;
+            }
+
+            .summary-box {
+                padding: 15px 10px;
+            }
+
+            .summary-box strong,
+            .tailor-summary strong {
+                font-size: 21px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            button,
+            .link-button {
+                width: 100%;
+                min-height: 43px;
+                padding: 11px 14px;
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .search-buttons {
+                flex-direction: column;
+            }
+
+            .search-buttons button {
+                width: 100%;
+            }
+
+            .search-results {
+                overflow-x: auto;
+            }
+
+            .search-table {
+                min-width: 850px;
+                font-size: 12px;
+            }
         }
-        /* =====================================================
-   جستجوی بل‌ها
-===================================================== */
 
-.search-box{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    padding:18px;
-}
-
-.search-buttons{
-    display:flex;
-    gap:10px;
-    margin-top:15px;
-    flex-wrap:wrap;
-}
-
-.btn-search{
-    background:#2563eb;
-    color:white;
-}
-
-.btn-clear-search{
-    background:#6b7280;
-    color:white;
-}
-
-.search-results{
-    margin-top:20px;
-    overflow-x:auto;
-}
-
-.search-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:850px;
-}
-
-.search-table th{
-    background:#1f2937;
-    color:white;
-    padding:12px;
-    white-space:nowrap;
-}
-
-.search-table td{
-    padding:11px;
-    border-bottom:1px solid #eee;
-    text-align:center;
-    white-space:nowrap;
-}
-
-.search-table tr:hover{
-    background:#f8fafc;
-}
-
-.search-empty{
-    text-align:center;
-    color:#888;
-    padding:25px;
-}
-
-.search-details-btn{
-    display:inline-block;
-    background:#16a34a;
-    color:white;
-    text-decoration:none;
-    padding:7px 12px;
-    border-radius:7px;
-    font-size:13px;
-}
-
-.search-details-btn:hover{
-    background:#15803d;
-}
-/* =========================================================
-   KABOORA CURTAIN - BILLS RESPONSIVE DESIGN
-   فقط ظاهر و سایز صفحه
-   ========================================================= */
-
-/* ---------- کامپیوتر بزرگ ---------- */
-
-@media (min-width: 1400px) {
-
-    .container {
-        max-width: 1400px;
-    }
-
-    .grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .tailor-rate-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-}
-
-
-/* ---------- لپتاپ ---------- */
-
-@media (max-width: 1200px) {
-
-    .container {
-        width: 94%;
-    }
-
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .tailor-rate-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .header {
-        padding: 23px 18px;
-    }
-
-}
-
-
-/* ---------- تبلت ---------- */
-
-@media (max-width: 900px) {
-
-    .container {
-        width: 94%;
-        margin: 18px auto 30px;
-    }
-
-    .header {
-        padding: 20px 15px;
-        border-radius: 13px;
-    }
-
-    .header h1 {
-        font-size: 23px;
-    }
-
-    .header p {
-        font-size: 13px;
-    }
-
-    .card {
-        padding: 18px;
-        border-radius: 13px;
-        margin-bottom: 16px;
-    }
-
-    .card h2 {
-        font-size: 19px;
-    }
-
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .tailor-rate-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .summary {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .section-title {
-        align-items: center;
-    }
-
-    .item-row {
-        padding: 15px;
-    }
-
-    .types {
-        gap: 7px;
-    }
-
-    .type-box {
-        padding: 8px 10px;
-        font-size: 13px;
-    }
-
-    .search-box {
-        padding: 15px;
-    }
-
-    .search-results {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-}
-
-
-/* ---------- موبایل ---------- */
-
-@media (max-width: 650px) {
-
-    body {
-        overflow-x: hidden;
-    }
-
-    .container {
-        width: 94%;
-        margin: 14px auto 25px;
-    }
-
-    .header {
-        padding: 17px 10px;
-        margin-bottom: 14px;
-        border-radius: 11px;
-    }
-
-    .header h1 {
-        font-size: 20px;
-        line-height: 1.6;
-    }
-
-    .header p {
-        font-size: 12px;
-        line-height: 1.7;
-    }
-
-    .card {
-        padding: 13px;
-        border-radius: 11px;
-        margin-bottom: 13px;
-    }
-
-    .card h2 {
-        font-size: 17px;
-        padding-bottom: 10px;
-        margin-bottom: 13px;
-    }
-
-    /* تمام فرم‌ها یک ستونه */
-
-    .grid,
-    .tailor-rate-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .form-group {
-        width: 100%;
-    }
-
-    label {
-        font-size: 13px;
-    }
-
-    input,
-    select,
-    textarea {
-        width: 100%;
-        font-size: 14px;
-        padding: 10px;
-        min-height: 42px;
-    }
-
-    textarea {
-        min-height: 80px;
-    }
-
-    /* عنوان بخش */
-
-    .section-title {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 9px;
-    }
-
-    .section-title h2 {
-        width: 100%;
-    }
-
-    .btn-add {
-        width: 100%;
-        min-height: 42px;
-        font-size: 13px;
-    }
-
-    /* ردیف تشک و پرده */
-
-    .item-row {
-        padding: 12px;
-        border-radius: 10px;
-    }
-
-    .item-header {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .item-header strong {
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-    .btn-remove {
-        padding: 7px 10px;
-        font-size: 12px;
-        white-space: nowrap;
-    }
-
-    /* انواع تشک و پرده */
-
-    .types {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 7px;
-    }
-
-    .type-box {
-        width: 100%;
-        padding: 9px 7px;
-        font-size: 12px;
-        text-align: center;
-    }
-
-    .type-box input {
-        width: auto;
-        min-height: auto;
-        margin-left: 4px;
-    }
-
-    /* بخش خیاط */
-
-    .tailor-box {
-        padding: 12px;
-        margin-top: 13px;
-        border-radius: 9px;
-    }
-
-    .tailor-box h3 {
-        font-size: 15px;
-    }
-
-    /* محاسبات */
-
-    .calculation,
-    .tailor-calculation {
-        padding: 11px;
-        font-size: 13px;
-        line-height: 1.8;
-    }
-
-    /* خلاصه */
-
-    .summary {
-        grid-template-columns: 1fr;
-        gap: 9px;
-    }
-
-    .summary-box {
-        padding: 15px 10px;
-    }
-
-    .summary-box h3 {
-        font-size: 13px;
-    }
-
-    .summary-box strong {
-        font-size: 21px;
-    }
-
-    .tailor-summary {
-        padding: 15px 10px;
-    }
-
-    .tailor-summary h3 {
-        font-size: 14px;
-    }
-
-    .tailor-summary strong {
-        font-size: 21px;
-    }
-
-    /* دکمه‌های اصلی */
-
-    .buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    button,
-    .link-button {
-        width: 100%;
-        min-height: 43px;
-        padding: 11px 14px;
-        font-size: 14px;
-        text-align: center;
-    }
-
-    /* جستجو */
-
-    .search-box {
-        padding: 12px;
-    }
-
-    .search-buttons {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .search-buttons button {
-        width: 100%;
-    }
-
-    /* جدول جستجو */
-
-    .search-results {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .search-table {
-        min-width: 850px;
-        font-size: 12px;
-    }
-
-    .search-table th,
-    .search-table td {
-        padding: 9px 7px;
-    }
-
-    .search-details-btn {
-        padding: 7px 10px;
-        font-size: 11px;
-        white-space: nowrap;
-    }
-
-    .status {
-        font-size: 12px;
-        line-height: 1.8;
-        padding: 10px;
-    }
-
-}
-
-
-/* ---------- موبایل خیلی کوچک ---------- */
-
-@media (max-width: 360px) {
-
-    .container {
-        width: 95%;
-    }
-
-    .header h1 {
-        font-size: 18px;
-    }
-
-    .header p {
-        font-size: 11px;
-    }
-
-    .card {
-        padding: 10px;
-    }
-
-    .card h2 {
-        font-size: 16px;
-    }
-
-    .item-row {
-        padding: 10px;
-    }
-
-    .item-header strong {
-        font-size: 13px;
-    }
-
-    .types {
-        grid-template-columns: 1fr;
-    }
-
-    .type-box {
-        font-size: 12px;
-    }
-
-    .summary-box strong,
-    .tailor-summary strong {
-        font-size: 19px;
-    }
-
-    .search-table {
-        min-width: 800px;
-    }
-
-}
-
-
-/* ---------- جلوگیری از بیرون‌زدگی ---------- */
-
-.card,
-.item-row,
-.tailor-box,
-.search-box,
-.summary-box,
-.tailor-summary {
-    overflow-wrap: anywhere;
-}
-
-
-/* ---------- لمس بهتر موبایل ---------- */
-
-@media (max-width: 650px) {
-
-    button,
-    input,
-    select,
-    textarea {
-        touch-action: manipulation;
-    }
-
-}
+        @media (max-width: 360px) {
+            .container {
+                width: 95%;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .card {
+                padding: 10px;
+            }
+
+            .types {
+                grid-template-columns: 1fr;
+            }
+
+            .search-table {
+                min-width: 800px;
+            }
+        }
+
+        .card,
+        .item-row,
+        .tailor-box,
+        .search-box,
+        .summary-box,
+        .tailor-summary {
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 650px) {
+            button,
+            input,
+            select,
+            textarea {
+                touch-action: manipulation;
+            }
+        }
     </style>
 </head>
 
@@ -859,142 +596,107 @@
     <div id="status" class="status"></div>
 
     <!-- =====================================================
-     جستجوی بل‌ها
-===================================================== -->
+         جستجوی بل‌ها
+    ===================================================== -->
 
-<div class="card">
+    <div class="card">
 
-    <h2>🔍 جستجوی بل‌ها</h2>
+        <h2>🔍 جستجوی بل‌ها</h2>
 
-    <div class="search-box">
+        <div class="search-box">
 
-        <div class="grid">
+            <div class="grid">
 
-            <div class="form-group">
+                <div class="form-group">
+                    <label>شماره بل</label>
 
-                <label>شماره بل</label>
+                    <input
+                        type="number"
+                        id="searchBillNumber"
+                        placeholder="مثلاً 25">
+                </div>
 
-                <input
-                    type="number"
-                    id="searchBillNumber"
-                    placeholder="مثلاً 25">
+                <div class="form-group">
+                    <label>نام مشتری</label>
 
-            </div>
+                    <input
+                        type="text"
+                        id="searchCustomerName"
+                        placeholder="نام مشتری">
+                </div>
 
+                <div class="form-group">
+                    <label>شماره تلفن</label>
 
-            <div class="form-group">
+                    <input
+                        type="text"
+                        id="searchPhone"
+                        placeholder="شماره تلفن">
+                </div>
 
-                <label>نام مشتری</label>
+                <div class="form-group">
+                    <label>تاریخ بل</label>
 
-                <input
-                    type="text"
-                    id="searchCustomerName"
-                    placeholder="نام مشتری">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>شماره تلفن</label>
-
-                <input
-                    type="text"
-                    id="searchPhone"
-                    placeholder="شماره تلفن">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>تاریخ بل</label>
-
-                <input
-                    type="date"
-                    id="searchDate">
+                    <input
+                        type="date"
+                        id="searchDate">
+                </div>
 
             </div>
 
-        </div>
+            <div class="search-buttons">
 
+                <button
+                    type="button"
+                    class="btn-search"
+                    onclick="searchBills()">
+                    🔍 جستجو
+                </button>
 
-        <div class="search-buttons">
+                <button
+                    type="button"
+                    class="btn-clear-search"
+                    onclick="clearBillSearch()">
+                    🔄 پاک کردن جستجو
+                </button>
 
-            <button
-                type="button"
-                class="btn-search"
-                onclick="searchBills()">
+            </div>
 
-                🔍 جستجو
+            <div class="search-results">
 
-            </button>
+                <table class="search-table">
 
+                    <thead>
+                        <tr>
+                            <th>شماره بل</th>
+                            <th>نام مشتری</th>
+                            <th>شماره تلفن</th>
+                            <th>تاریخ</th>
+                            <th>مبلغ کل</th>
+                            <th>رسید</th>
+                            <th>باقی‌مانده</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
 
-            <button
-                type="button"
-                class="btn-clear-search"
-                onclick="clearBillSearch()">
+                    <tbody id="searchResultsBody">
 
-                🔄 پاک کردن جستجو
+                        <tr>
+                            <td colspan="8" class="search-empty">
+                                برای جستجو اطلاعات را وارد کنید.
+                            </td>
+                        </tr>
 
-            </button>
+                    </tbody>
 
-        </div>
+                </table>
 
-
-        <div class="search-results">
-
-            <table class="search-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>شماره بل</th>
-
-                        <th>نام مشتری</th>
-
-                        <th>شماره تلفن</th>
-
-                        <th>تاریخ</th>
-
-                        <th>مبلغ کل</th>
-
-                        <th>رسید</th>
-
-                        <th>باقی‌مانده</th>
-
-                        <th>عملیات</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="searchResultsBody">
-
-                    <tr>
-
-                        <td
-                            colspan="8"
-                            class="search-empty">
-
-                            برای جستجو اطلاعات را وارد کنید.
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
     <!-- ================= اطلاعات بل ================= -->
 
@@ -1006,7 +708,12 @@
 
             <div class="form-group">
                 <label>شماره بل</label>
-                <input type="number" id="BillNumber" readonly>
+               <input
+    type="number"
+    id="BillNumber"
+    min="1"
+    placeholder="شماره بل را وارد کنید"
+    required>
             </div>
 
             <div class="form-group">
@@ -1085,7 +792,6 @@
         <div class="grid">
 
             <div class="form-group">
-
                 <label>رسید</label>
 
                 <input
@@ -1095,17 +801,14 @@
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
             <div class="form-group">
-
                 <label>تاریخ رسید</label>
 
                 <input
                     type="date"
                     id="PaymentDate">
-
             </div>
 
             <div
@@ -1134,37 +837,24 @@
         <div class="summary">
 
             <div class="summary-box">
-
                 <h3>مجموع بل مشتری</h3>
-
                 <strong id="showTotal">0</strong>
-
                 <div>افغانی</div>
-
             </div>
 
             <div class="summary-box">
-
                 <h3>رسید مشتری</h3>
-
                 <strong id="showReceipt">0</strong>
-
                 <div>افغانی</div>
-
             </div>
 
             <div class="summary-box">
-
                 <h3>باقی‌مانده مشتری</h3>
-
                 <strong id="showBalance">0</strong>
-
                 <div>افغانی</div>
-
             </div>
 
         </div>
-
 
         <div class="tailor-summary">
 
@@ -1275,7 +965,9 @@ async function loadNextBillNumber() {
         const data =
             await response.json();
 
-        document.getElementById("BillNumber").value =
+        document.getElementById(
+            "BillNumber"
+        ).value =
             data.BillNumber;
 
     } catch (error) {
@@ -1307,7 +999,9 @@ async function loadCustomers() {
             await response.json();
 
         const select =
-            document.getElementById("CustomerId");
+            document.getElementById(
+                "CustomerId"
+            );
 
         select.innerHTML =
             '<option value="">انتخاب مشتری</option>';
@@ -1315,7 +1009,9 @@ async function loadCustomers() {
         customers.forEach(customer => {
 
             const option =
-                document.createElement("option");
+                document.createElement(
+                    "option"
+                );
 
             option.value =
                 customer.Id;
@@ -1380,7 +1076,6 @@ function addMattressRow() {
 
         </div>
 
-
         <label>نوع تشک</label>
 
         <div class="types">
@@ -1412,7 +1107,6 @@ function addMattressRow() {
 
         </div>
 
-
         <div class="grid">
 
             <div class="form-group">
@@ -1426,7 +1120,6 @@ function addMattressRow() {
                     oninput="calculateGrandTotal()">
             </div>
 
-
             <div class="form-group">
                 <label>تعداد بالشت</label>
 
@@ -1437,7 +1130,6 @@ function addMattressRow() {
                     value="0"
                     oninput="calculateGrandTotal()">
             </div>
-
 
             <div class="form-group">
                 <label>بالشت کوچک</label>
@@ -1450,7 +1142,6 @@ function addMattressRow() {
                     oninput="calculateGrandTotal()">
             </div>
 
-
             <div class="form-group">
                 <label>بالشت رول</label>
 
@@ -1461,7 +1152,6 @@ function addMattressRow() {
                     value="0"
                     oninput="calculateGrandTotal()">
             </div>
-
 
             <div class="form-group">
                 <label>متر پارچه</label>
@@ -1475,7 +1165,6 @@ function addMattressRow() {
                     oninput="calculateGrandTotal()">
             </div>
 
-
             <div class="form-group">
                 <label>قیمت هر متر پارچه مشتری</label>
 
@@ -1487,7 +1176,6 @@ function addMattressRow() {
                     value="0"
                     oninput="calculateGrandTotal()">
             </div>
-
 
             <div class="form-group">
                 <label>قیمت دوخت مشتری</label>
@@ -1503,11 +1191,6 @@ function addMattressRow() {
 
         </div>
 
-
-        <!-- =================================================
-             نرخ‌های خیاط تشک
-             ================================================= -->
-
         <div class="tailor-box">
 
             <h3>✂️ نرخ دستمزد خیاط</h3>
@@ -1515,7 +1198,6 @@ function addMattressRow() {
             <div class="tailor-rate-grid">
 
                 <div class="form-group">
-
                     <label>نرخ خیاط تشک ساده</label>
 
                     <input
@@ -1525,12 +1207,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط سجاف‌دار</label>
 
                     <input
@@ -1540,12 +1219,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط باکسی</label>
 
                     <input
@@ -1555,12 +1231,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط دیزاین‌دار</label>
 
                     <input
@@ -1570,12 +1243,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط زیرپوش</label>
 
                     <input
@@ -1585,12 +1255,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط بالشت</label>
 
                     <input
@@ -1600,12 +1267,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط بالشت کوچک</label>
 
                     <input
@@ -1615,12 +1279,9 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
-
                 <div class="form-group">
-
                     <label>نرخ خیاط بالشت رول</label>
 
                     <input
@@ -1630,13 +1291,11 @@ function addMattressRow() {
                         step="0.01"
                         value="0"
                         oninput="calculateGrandTotal()">
-
                 </div>
 
             </div>
 
         </div>
-
 
         <div class="calculation">
 
@@ -1646,7 +1305,6 @@ function addMattressRow() {
 
         </div>
 
-
         <div class="tailor-calculation">
 
             دستمزد خیاط این ردیف:
@@ -1654,7 +1312,6 @@ function addMattressRow() {
             افغانی
 
         </div>
-
     `;
 
     container.appendChild(row);
@@ -1671,181 +1328,190 @@ function calculateMattressRow(row) {
 
     const mattressCount =
         Number(
-            row.querySelector(".mattressCount").value
+            row.querySelector(
+                ".mattressCount"
+            ).value
         ) || 0;
 
     const pillowCount =
         Number(
-            row.querySelector(".pillowCount").value
+            row.querySelector(
+                ".pillowCount"
+            ).value
         ) || 0;
 
     const smallPillowCount =
         Number(
-            row.querySelector(".smallPillowCount").value
+            row.querySelector(
+                ".smallPillowCount"
+            ).value
         ) || 0;
 
     const rollPillowCount =
         Number(
-            row.querySelector(".rollPillowCount").value
+            row.querySelector(
+                ".rollPillowCount"
+            ).value
         ) || 0;
 
     const fabricMeters =
         Number(
-            row.querySelector(".fabricMeters").value
+            row.querySelector(
+                ".fabricMeters"
+            ).value
         ) || 0;
 
     const fabricPrice =
         Number(
-            row.querySelector(".fabricPrice").value
+            row.querySelector(
+                ".fabricPrice"
+            ).value
         ) || 0;
 
     const sewingPrice =
         Number(
-            row.querySelector(".sewingPrice").value
+            row.querySelector(
+                ".sewingPrice"
+            ).value
         ) || 0;
 
-
-    // =================================================
-    // قیمت مشتری
-    // =================================================
-
     const customerTotal =
-        (fabricMeters * fabricPrice)
-        +
+        (fabricMeters * fabricPrice) +
         sewingPrice;
-
-
-    // =================================================
-    // نرخ‌های خیاط
-    // =================================================
 
     const tailorSimplePrice =
         Number(
-            row.querySelector(".tailorSimplePrice").value
+            row.querySelector(
+                ".tailorSimplePrice"
+            ).value
         ) || 0;
 
     const tailorSajafDarPrice =
         Number(
-            row.querySelector(".tailorSajafDarPrice").value
+            row.querySelector(
+                ".tailorSajafDarPrice"
+            ).value
         ) || 0;
 
     const tailorBoxiPrice =
         Number(
-            row.querySelector(".tailorBoxiPrice").value
+            row.querySelector(
+                ".tailorBoxiPrice"
+            ).value
         ) || 0;
 
     const tailorDesignDarPrice =
         Number(
-            row.querySelector(".tailorDesignDarPrice").value
+            row.querySelector(
+                ".tailorDesignDarPrice"
+            ).value
         ) || 0;
 
     const tailorZirPooshPrice =
         Number(
-            row.querySelector(".tailorZirPooshPrice").value
+            row.querySelector(
+                ".tailorZirPooshPrice"
+            ).value
         ) || 0;
 
     const tailorPillowPrice =
         Number(
-            row.querySelector(".tailorPillowPrice").value
+            row.querySelector(
+                ".tailorPillowPrice"
+            ).value
         ) || 0;
 
     const tailorSmallPillowPrice =
         Number(
-            row.querySelector(".tailorSmallPillowPrice").value
+            row.querySelector(
+                ".tailorSmallPillowPrice"
+            ).value
         ) || 0;
 
     const tailorRollPillowPrice =
         Number(
-            row.querySelector(".tailorRollPillowPrice").value
+            row.querySelector(
+                ".tailorRollPillowPrice"
+            ).value
         ) || 0;
-
-
-    // =================================================
-    // محاسبه دستمزد خیاط
-    // =================================================
 
     let tailorTotal = 0;
 
-
     if (
-        row.querySelector(".simple").checked
+        row.querySelector(
+            ".simple"
+        ).checked
     ) {
-
         tailorTotal +=
             mattressCount *
             tailorSimplePrice;
     }
 
-
     if (
-        row.querySelector(".sajafDar").checked
+        row.querySelector(
+            ".sajafDar"
+        ).checked
     ) {
-
         tailorTotal +=
             mattressCount *
             tailorSajafDarPrice;
     }
 
-
     if (
-        row.querySelector(".boxi").checked
+        row.querySelector(
+            ".boxi"
+        ).checked
     ) {
-
         tailorTotal +=
             mattressCount *
             tailorBoxiPrice;
     }
 
-
     if (
-        row.querySelector(".designDar").checked
+        row.querySelector(
+            ".designDar"
+        ).checked
     ) {
-
         tailorTotal +=
             mattressCount *
             tailorDesignDarPrice;
     }
 
-
     if (
-        row.querySelector(".zirPoosh").checked
+        row.querySelector(
+            ".zirPoosh"
+        ).checked
     ) {
-
         tailorTotal +=
             mattressCount *
             tailorZirPooshPrice;
     }
 
-
-    // بالشت
     tailorTotal +=
         pillowCount *
         tailorPillowPrice;
 
-
-    // بالشت کوچک
     tailorTotal +=
         smallPillowCount *
         tailorSmallPillowPrice;
 
-
-    // بالشت رول
     tailorTotal +=
         rollPillowCount *
         tailorRollPillowPrice;
 
+    row.querySelector(
+        ".rowTotal"
+    ).textContent =
+        customerTotal.toLocaleString(
+            "en-US"
+        );
 
-    // =================================================
-    // نمایش
-    // =================================================
-
-    row.querySelector(".rowTotal").textContent =
-        customerTotal.toLocaleString("en-US");
-
-
-    row.querySelector(".tailorRowTotal").textContent =
-        tailorTotal.toLocaleString("en-US");
-
+    row.querySelector(
+        ".tailorRowTotal"
+    ).textContent =
+        tailorTotal.toLocaleString(
+            "en-US"
+        );
 
     return {
         customerTotal,
@@ -1875,7 +1541,6 @@ function addCurtainRow() {
     row.dataset.id =
         curtainCounter;
 
-
     row.innerHTML = `
 
         <div class="item-header">
@@ -1895,7 +1560,6 @@ function addCurtainRow() {
             </button>
 
         </div>
-
 
         <label>نوع پرده</label>
 
@@ -1933,11 +1597,9 @@ function addCurtainRow() {
 
         </div>
 
-
         <div class="grid">
 
             <div class="form-group">
-
                 <label>متر جالی</label>
 
                 <input
@@ -1947,12 +1609,9 @@ function addCurtainRow() {
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
-
             <div class="form-group">
-
                 <label>قیمت هر متر جالی مشتری</label>
 
                 <input
@@ -1962,12 +1621,9 @@ function addCurtainRow() {
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
-
             <div class="form-group">
-
                 <label>متر پارچه</label>
 
                 <input
@@ -1977,12 +1633,9 @@ function addCurtainRow() {
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
-
             <div class="form-group">
-
                 <label>قیمت هر متر پارچه مشتری</label>
 
                 <input
@@ -1992,12 +1645,9 @@ function addCurtainRow() {
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
-
             <div class="form-group">
-
                 <label>قیمت دوخت مشتری هر متر</label>
 
                 <input
@@ -2007,13 +1657,9 @@ function addCurtainRow() {
                     step="0.01"
                     value="0"
                     oninput="calculateGrandTotal()">
-
             </div>
 
         </div>
-
-
-        <!-- ================= نرخ خیاط پرده ================= -->
 
         <div class="tailor-box">
 
@@ -2041,7 +1687,6 @@ function addCurtainRow() {
 
         </div>
 
-
         <div class="calculation">
 
             مبلغ این ردیف مشتری:
@@ -2050,7 +1695,6 @@ function addCurtainRow() {
 
         </div>
 
-
         <div class="tailor-calculation">
 
             دستمزد خیاط این ردیف:
@@ -2058,9 +1702,7 @@ function addCurtainRow() {
             افغانی
 
         </div>
-
     `;
-
 
     container.appendChild(row);
 
@@ -2076,79 +1718,85 @@ function calculateCurtainRow(row) {
 
     const jaliMeters =
         Number(
-            row.querySelector(".jaliMeters").value
+            row.querySelector(
+                ".jaliMeters"
+            ).value
         ) || 0;
 
     const jaliPrice =
         Number(
-            row.querySelector(".jaliPrice").value
+            row.querySelector(
+                ".jaliPrice"
+            ).value
         ) || 0;
 
     const fabricMeters =
         Number(
-            row.querySelector(".fabricMeters").value
+            row.querySelector(
+                ".fabricMeters"
+            ).value
         ) || 0;
 
     const fabricPrice =
         Number(
-            row.querySelector(".fabricPrice").value
+            row.querySelector(
+                ".fabricPrice"
+            ).value
         ) || 0;
 
     const sewingPrice =
         Number(
-            row.querySelector(".sewingPrice").value
+            row.querySelector(
+                ".sewingPrice"
+            ).value
         ) || 0;
 
     const tailorSewingPrice =
         Number(
-            row.querySelector(".tailorSewingPrice").value
+            row.querySelector(
+                ".tailorSewingPrice"
+            ).value
         ) || 0;
 
-
-    // =================================================
-    // مشتری
-    // =================================================
-
     const jaliTotal =
-        jaliMeters * jaliPrice;
+        jaliMeters *
+        jaliPrice;
 
     const jaliSewingTotal =
-        jaliMeters * sewingPrice;
+        jaliMeters *
+        sewingPrice;
 
     const fabricTotal =
-        fabricMeters * fabricPrice;
+        fabricMeters *
+        fabricPrice;
 
     const fabricSewingTotal =
-        fabricMeters * sewingPrice;
-
+        fabricMeters *
+        sewingPrice;
 
     const customerTotal =
-        jaliTotal
-        +
-        jaliSewingTotal
-        +
-        fabricTotal
-        +
+        jaliTotal +
+        jaliSewingTotal +
+        fabricTotal +
         fabricSewingTotal;
 
-
-    // =================================================
-    // خیاط
-    // =================================================
-
     const tailorTotal =
-        (jaliMeters + fabricMeters)
-        *
+        (jaliMeters + fabricMeters) *
         tailorSewingPrice;
 
+    row.querySelector(
+        ".rowTotal"
+    ).textContent =
+        customerTotal.toLocaleString(
+            "en-US"
+        );
 
-    row.querySelector(".rowTotal").textContent =
-        customerTotal.toLocaleString("en-US");
-
-
-    row.querySelector(".tailorRowTotal").textContent =
-        tailorTotal.toLocaleString("en-US");
-
+    row.querySelector(
+        ".tailorRowTotal"
+    ).textContent =
+        tailorTotal.toLocaleString(
+            "en-US"
+        );
 
     return {
         customerTotal,
@@ -2164,11 +1812,8 @@ function calculateCurtainRow(row) {
 function calculateGrandTotal() {
 
     let total = 0;
-
     let tailorTotal = 0;
 
-
-    // تشک
     document
         .querySelectorAll(
             "#mattressContainer .item-row"
@@ -2183,11 +1828,8 @@ function calculateGrandTotal() {
 
             tailorTotal +=
                 result.tailorTotal;
-
         });
 
-
-    // پرده
     document
         .querySelectorAll(
             "#curtainContainer .item-row"
@@ -2202,9 +1844,7 @@ function calculateGrandTotal() {
 
             tailorTotal +=
                 result.tailorTotal;
-
         });
-
 
     const receipt =
         Number(
@@ -2213,34 +1853,28 @@ function calculateGrandTotal() {
             ).value
         ) || 0;
 
-
     const balance =
         total - receipt;
-
 
     document.getElementById(
         "showTotal"
     ).textContent =
         total.toLocaleString("en-US");
 
-
     document.getElementById(
         "showReceipt"
     ).textContent =
         receipt.toLocaleString("en-US");
-
 
     document.getElementById(
         "showBalance"
     ).textContent =
         balance.toLocaleString("en-US");
 
-
     document.getElementById(
         "showTailorTotal"
     ).textContent =
         tailorTotal.toLocaleString("en-US");
-
 
     return {
         total,
@@ -2256,7 +1890,6 @@ function calculateGrandTotal() {
 function getMattressItems() {
 
     const items = [];
-
 
     document
         .querySelectorAll(
@@ -2291,7 +1924,6 @@ function getMattressItems() {
                         ".rollPillowCount"
                     ).value
                 ) || 0;
-
 
             const tailorSimplePrice =
                 Number(
@@ -2349,78 +1981,69 @@ function getMattressItems() {
                     ).value
                 ) || 0;
 
-
-            // =================================================
-            // مبلغ خیاط
-            // =================================================
-
             let tailorSewingAmount = 0;
 
-
             if (
-                row.querySelector(".simple").checked
+                row.querySelector(
+                    ".simple"
+                ).checked
             ) {
-
                 tailorSewingAmount +=
                     mattressCount *
                     tailorSimplePrice;
             }
 
-
             if (
-                row.querySelector(".sajafDar").checked
+                row.querySelector(
+                    ".sajafDar"
+                ).checked
             ) {
-
                 tailorSewingAmount +=
                     mattressCount *
                     tailorSajafDarPrice;
             }
 
-
             if (
-                row.querySelector(".boxi").checked
+                row.querySelector(
+                    ".boxi"
+                ).checked
             ) {
-
                 tailorSewingAmount +=
                     mattressCount *
                     tailorBoxiPrice;
             }
 
-
             if (
-                row.querySelector(".designDar").checked
+                row.querySelector(
+                    ".designDar"
+                ).checked
             ) {
-
                 tailorSewingAmount +=
                     mattressCount *
                     tailorDesignDarPrice;
             }
 
-
             if (
-                row.querySelector(".zirPoosh").checked
+                row.querySelector(
+                    ".zirPoosh"
+                ).checked
             ) {
-
                 tailorSewingAmount +=
                     mattressCount *
                     tailorZirPooshPrice;
             }
 
-
             tailorSewingAmount +=
                 pillowCount *
                 tailorPillowPrice;
-
 
             tailorSewingAmount +=
                 smallPillowCount *
                 tailorSmallPillowPrice;
 
-
             tailorSewingAmount +=
                 rollPillowCount *
                 tailorRollPillowPrice;
-
 
             items.push({
 
@@ -2484,8 +2107,6 @@ function getMattressItems() {
                         ).value
                     ) || 0,
 
-
-                // نرخ‌های خیاط
                 TailorSimplePrice:
                     tailorSimplePrice,
 
@@ -2510,15 +2131,12 @@ function getMattressItems() {
                 TailorRollPillowPrice:
                     tailorRollPillowPrice,
 
-
-                // مجموع دستمزد خیاط
                 TailorSewingAmount:
                     tailorSewingAmount
 
             });
 
         });
-
 
     return items;
 }
@@ -2531,7 +2149,6 @@ function getMattressItems() {
 function getCurtainItems() {
 
     const items = [];
-
 
     document
         .querySelectorAll(
@@ -2560,12 +2177,9 @@ function getCurtainItems() {
                     ).value
                 ) || 0;
 
-
             const tailorSewingAmount =
-                (jaliMeters + fabricMeters)
-                *
+                (jaliMeters + fabricMeters) *
                 tailorSewingPrice;
-
 
             items.push({
 
@@ -2638,7 +2252,6 @@ function getCurtainItems() {
 
         });
 
-
     return items;
 }
 
@@ -2656,7 +2269,6 @@ async function saveBill() {
             ).value
         );
 
-
     const CustomerId =
         Number(
             document.getElementById(
@@ -2664,38 +2276,30 @@ async function saveBill() {
             ).value
         );
 
-
     const BillDate =
         document.getElementById(
             "BillDate"
         ).value;
-
 
     const DeliveryDate =
         document.getElementById(
             "DeliveryDate"
         ).value;
 
-
     const mattressItems =
         getMattressItems();
-
 
     const curtainItems =
         getCurtainItems();
 
-
     const totals =
         calculateGrandTotal();
-
 
     const TotalAmount =
         totals.total;
 
-
     const TailorTotalAmount =
         totals.tailorTotal;
-
 
     const ReceiptAmount =
         Number(
@@ -2704,18 +2308,50 @@ async function saveBill() {
             ).value
         ) || 0;
 
-
     const PaymentDate =
         document.getElementById(
             "PaymentDate"
         ).value;
-
 
     const PaymentDescription =
         document.getElementById(
             "PaymentDescription"
         ).value;
 
+
+    // =====================================================
+    // کارمند وارد شده
+    // =====================================================
+
+    let employeeUser = null;
+
+    try {
+
+        employeeUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "employeeUser"
+                )
+            );
+
+    } catch (error) {
+
+        console.error(
+            "Employee user parse error:",
+            error
+        );
+
+    }
+
+    const EmployeeId =
+        employeeUser
+            ? Number(employeeUser.EmployeeId)
+            : null;
+
+
+    // =====================================================
+    // بررسی اطلاعات
+    // =====================================================
 
     if (!CustomerId) {
 
@@ -2727,7 +2363,6 @@ async function saveBill() {
         return;
     }
 
-
     if (!BillDate) {
 
         showStatus(
@@ -2737,7 +2372,6 @@ async function saveBill() {
 
         return;
     }
-
 
     if (
         mattressItems.length === 0 &&
@@ -2752,7 +2386,6 @@ async function saveBill() {
         return;
     }
 
-
     if (ReceiptAmount > TotalAmount) {
 
         showStatus(
@@ -2763,6 +2396,10 @@ async function saveBill() {
         return;
     }
 
+
+    // =====================================================
+    // ثبت در سرور
+    // =====================================================
 
     try {
 
@@ -2781,6 +2418,8 @@ async function saveBill() {
                     body: JSON.stringify({
 
                         BillNumber,
+
+                        EmployeeId,
 
                         CustomerId,
 
@@ -2818,6 +2457,7 @@ async function saveBill() {
 
             throw new Error(
                 data.error ||
+                data.message ||
                 "خطا در ثبت بل"
             );
 
@@ -2830,7 +2470,7 @@ async function saveBill() {
         );
 
 
-        await loadNextBillNumber();
+       // await loadNextBillNumber();
 
 
         document.getElementById(
@@ -2868,18 +2508,25 @@ async function saveBill() {
         curtainCounter = 0;
 
 
+        addMattressRow();
+
+        addCurtainRow();
+
+
         calculateGrandTotal();
 
 
     } catch (error) {
 
-        console.error(error);
-
-        showStatus(
-            error.message,
-            "error"
+        console.error(
+            "Save bill error:",
+            error
         );
 
+        showStatus(
+            "❌ " + error.message,
+            "error"
+        );
     }
 }
 
@@ -2894,48 +2541,43 @@ function resetForm() {
         "CustomerId"
     ).value = "";
 
-
     document.getElementById(
         "BillDate"
     ).value =
         getToday();
 
-
     document.getElementById(
         "DeliveryDate"
     ).value = "";
 
-
     document.getElementById(
         "ReceiptAmount"
     ).value = 0;
-
 
     document.getElementById(
         "PaymentDate"
     ).value =
         getToday();
 
-
     document.getElementById(
         "PaymentDescription"
     ).value = "";
-
 
     document.getElementById(
         "mattressContainer"
     ).innerHTML = "";
 
-
     document.getElementById(
         "curtainContainer"
     ).innerHTML = "";
-
 
     mattressCounter = 0;
 
     curtainCounter = 0;
 
+    addMattressRow();
+
+    addCurtainRow();
 
     calculateGrandTotal();
 
@@ -2956,62 +2598,74 @@ document.addEventListener(
         ).value =
             getToday();
 
-
         document.getElementById(
             "PaymentDate"
         ).value =
             getToday();
 
-
         await loadCustomers();
 
-        await loadNextBillNumber();
-
+       // await loadNextBillNumber();
 
         addMattressRow();
 
         addCurtainRow();
 
-
         calculateGrandTotal();
 
     }
 );
+
+
 // =====================================================
 // جستجوی بل‌ها
 // =====================================================
 
-
-// =====================================================
-// جستجوی بل‌ها - نسخه اصلاح‌شده
-// =====================================================
-
 async function searchBills() {
 
-    const billNumber = document
-        .getElementById("searchBillNumber")
-        .value
-        .trim();
+    const billNumber =
+        document
+            .getElementById(
+                "searchBillNumber"
+            )
+            .value
+            .trim();
 
-    const customerName = document
-        .getElementById("searchCustomerName")
-        .value
-        .trim();
+    const customerName =
+        document
+            .getElementById(
+                "searchCustomerName"
+            )
+            .value
+            .trim();
 
-    const phone = document
-        .getElementById("searchPhone")
-        .value
-        .trim();
+    const phone =
+        document
+            .getElementById(
+                "searchPhone"
+            )
+            .value
+            .trim();
 
-    const date = document
-        .getElementById("searchDate")
-        .value;
+    const date =
+        document
+            .getElementById(
+                "searchDate"
+            )
+            .value;
 
-    const tbody = document.getElementById("searchResultsBody");
+    const tbody =
+        document.getElementById(
+            "searchResultsBody"
+        );
 
 
-    // اگر هیچ چیزی وارد نشده باشد
-    if (!billNumber && !customerName && !phone && !date) {
+    if (
+        !billNumber &&
+        !customerName &&
+        !phone &&
+        !date
+    ) {
 
         tbody.innerHTML = `
             <tr>
@@ -3025,7 +2679,6 @@ async function searchBills() {
     }
 
 
-    // نمایش حالت جستجو
     tbody.innerHTML = `
         <tr>
             <td colspan="8" class="search-empty">
@@ -3037,73 +2690,83 @@ async function searchBills() {
 
     try {
 
-        const params = new URLSearchParams();
+        const params =
+            new URLSearchParams();
 
 
         if (billNumber) {
-            params.set("billNumber", billNumber);
+            params.append(
+                "BillNumber",
+                billNumber
+            );
         }
 
         if (customerName) {
-            params.set("customerName", customerName);
+            params.append(
+                "CustomerName",
+                customerName
+            );
         }
 
         if (phone) {
-            params.set("phone", phone);
+            params.append(
+                "Phone",
+                phone
+            );
         }
 
         if (date) {
-            params.set("date", date);
+            params.append(
+                "BillDate",
+                date
+            );
         }
-
-
-        const url =
-            `${API}/api/bills?${params.toString()}`;
-
-
-        console.log("Search URL:", url);
 
 
         const response =
-            await fetch(url);
-
-
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-            throw new Error(
-                `خطای سرور: ${response.status} ${errorText}`
+            await fetch(
+                `${API}/api/bills?${params.toString()}`
             );
-        }
 
 
         const data =
             await response.json();
 
 
-        console.log("Search result:", data);
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "خطا در جستجوی بل‌ها"
+            );
+        }
 
 
-        // API ما آرایه برمی‌گرداند
         const bills =
             Array.isArray(data)
                 ? data
                 : (
                     Array.isArray(data.bills)
                         ? data.bills
-                        : []
+                        : (
+                            Array.isArray(data.data)
+                                ? data.data
+                                : []
+                        )
                 );
 
 
-        // هیچ نتیجه‌ای پیدا نشد
         if (bills.length === 0) {
 
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="8" class="search-empty">
+                    <td
+                        colspan="8"
+                        class="search-empty">
+
                         ❌ هیچ بلی با این مشخصات پیدا نشد.
+
                     </td>
                 </tr>
             `;
@@ -3112,116 +2775,122 @@ async function searchBills() {
         }
 
 
-        // نمایش نتایج
-        tbody.innerHTML = bills.map(bill => {
+        tbody.innerHTML =
+            bills.map(bill => {
 
-            const id =
-                String(bill.Id || "").trim();
-
-
-            const billNumberValue =
-                bill.BillNumber ?? "-";
+                const id =
+                    String(
+                        bill.Id || ""
+                    ).trim();
 
 
-            const customer =
-                bill.CustomerName || "-";
+                const billNumberValue =
+                    bill.BillNumber ?? "-";
 
 
-            const customerPhone =
-                bill.Phone || "-";
+                const customer =
+                    bill.CustomerName ||
+                    bill.FullName ||
+                    "-";
 
 
-            const total =
-                Number(
-                    bill.TotalAmount || 0
-                );
+                const customerPhone =
+                    bill.Phone ||
+                    "-";
 
 
-            const receipt =
-                Number(
-                    bill.ReceiptAmount || 0
-                );
+                const total =
+                    Number(
+                        bill.TotalAmount || 0
+                    );
 
 
-            const balance =
-                bill.BalanceAmount !== undefined
-                    ? Number(
-                        bill.BalanceAmount || 0
-                    )
-                    : total - receipt;
+                const receipt =
+                    Number(
+                        bill.ReceiptAmount || 0
+                    );
 
 
-            const billDate =
-                formatSearchDate(
-                    bill.BillDate
-                );
+                const balance =
+                    bill.BalanceAmount !==
+                    undefined
+                        ? Number(
+                            bill.BalanceAmount || 0
+                        )
+                        : total - receipt;
 
 
-            return `
-                <tr>
-
-                    <td>
-                        <strong>
-                            ${billNumberValue}
-                        </strong>
-                    </td>
+                const billDate =
+                    formatSearchDate(
+                        bill.BillDate
+                    );
 
 
-                    <td>
-                        ${escapeHtml(customer)}
-                    </td>
+                return `
 
+                    <tr>
 
-                    <td>
-                        ${escapeHtml(customerPhone)}
-                    </td>
+                        <td>
+                            <strong>
+                                ${billNumberValue}
+                            </strong>
+                        </td>
 
+                        <td>
+                            ${escapeHtml(customer)}
+                        </td>
 
-                    <td>
-                        ${billDate}
-                    </td>
+                        <td>
+                            ${escapeHtml(customerPhone)}
+                        </td>
 
+                        <td>
+                            ${billDate}
+                        </td>
 
-                    <td>
-                        ${moneySearch(total)}
-                    </td>
+                        <td>
+                            ${moneySearch(total)}
+                        </td>
 
+                        <td>
+                            ${moneySearch(receipt)}
+                        </td>
 
-                    <td>
-                        ${moneySearch(receipt)}
-                    </td>
+                        <td>
+                            ${moneySearch(balance)}
+                        </td>
 
+                        <td>
 
-                    <td>
-                        ${moneySearch(balance)}
-                    </td>
+                            ${
+                                id
+                                    ? `
+                                        <a
+                                            href="/bill-details.html?id=${encodeURIComponent(id)}"
+                                            target="_blank"
+                                            class="search-details-btn">
 
+                                            👁 جزئیات
 
-                    <td>
+                                        </a>
+                                    `
+                                    : `
+                                        <span
+                                            style="color:#999;">
 
-                        ${
-                            id
-                            ? `
-                                <a
-                                    href="/bill-details.html?id=${encodeURIComponent(id)}"
-                                    target="_blank"
-                                    class="search-details-btn">
-                                    👁 جزئیات
-                                </a>
-                            `
-                            : `
-                                <span style="color:#999;">
-                                    بدون شناسه
-                                </span>
-                            `
-                        }
+                                            بدون شناسه
 
-                    </td>
+                                        </span>
+                                    `
+                            }
 
-                </tr>
-            `;
+                        </td>
 
-        }).join("");
+                    </tr>
+
+                `;
+
+            }).join("");
 
 
     } catch (error) {
@@ -3233,12 +2902,20 @@ async function searchBills() {
 
 
         tbody.innerHTML = `
+
             <tr>
-                <td colspan="8" class="search-empty">
+
+                <td
+                    colspan="8"
+                    class="search-empty">
+
                     ❌ خطا در جستجو:
                     ${escapeHtml(error.message)}
+
                 </td>
+
             </tr>
+
         `;
     }
 }
@@ -3267,10 +2944,8 @@ function formatSearchDate(value) {
         return "-";
     }
 
-
     const date =
         new Date(value);
-
 
     if (
         Number.isNaN(
@@ -3281,39 +2956,52 @@ function formatSearchDate(value) {
         return String(value);
     }
 
-
     const year =
         date.getFullYear();
-
 
     const month =
         String(
             date.getMonth() + 1
         ).padStart(2, "0");
 
-
     const day =
         String(
             date.getDate()
         ).padStart(2, "0");
-
 
     return `${year}/${month}/${day}`;
 }
 
 
 // =====================================================
-// جلوگیری از نمایش کد HTML
+// جلوگیری از نمایش HTML
 // =====================================================
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
@@ -3327,62 +3015,17 @@ function clearBillSearch() {
         "searchBillNumber"
     ).value = "";
 
-
     document.getElementById(
         "searchCustomerName"
     ).value = "";
-
 
     document.getElementById(
         "searchPhone"
     ).value = "";
 
-
     document.getElementById(
         "searchDate"
     ).value = "";
-
-
-    document.getElementById(
-        "searchResultsBody"
-    ).innerHTML = `
-        <tr>
-            <td
-                colspan="8"
-                class="search-empty">
-
-                برای جستجو اطلاعات را وارد کنید.
-
-            </td>
-        </tr>
-    `;
-}
-
-// =====================================================
-// پاک کردن جستجو
-// =====================================================
-
-function clearBillSearch() {
-
-    document.getElementById(
-        "searchBillNumber"
-    ).value = "";
-
-
-    document.getElementById(
-        "searchCustomerName"
-    ).value = "";
-
-
-    document.getElementById(
-        "searchPhone"
-    ).value = "";
-
-
-    document.getElementById(
-        "searchDate"
-    ).value = "";
-
 
     document.getElementById(
         "searchResultsBody"
@@ -3401,7 +3044,6 @@ function clearBillSearch() {
         </tr>
 
     `;
-
 }
 
 </script>

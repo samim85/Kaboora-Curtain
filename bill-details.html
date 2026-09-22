@@ -1,297 +1,355 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>جزئیات بل - نمایشگاه پرده کابورا</title>
 
-    <title>جزئیات بل - نمایشگاه پرده کابورا</title>
+<style>
 
-    <style>
+* {
+    box-sizing: border-box;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    background: #f1f3f5;
+    font-family: Tahoma, Arial, sans-serif;
+    color: #222;
+}
 
-        body {
-            margin: 0;
-            background: #f1f3f5;
-            font-family: Tahoma, Arial, sans-serif;
-            color: #222;
-        }
+.page {
+    width: 95%;
+    max-width: 1100px;
+    margin: 25px auto;
+}
 
-        .page {
-            width: 95%;
-            max-width: 1100px;
-            margin: 25px auto;
-        }
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
 
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+.toolbar button {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 18px;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
 
-        .toolbar button {
-            border: none;
-            border-radius: 8px;
-            padding: 11px 18px;
-            font-family: Tahoma, Arial, sans-serif;
-            font-size: 14px;
-            cursor: pointer;
-        }
+.back-btn {
+    background: #6b7280;
+    color: white;
+}
 
-        .back-btn {
-            background: #6b7280;
-            color: white;
-        }
+.edit-btn {
+    background: #059669;
+    color: white;
+}
 
-        .print-btn {
-            background: #2563eb;
-            color: white;
-        }
+.print-btn {
+    background: #2563eb;
+    color: white;
+}
 
-        .bill {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, .08);
-        }
+.bill {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.08);
+}
 
-        .bill-header {
-            text-align: center;
-            border-bottom: 2px solid #1f2937;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
+.bill-header {
+    text-align: center;
+    border-bottom: 2px solid #1f2937;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
 
-        .bill-header h1 {
-            margin: 0 0 8px;
-            font-size: 30px;
-            color: #1f2937;
-        }
+.bill-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    color: #1f2937;
+}
 
-        .bill-header p {
-            margin: 0;
-            color: #6b7280;
-        }
+.bill-header p {
+    margin: 0;
+    color: #6b7280;
+}
 
-        .bill-number-box {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 9px 20px;
-            background: #f3f4f6;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #2563eb;
-        }
+.bill-number-box {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 9px 20px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #2563eb;
+}
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
 
-        .info-box {
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 14px;
-            background: #fafafa;
-        }
+.info-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fafafa;
+}
 
-        .info-box small {
-            display: block;
-            color: #6b7280;
-            margin-bottom: 7px;
-        }
+.info-box small {
+    display: block;
+    color: #6b7280;
+    margin-bottom: 7px;
+}
 
-        .info-box strong {
-            font-size: 15px;
-        }
+.info-box strong {
+    font-size: 15px;
+}
 
-        .section {
-            margin-top: 25px;
-        }
+.section {
+    margin-top: 25px;
+}
 
-        .section-title {
-            background: #1f2937;
-            color: white;
-            padding: 12px 15px;
-            border-radius: 8px 8px 0 0;
-            font-size: 17px;
-            font-weight: bold;
-        }
+.section-title {
+    background: #1f2937;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px 8px 0 0;
+    font-size: 17px;
+    font-weight: bold;
+}
 
-        .table-wrapper {
-            overflow-x: auto;
-        }
+.table-wrapper {
+    overflow-x: auto;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 700px;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
 
-        th,
-        td {
-            border: 1px solid #dfe3e8;
-            padding: 10px;
-            text-align: center;
-        }
+th,
+td {
+    border: 1px solid #dfe3e8;
+    padding: 10px;
+    text-align: center;
+}
 
-        th {
-            background: #f3f4f6;
-            font-weight: bold;
-        }
+th {
+    background: #f3f4f6;
+    font-weight: bold;
+}
 
-        tr:nth-child(even) {
-            background: #fafafa;
-        }
+tr:nth-child(even) {
+    background: #fafafa;
+}
 
-        .empty {
-            padding: 25px;
-            color: #6b7280;
-        }
+.empty {
+    padding: 25px;
+    color: #6b7280;
+}
 
-        .amount {
-            font-weight: bold;
-        }
+.amount {
+    font-weight: bold;
+}
 
-        .total-row {
-            background: #eef5ff !important;
-            font-weight: bold;
-        }
+.paid {
+    color: #059669 !important;
+}
 
-        /* =========================
-           خلاصه بل - فقط 3 بخش
-        ========================= */
+.unpaid {
+    color: #dc2626 !important;
+}
 
-        .summary {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
+.summary {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+}
 
-        .summary-box {
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 18px;
-            text-align: center;
-            background: #fafafa;
-        }
+.summary-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    background: #fafafa;
+}
 
-        .summary-box .title {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 9px;
-        }
+.summary-box .title {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
 
-        .summary-box .value {
-            font-size: 20px;
-            font-weight: bold;
-        }
+.summary-box .value {
+    font-size: 20px;
+    font-weight: bold;
+}
 
-        .total-value {
-            color: #2563eb;
-        }
+.total-value {
+    color: #2563eb;
+}
 
-        .receipt-value {
-            color: #059669;
-        }
+.receipt-value {
+    color: #059669;
+}
 
-        .balance-value {
-            color: #dc2626;
-        }
+.balance-value {
+    color: #dc2626;
+}
 
-        .paid {
-            color: #059669 !important;
-        }
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 13px;
+}
 
-        .unpaid {
-            color: #dc2626 !important;
-        }
+.loading {
+    text-align: center;
+    padding: 60px;
+    background: white;
+    border-radius: 15px;
+    font-size: 18px;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #e5e7eb;
-            color: #6b7280;
-            font-size: 13px;
-        }
+.error {
+    text-align: center;
+    padding: 30px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 12px;
+    font-weight: bold;
+}
 
-        .loading {
-            text-align: center;
-            padding: 60px;
-            background: white;
-            border-radius: 15px;
-            font-size: 18px;
-        }
+/* =========================
+   پنل ویرایش
+========================= */
 
-        .error {
-            text-align: center;
-            padding: 30px;
-            background: #fee2e2;
-            color: #991b1b;
-            border-radius: 12px;
-            font-weight: bold;
-        }
+#editPanel {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+}
 
-        @media (max-width: 850px) {
+.edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
 
-            .info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.edit-input,
+.edit-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 14px;
+    background: white;
+}
 
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.edit-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
 
-        }
+.save-edit-btn,
+.cancel-edit-btn {
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Tahoma, Arial, sans-serif;
+}
 
-        @media (max-width: 600px) {
+.save-edit-btn {
+    background: #059669;
+    color: white;
+}
 
-            .page {
-                width: 97%;
-                margin: 10px auto;
-            }
+.cancel-edit-btn {
+    background: #6b7280;
+    color: white;
+}
 
-            .bill {
-                padding: 15px;
-            }
+@media (max-width:850px) {
 
-            .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
+    .info-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
 
-            .toolbar button {
-                width: 100%;
-            }
+    .summary {
+        grid-template-columns: repeat(2,1fr);
+    }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
+}
 
-            .summary {
-                grid-template-columns: 1fr;
-            }
+@media (max-width:600px) {
 
-            .bill-header h1 {
-                font-size: 23px;
-            }
+    .page {
+        width: 97%;
+        margin: 10px auto;
+    }
 
-        }
+    .bill {
+        padding: 15px;
+    }
 
-       @media print {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar button {
+        width: 100%;
+    }
+
+    .toolbar > div {
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bill-header h1 {
+        font-size: 23px;
+    }
+
+}
+
+@media print {
 
     @page {
         size: A4 portrait;
@@ -308,7 +366,6 @@
     }
 
     body {
-        font-family: Tahoma, Arial, sans-serif;
         font-size: 10px;
     }
 
@@ -319,13 +376,13 @@
         padding: 0;
     }
 
-    .toolbar {
+    .toolbar,
+    #editPanel {
         display: none !important;
     }
 
     .bill {
         width: 100%;
-        min-height: 0;
         margin: 0;
         padding: 0;
         background: white;
@@ -387,7 +444,6 @@
         width: 100%;
         min-width: 0;
         font-size: 8px;
-        page-break-inside: avoid;
     }
 
     th,
@@ -396,15 +452,10 @@
         line-height: 1.2;
     }
 
-    .empty {
-        padding: 10px;
-    }
-
     .summary {
         margin-top: 12px;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,1fr);
         gap: 7px;
-        page-break-inside: avoid;
     }
 
     .summary-box {
@@ -427,281 +478,8 @@
     }
 
 }
-/* =========================================================
-   KABOORA CURTAIN
-   Responsive Design - Mobile / Tablet / Desktop
-   فقط تغییر ظاهری و اندازه‌ها
-========================================================= */
 
-/* صفحه‌های بزرگ */
-@media (min-width: 1400px) {
-
-    .page {
-        max-width: 1200px;
-    }
-
-    .bill {
-        padding: 35px;
-    }
-
-    .bill-header h1 {
-        font-size: 32px;
-    }
-
-}
-
-
-/* لپتاپ و تبلت بزرگ */
-@media (max-width: 1100px) {
-
-    .page {
-        width: 94%;
-    }
-
-    .bill {
-        padding: 25px;
-    }
-
-    .info-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-
-
-/* تبلت */
-@media (max-width: 850px) {
-
-    .page {
-        width: 94%;
-        margin: 18px auto;
-    }
-
-    .bill {
-        padding: 20px;
-        border-radius: 12px;
-    }
-
-    .bill-header h1 {
-        font-size: 26px;
-    }
-
-    .bill-header p {
-        font-size: 14px;
-    }
-
-    .info-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    .info-box {
-        padding: 12px;
-    }
-
-    .section {
-        margin-top: 20px;
-    }
-
-    .section-title {
-        font-size: 16px;
-        padding: 11px 13px;
-    }
-
-    .summary {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .toolbar button {
-        padding: 10px 15px;
-    }
-
-}
-
-
-/* موبایل */
-@media (max-width: 600px) {
-
-    body {
-        font-size: 14px;
-    }
-
-    .page {
-        width: 96%;
-        margin: 10px auto;
-    }
-
-    .toolbar {
-        flex-direction: column;
-        width: 100%;
-        gap: 8px;
-    }
-
-    .toolbar button {
-        width: 100%;
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .bill {
-        padding: 12px;
-        border-radius: 10px;
-    }
-
-    .bill-header {
-        padding-bottom: 15px;
-        margin-bottom: 15px;
-    }
-
-    .bill-header h1 {
-        font-size: 21px;
-        line-height: 1.6;
-    }
-
-    .bill-header p {
-        font-size: 12px;
-        line-height: 1.6;
-    }
-
-    .bill-number-box {
-        margin-top: 10px;
-        padding: 8px 14px;
-        font-size: 13px;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-bottom: 12px;
-    }
-
-    .info-box {
-        padding: 11px;
-        border-radius: 8px;
-    }
-
-    .info-box small {
-        font-size: 11px;
-    }
-
-    .info-box strong {
-        font-size: 13px;
-        line-height: 1.7;
-        overflow-wrap: anywhere;
-    }
-
-    .section {
-        margin-top: 18px;
-    }
-
-    .section-title {
-        font-size: 14px;
-        padding: 10px 12px;
-    }
-
-    .table-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-        min-width: 700px;
-        font-size: 12px;
-    }
-
-    th,
-    td {
-        padding: 8px 6px;
-        white-space: nowrap;
-    }
-
-    .empty {
-        padding: 20px 10px;
-        white-space: normal;
-    }
-
-    .summary {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-top: 20px;
-    }
-
-    .summary-box {
-        padding: 14px;
-    }
-
-    .summary-box .title {
-        font-size: 12px;
-    }
-
-    .summary-box .value {
-        font-size: 18px;
-    }
-
-    .footer {
-        margin-top: 20px;
-        font-size: 11px;
-        line-height: 1.8;
-    }
-
-}
-
-
-/* موبایل خیلی کوچک */
-@media (max-width: 360px) {
-
-    .page {
-        width: 98%;
-    }
-
-    .bill {
-        padding: 9px;
-    }
-
-    .bill-header h1 {
-        font-size: 19px;
-    }
-
-    .bill-header p {
-        font-size: 11px;
-    }
-
-    .section-title {
-        font-size: 13px;
-    }
-
-    table {
-        min-width: 650px;
-        font-size: 11px;
-    }
-
-    th,
-    td {
-        padding: 7px 5px;
-    }
-
-    .summary-box .value {
-        font-size: 16px;
-    }
-
-}
-
-
-/* جلوگیری از بیرون‌زدگی متن */
-.info-box,
-.summary-box,
-.footer {
-    overflow-wrap: anywhere;
-}
-
-
-/* لمس بهتر دکمه‌ها در موبایل */
-button {
-    touch-action: manipulation;
-}
-
-    </style>
+</style>
 
 </head>
 
@@ -716,27 +494,38 @@ button {
     <div class="toolbar">
 
         <button
+            type="button"
             class="back-btn"
-            onclick="window.close()">
+            id="backButton">
 
             ← بستن
 
         </button>
 
-        <button
-            class="print-btn"
-            onclick="window.print()">
+        <div style="display:flex;gap:10px;">
 
-            🖨️ چاپ بل
+            <button
+                type="button"
+                class="edit-btn"
+                id="editBillButton">
 
-        </button>
+                ✏️ ویرایش بل
+
+            </button>
+
+            <button
+                type="button"
+                class="print-btn"
+                id="printBillButton">
+
+                🖨️ چاپ بل
+
+            </button>
+
+        </div>
 
     </div>
 
-
-    <!-- =========================
-         لودینگ
-    ========================= -->
 
     <div
         id="loading"
@@ -747,10 +536,6 @@ button {
     </div>
 
 
-    <!-- =========================
-         خطا
-    ========================= -->
-
     <div
         id="errorBox"
         class="error"
@@ -759,19 +544,10 @@ button {
     </div>
 
 
-    <!-- =========================
-         بل
-    ========================= -->
-
     <div
         id="billContainer"
         class="bill"
         style="display:none;">
-
-
-        <!-- =========================
-             سر بل
-        ========================= -->
 
         <div class="bill-header">
 
@@ -780,7 +556,7 @@ button {
             </h1>
 
             <p>
-                بزرگترین نمایشگاه پرده کابورا
+                سیستم ثبت بل مشتریان
             </p>
 
             <div
@@ -792,95 +568,60 @@ button {
         </div>
 
 
-        <!-- =========================
-             اطلاعات مشتری
-        ========================= -->
+        <!-- اطلاعات مشتری -->
 
         <div class="info-grid">
 
             <div class="info-box">
 
-                <small>
-                    نام مشتری
-                </small>
+                <small>نام مشتری</small>
 
-                <strong id="customerName">
-                    -
-                </strong>
+                <strong id="customerName">-</strong>
 
             </div>
 
-
             <div class="info-box">
 
-                <small>
-                    شماره تماس
-                </small>
+                <small>شماره تماس</small>
 
-                <strong id="customerPhone">
-                    -
-                </strong>
+                <strong id="customerPhone">-</strong>
 
             </div>
 
-
             <div class="info-box">
 
-                <small>
-                    تاریخ بل
-                </small>
+                <small>تاریخ بل</small>
 
-                <strong id="billDate">
-                    -
-                </strong>
+                <strong id="billDate">-</strong>
 
             </div>
 
-
             <div class="info-box">
 
-                <small>
-                    تاریخ تحویل
-                </small>
+                <small>تاریخ تحویل</small>
 
-                <strong id="deliveryDate">
-                    -
-                </strong>
+                <strong id="deliveryDate">-</strong>
 
             </div>
 
         </div>
 
-
-        <!-- =========================
-             آدرس مشتری
-        ========================= -->
 
         <div class="info-box">
 
-            <small>
-                آدرس مشتری
-            </small>
+            <small>آدرس مشتری</small>
 
-            <strong id="customerAddress">
-                -
-            </strong>
+            <strong id="customerAddress">-</strong>
 
         </div>
 
 
-        <!-- =========================
-             تشک و بالشت
-        ========================= -->
+        <!-- تشک -->
 
-        <div
-            class="section"
-            id="mattressSection">
+        <div class="section">
 
             <div class="section-title">
-
                 🛏️ تشک و بالشت
-
             </div>
 
             <div class="table-wrapper">
@@ -892,33 +633,21 @@ button {
                     <tr>
 
                         <th>ردیف</th>
-
                         <th>نوع دوخت</th>
-
                         <th>تشک</th>
-
                         <th>بالشت</th>
-
                         <th>بالشت کوچک</th>
-
                         <th>بالشت رول</th>
-
                         <th>متراژ پارچه</th>
-
                         <th>قیمت پارچه</th>
-
                         <th>دستمزد</th>
-
                         <th>مبلغ</th>
 
                     </tr>
 
                     </thead>
 
-                    <tbody
-                        id="mattressBody">
-
-                    </tbody>
+                    <tbody id="mattressBody"></tbody>
 
                 </table>
 
@@ -927,18 +656,12 @@ button {
         </div>
 
 
-        <!-- =========================
-             پرده و جالی
-        ========================= -->
+        <!-- پرده -->
 
-        <div
-            class="section"
-            id="curtainSection">
+        <div class="section">
 
             <div class="section-title">
-
                 🪟 پرده و جالی
-
             </div>
 
             <div class="table-wrapper">
@@ -950,29 +673,19 @@ button {
                     <tr>
 
                         <th>ردیف</th>
-
                         <th>نوع دوخت</th>
-
                         <th>متراژ جالی</th>
-
                         <th>قیمت جالی</th>
-
                         <th>متراژ پارچه</th>
-
                         <th>قیمت پارچه</th>
-
                         <th>دستمزد</th>
-
                         <th>مبلغ</th>
 
                     </tr>
 
                     </thead>
 
-                    <tbody
-                        id="curtainBody">
-
-                    </tbody>
+                    <tbody id="curtainBody"></tbody>
 
                 </table>
 
@@ -981,18 +694,12 @@ button {
         </div>
 
 
-        <!-- =========================
-             رسیدها
-        ========================= -->
+        <!-- پرداخت -->
 
-        <div
-            class="section"
-            id="paymentsSection">
+        <div class="section">
 
             <div class="section-title">
-
                 💵 رسیدهای پرداختی
-
             </div>
 
             <div class="table-wrapper">
@@ -1004,21 +711,15 @@ button {
                     <tr>
 
                         <th>ردیف</th>
-
                         <th>تاریخ</th>
-
                         <th>مبلغ</th>
-
                         <th>توضیحات</th>
 
                     </tr>
 
                     </thead>
 
-                    <tbody
-                        id="paymentsBody">
-
-                    </tbody>
+                    <tbody id="paymentsBody"></tbody>
 
                 </table>
 
@@ -1028,21 +729,101 @@ button {
 
 
         <!-- =========================
-             خلاصه بل
-             فقط مجموع، رسید و باقی‌مانده
+             پنل ویرایش
         ========================= -->
 
+        <div id="editPanel">
+
+            <h3 style="margin-top:0;">
+                ✏️ ویرایش اطلاعات اصلی بل
+            </h3>
+
+            <div class="edit-grid">
+
+                <div class="info-box">
+
+                    <small>شماره بل</small>
+
+                    <input
+                        id="editBillNumber"
+                        class="edit-input"
+                        type="text">
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <small>مشتری</small>
+
+                    <select
+                        id="editCustomerId"
+                        class="edit-select">
+
+                    </select>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <small>تاریخ بل</small>
+
+                    <input
+                        id="editBillDate"
+                        class="edit-input"
+                        type="date">
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <small>تاریخ تحویل</small>
+
+                    <input
+                        id="editDeliveryDate"
+                        class="edit-input"
+                        type="date">
+
+                </div>
+
+            </div>
+
+
+            <div class="edit-actions">
+
+                <button
+                    type="button"
+                    class="save-edit-btn"
+                    id="saveEditButton">
+
+                    💾 ذخیره تغییرات
+
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-edit-btn"
+                    id="cancelEditButton">
+
+                    لغو
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- خلاصه -->
+
         <div class="summary">
-
-
-            <!-- مجموع بل -->
 
             <div class="summary-box">
 
                 <div class="title">
-
                     مجموع بل
-
                 </div>
 
                 <div
@@ -1056,14 +837,10 @@ button {
             </div>
 
 
-            <!-- مجموع رسید -->
-
             <div class="summary-box">
 
                 <div class="title">
-
                     مجموع رسید
-
                 </div>
 
                 <div
@@ -1077,14 +854,10 @@ button {
             </div>
 
 
-            <!-- باقی مانده -->
-
             <div class="summary-box">
 
                 <div class="title">
-
                     باقی‌مانده
-
                 </div>
 
                 <div
@@ -1097,13 +870,8 @@ button {
 
             </div>
 
-
         </div>
 
-
-        <!-- =========================
-             پاورقی
-        ========================= -->
 
         <div class="footer">
 
@@ -1115,7 +883,6 @@ button {
 
         </div>
 
-
     </div>
 
 </div>
@@ -1124,7 +891,7 @@ button {
 <script>
 
 /* =========================================================
-   دریافت شناسه بل از URL
+   متغیرهای اصلی
 ========================================================= */
 
 const urlParams =
@@ -1132,23 +899,40 @@ const urlParams =
         window.location.search
     );
 
-
 const billId =
     Number(
         urlParams.get("id")
     );
 
 
+let currentBill = null;
+let currentMattressItems = [];
+let currentCurtainItems = [];
+let currentPayments = [];
+
+
+/* =========================================================
+   بستن
+========================================================= */
+function closeBillPage() {
+
+    if (window.opener && !window.opener.closed) {
+        window.close();
+        return;
+    }
+
+    window.location.href = "/bills.html";
+
+}
 /* =========================================================
    فرمت پول
 ========================================================= */
 
 function formatMoney(value) {
 
-    return Number(
-        value || 0
-    ).toLocaleString("fa-AF")
-    + " افغانی";
+    return Number(value || 0)
+        .toLocaleString("fa-AF")
+        + " افغانی";
 
 }
 
@@ -1159,9 +943,8 @@ function formatMoney(value) {
 
 function formatNumber(value) {
 
-    return Number(
-        value || 0
-    ).toLocaleString("fa-AF");
+    return Number(value || 0)
+        .toLocaleString("fa-AF");
 
 }
 
@@ -1173,30 +956,38 @@ function formatNumber(value) {
 function formatDate(value) {
 
     if (!value) {
-
         return "-";
-
     }
 
+    const date = new Date(value);
 
-    const date =
-        new Date(value);
-
-
-    if (
-        isNaN(
-            date.getTime()
-        )
-    ) {
-
+    if (isNaN(date.getTime())) {
         return "-";
-
     }
 
+    return date.toLocaleDateString("fa-AF");
 
-    return date.toLocaleDateString(
-        "fa-AF"
-    );
+}
+
+
+/* =========================================================
+   تاریخ input
+========================================================= */
+
+function formatInputDate(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toISOString()
+        .split("T")[0];
 
 }
 
@@ -1207,76 +998,29 @@ function formatDate(value) {
 
 function escapeHtml(value) {
 
-    return String(
-        value ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
 /* =========================================================
-   نوع دوخت تشک
+   نوع تشک
 ========================================================= */
 
 function getMattressTypes(item) {
 
     const types = [];
 
-
-    if (item.Simple) {
-
-        types.push("ساده");
-
-    }
-
-
-    if (item.SajafDar) {
-
-        types.push("سجاف‌دار");
-
-    }
-
-
-    if (item.Boxi) {
-
-        types.push("باکسی");
-
-    }
-
-
-    if (item.DesignDar) {
-
-        types.push("دیزاین‌دار");
-
-    }
-
-
-    if (item.ZirPoosh) {
-
-        types.push("زیرپوش");
-
-    }
-
+    if (item.Simple) types.push("ساده");
+    if (item.SajafDar) types.push("سجاف‌دار");
+    if (item.Boxi) types.push("باکسی");
+    if (item.DesignDar) types.push("دیزاین‌دار");
+    if (item.ZirPoosh) types.push("زیرپوش");
 
     return types.length
         ? types.join("، ")
@@ -1286,55 +1030,19 @@ function getMattressTypes(item) {
 
 
 /* =========================================================
-   نوع دوخت پرده
+   نوع پرده
 ========================================================= */
 
 function getCurtainTypes(item) {
 
     const types = [];
 
-
-    if (item.Ringdar) {
-
-        types.push("رینگدار");
-
-    }
-
-
-    if (item.Plyti) {
-
-        types.push("پلیتی");
-
-    }
-
-
-    if (item.SePlyte) {
-
-        types.push("سه پلیته");
-
-    }
-
-
-    if (item.Minimal) {
-
-        types.push("مینیمال");
-
-    }
-
-
-    if (item.Iranian) {
-
-        types.push("دوخت ایرانی");
-
-    }
-
-
-    if (item.PoshtPardeyi) {
-
-        types.push("پشت پرده‌ای");
-
-    }
-
+    if (item.Ringdar) types.push("رینگدار");
+    if (item.Plyti) types.push("پلیتی");
+    if (item.SePlyte) types.push("سه پلیته");
+    if (item.Minimal) types.push("مینیمال");
+    if (item.Iranian) types.push("دوخت ایرانی");
+    if (item.PoshtPardeyi) types.push("پشت پرده‌ای");
 
     return types.length
         ? types.join("، ")
@@ -1350,164 +1058,87 @@ function getCurtainTypes(item) {
 function renderMattressItems(items) {
 
     const tbody =
-        document.getElementById(
-            "mattressBody"
-        );
-
+        document.getElementById("mattressBody");
 
     tbody.innerHTML = "";
 
-
     if (
-        !Array.isArray(items)
-        ||
+        !Array.isArray(items) ||
         items.length === 0
     ) {
 
         tbody.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="10"
-                    class="empty">
-
+                <td colspan="10" class="empty">
                     برای این بل تشک یا بالشتی ثبت نشده است.
-
                 </td>
-
             </tr>
-
         `;
 
         return;
-
     }
 
 
-    items.forEach(
-        (item, index) => {
+    items.forEach((item,index) => {
+
+        const fabricMeters =
+            Number(item.FabricMeters || 0);
+
+        const fabricPrice =
+            Number(item.FabricPrice || 0);
+
+        const sewingPrice =
+            Number(item.SewingPrice || 0);
+
+        const amount =
+            (fabricMeters * fabricPrice)
+            + sewingPrice;
 
 
-            /*
-             * مبلغ مشتری:
-             *
-             * متراژ پارچه × قیمت پارچه
-             * +
-             * دستمزد مشتری
-             *
-             * توجه:
-             * دستمزد خیاط داخلی در این صفحه
-             * نمایش داده نمی‌شود.
-             */
-
-            const fabricMeters =
-                Number(
-                    item.FabricMeters || 0
-                );
+        const tr =
+            document.createElement("tr");
 
 
-            const fabricPrice =
-                Number(
-                    item.FabricPrice || 0
-                );
+        tr.innerHTML = `
 
+            <td>${formatNumber(index + 1)}</td>
 
-            const sewingPrice =
-                Number(
-                    item.SewingPrice || 0
-                );
+            <td>
+                ${escapeHtml(
+                    getMattressTypes(item)
+                )}
+            </td>
 
+            <td>${formatNumber(item.MattressCount)}</td>
 
-            const amount =
-                (
-                    fabricMeters *
-                    fabricPrice
-                )
-                +
-                sewingPrice;
+            <td>${formatNumber(item.PillowCount)}</td>
 
+            <td>${formatNumber(item.SmallPillowCount)}</td>
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
+            <td>${formatNumber(item.RollPillowCount)}</td>
 
+            <td>
+                ${formatNumber(fabricMeters)}
+                متر
+            </td>
 
-            tr.innerHTML = `
+            <td>
+                ${formatMoney(fabricPrice)}
+            </td>
 
-                <td>
-                    ${formatNumber(
-                        index + 1
-                    )}
-                </td>
+            <td>
+                ${formatMoney(sewingPrice)}
+            </td>
 
-                <td>
-                    ${escapeHtml(
-                        getMattressTypes(item)
-                    )}
-                </td>
+            <td class="amount">
+                ${formatMoney(amount)}
+            </td>
 
-                <td>
-                    ${formatNumber(
-                        item.MattressCount
-                    )}
-                </td>
+        `;
 
-                <td>
-                    ${formatNumber(
-                        item.PillowCount
-                    )}
-                </td>
+        tbody.appendChild(tr);
 
-                <td>
-                    ${formatNumber(
-                        item.SmallPillowCount
-                    )}
-                </td>
-
-                <td>
-                    ${formatNumber(
-                        item.RollPillowCount
-                    )}
-                </td>
-
-                <td>
-                    ${formatNumber(
-                        fabricMeters
-                    )}
-                    متر
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        fabricPrice
-                    )}
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        sewingPrice
-                    )}
-                </td>
-
-                <td class="amount">
-
-                    ${formatMoney(
-                        amount
-                    )}
-
-                </td>
-
-            `;
-
-
-            tbody.appendChild(
-                tr
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -1519,302 +1150,172 @@ function renderMattressItems(items) {
 function renderCurtainItems(items) {
 
     const tbody =
-        document.getElementById(
-            "curtainBody"
-        );
-
+        document.getElementById("curtainBody");
 
     tbody.innerHTML = "";
 
-
     if (
-        !Array.isArray(items)
-        ||
+        !Array.isArray(items) ||
         items.length === 0
     ) {
 
         tbody.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="8"
-                    class="empty">
-
+                <td colspan="8" class="empty">
                     برای این بل پرده‌ای ثبت نشده است.
-
                 </td>
-
             </tr>
-
         `;
 
         return;
-
     }
 
 
-    items.forEach(
-        (item, index) => {
+    items.forEach((item,index) => {
+
+        const jaliMeters =
+            Number(item.JaliMeters || 0);
+
+        const jaliPrice =
+            Number(item.JaliPrice || 0);
+
+        const fabricMeters =
+            Number(item.FabricMeters || 0);
+
+        const fabricPrice =
+            Number(item.FabricPrice || 0);
+
+        const sewingPrice =
+            Number(item.SewingPrice || 0);
 
 
-            const jaliMeters =
-                Number(
-                    item.JaliMeters || 0
-                );
+        const amount =
+            (jaliMeters * jaliPrice)
+            +
+            (fabricMeters * fabricPrice)
+            +
+            sewingPrice;
 
 
-            const jaliPrice =
-                Number(
-                    item.JaliPrice || 0
-                );
+        const tr =
+            document.createElement("tr");
 
 
-            const fabricMeters =
-                Number(
-                    item.FabricMeters || 0
-                );
+        tr.innerHTML = `
 
+            <td>${formatNumber(index + 1)}</td>
 
-            const fabricPrice =
-                Number(
-                    item.FabricPrice || 0
-                );
+            <td>
+                ${escapeHtml(
+                    getCurtainTypes(item)
+                )}
+            </td>
 
+            <td>
+                ${formatNumber(jaliMeters)}
+                متر
+            </td>
 
-            const sewingPrice =
-                Number(
-                    item.SewingPrice || 0
-                );
+            <td>
+                ${formatMoney(jaliPrice)}
+            </td>
 
+            <td>
+                ${formatNumber(fabricMeters)}
+                متر
+            </td>
 
-            /*
-             * مبلغ مشتری
-             *
-             * جالی:
-             * متراژ × قیمت جالی
-             *
-             * دستمزد جالی:
-             * متراژ × دستمزد
-             *
-             * پارچه:
-             * متراژ × قیمت پارچه
-             *
-             * دستمزد پارچه:
-             * متراژ × دستمزد
-             */
+            <td>
+                ${formatMoney(fabricPrice)}
+            </td>
 
-            const jaliTotal =
-                jaliMeters *
-                jaliPrice;
+            <td>
+                ${formatMoney(sewingPrice)}
+            </td>
 
+            <td class="amount">
+                ${formatMoney(amount)}
+            </td>
 
-            const jaliSewing =
-                jaliMeters *
-                sewingPrice;
+        `;
 
+        tbody.appendChild(tr);
 
-            const fabricTotal =
-                fabricMeters *
-                fabricPrice;
-
-
-            const fabricSewing =
-                fabricMeters *
-                sewingPrice;
-
-
-            const amount =
-                jaliTotal
-                +
-                jaliSewing
-                +
-                fabricTotal
-                +
-                fabricSewing;
-
-
-            const tr =
-                document.createElement(
-                    "tr"
-                );
-
-
-            tr.innerHTML = `
-
-                <td>
-                    ${formatNumber(
-                        index + 1
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHtml(
-                        getCurtainTypes(item)
-                    )}
-                </td>
-
-                <td>
-                    ${formatNumber(
-                        jaliMeters
-                    )}
-                    متر
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        jaliPrice
-                    )}
-                </td>
-
-                <td>
-                    ${formatNumber(
-                        fabricMeters
-                    )}
-                    متر
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        fabricPrice
-                    )}
-                </td>
-
-                <td>
-                    ${formatMoney(
-                        sewingPrice
-                    )}
-                </td>
-
-                <td class="amount">
-
-                    ${formatMoney(
-                        amount
-                    )}
-
-                </td>
-
-            `;
-
-
-            tbody.appendChild(
-                tr
-            );
-
-        }
-    );
+    });
 
 }
 
 
 /* =========================================================
-   نمایش رسیدها
+   نمایش پرداخت
 ========================================================= */
 
 function renderPayments(payments) {
 
     const tbody =
-        document.getElementById(
-            "paymentsBody"
-        );
-
+        document.getElementById("paymentsBody");
 
     tbody.innerHTML = "";
 
-
     if (
-        !Array.isArray(payments)
-        ||
+        !Array.isArray(payments) ||
         payments.length === 0
     ) {
 
         tbody.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="4"
-                    class="empty">
-
+                <td colspan="4" class="empty">
                     هنوز رسیدی برای این بل ثبت نشده است.
-
                 </td>
-
             </tr>
-
         `;
 
         return;
-
     }
 
 
-    payments.forEach(
-        (payment, index) => {
+    payments.forEach((payment,index) => {
+
+        const tr =
+            document.createElement("tr");
 
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
+        tr.innerHTML = `
 
+            <td>
+                ${formatNumber(index + 1)}
+            </td>
 
-            tr.innerHTML = `
+            <td>
+                ${formatDate(payment.PaymentDate)}
+            </td>
 
-                <td>
-                    ${formatNumber(
-                        index + 1
-                    )}
-                </td>
+            <td class="amount paid">
+                ${formatMoney(payment.Amount)}
+            </td>
 
-                <td>
-                    ${formatDate(
-                        payment.PaymentDate
-                    )}
-                </td>
+            <td>
+                ${escapeHtml(
+                    payment.Description || "-"
+                )}
+            </td>
 
-                <td class="amount paid">
+        `;
 
-                    ${formatMoney(
-                        payment.Amount
-                    )}
+        tbody.appendChild(tr);
 
-                </td>
-
-                <td>
-
-                    ${escapeHtml(
-                        payment.Description
-                        ||
-                        "-"
-                    )}
-
-                </td>
-
-            `;
-
-
-            tbody.appendChild(
-                tr
-            );
-
-        }
-    );
+    });
 
 }
 
 
 /* =========================================================
-   دریافت جزئیات بل
+   دریافت بل
 ========================================================= */
 
 async function loadBillDetails() {
 
-    if (
-        !billId
-        ||
-        billId <= 0
-    ) {
+    if (!billId || billId <= 0) {
 
         throw new Error(
             "شناسه بل در آدرس پیدا نشد."
@@ -1829,15 +1330,30 @@ async function loadBillDetails() {
         );
 
 
-    const data =
-        await response.json();
+    const text =
+        await response.text();
+
+
+    let data;
+
+    try {
+
+        data =
+            JSON.parse(text);
+
+    } catch {
+
+        throw new Error(
+            "پاسخ سرور معتبر نیست."
+        );
+
+    }
 
 
     if (!response.ok) {
 
         throw new Error(
-            data.error
-            ||
+            data.error ||
             "خطا در دریافت جزئیات بل"
         );
 
@@ -1855,201 +1371,540 @@ async function loadBillDetails() {
 
 function renderBill(data) {
 
-    const bill =
-        data.bill;
+    if (!data || !data.bill) {
 
-
-    const mattressItems =
-        data.mattressItems
-        ||
-        [];
-
-
-    const curtainItems =
-        data.curtainItems
-        ||
-        [];
-
-
-    const payments =
-        data.payments
-        ||
-        [];
-
-
-    /* =========================
-       اطلاعات اصلی
-    ========================= */
-
-    document.getElementById(
-        "billNumber"
-    ).textContent =
-        "بل شماره " +
-        formatNumber(
-            bill.BillNumber
-        );
-
-
-    document.getElementById(
-        "customerName"
-    ).textContent =
-        bill.CustomerName
-        ||
-        "-";
-
-
-    document.getElementById(
-        "customerPhone"
-    ).textContent =
-        bill.Phone
-        ||
-        "-";
-
-
-    document.getElementById(
-        "customerAddress"
-    ).textContent =
-        bill.Address
-        ||
-        "-";
-
-
-    document.getElementById(
-        "billDate"
-    ).textContent =
-        formatDate(
-            bill.BillDate
-        );
-
-
-    document.getElementById(
-        "deliveryDate"
-    ).textContent =
-        formatDate(
-            bill.DeliveryDate
-        );
-
-
-    /* =========================
-       جدول‌ها
-    ========================= */
-
-    renderMattressItems(
-        mattressItems
-    );
-
-
-    renderCurtainItems(
-        curtainItems
-    );
-
-
-    renderPayments(
-        payments
-    );
-
-
-    /* =========================
-       خلاصه بل
-    ========================= */
-
-    const totalAmount =
-        Number(
-            bill.TotalAmount || 0
-        );
-
-
-    const receiptAmount =
-        Number(
-            bill.ReceiptAmount || 0
-        );
-
-
-    const balanceAmount =
-        Number(
-            bill.BalanceAmount || 0
-        );
-
-
-    /* مجموع بل */
-
-    document.getElementById(
-        "totalAmount"
-    ).textContent =
-        formatMoney(
-            totalAmount
-        );
-
-
-    /* مجموع رسید */
-
-    document.getElementById(
-        "receiptAmount"
-    ).textContent =
-        formatMoney(
-            receiptAmount
-        );
-
-
-    /* باقی‌مانده */
-
-    const balanceElement =
-        document.getElementById(
-            "balanceAmount"
-        );
-
-
-    balanceElement.textContent =
-        formatMoney(
-            balanceAmount
-        );
-
-
-    if (
-        balanceAmount <= 0
-    ) {
-
-        balanceElement.classList.add(
-            "paid"
-        );
-
-        balanceElement.classList.remove(
-            "unpaid"
-        );
-
-    } else {
-
-        balanceElement.classList.add(
-            "unpaid"
-        );
-
-        balanceElement.classList.remove(
-            "paid"
+        throw new Error(
+            "اطلاعات بل از سرور دریافت نشد."
         );
 
     }
 
 
-    /* =========================
-       نمایش نهایی
-    ========================= */
+    currentBill =
+        data.bill;
 
-    document.getElementById(
-        "loading"
-    ).style.display =
+    currentMattressItems =
+        Array.isArray(data.mattressItems)
+            ? data.mattressItems
+            : [];
+
+    currentCurtainItems =
+        Array.isArray(data.curtainItems)
+            ? data.curtainItems
+            : [];
+
+    currentPayments =
+        Array.isArray(data.payments)
+            ? data.payments
+            : [];
+
+
+    const bill =
+        currentBill;
+
+
+    document.getElementById("billNumber")
+        .textContent =
+        "بل شماره " +
+        formatNumber(bill.BillNumber);
+
+
+    document.getElementById("customerName")
+        .textContent =
+        bill.CustomerName || "-";
+
+
+    document.getElementById("customerPhone")
+        .textContent =
+        bill.Phone || "-";
+
+
+    document.getElementById("customerAddress")
+        .textContent =
+        bill.Address || "-";
+
+
+    document.getElementById("billDate")
+        .textContent =
+        formatDate(bill.BillDate);
+
+
+    document.getElementById("deliveryDate")
+        .textContent =
+        formatDate(bill.DeliveryDate);
+
+
+    renderMattressItems(
+        currentMattressItems
+    );
+
+    renderCurtainItems(
+        currentCurtainItems
+    );
+
+    renderPayments(
+        currentPayments
+    );
+
+
+    const total =
+        Number(bill.TotalAmount || 0);
+
+    const receipt =
+        Number(bill.ReceiptAmount || 0);
+
+    const balance =
+        Number(bill.BalanceAmount || 0);
+
+
+    document.getElementById("totalAmount")
+        .textContent =
+        formatMoney(total);
+
+
+    document.getElementById("receiptAmount")
+        .textContent =
+        formatMoney(receipt);
+
+
+    const balanceElement =
+        document.getElementById("balanceAmount");
+
+
+    balanceElement.textContent =
+        formatMoney(balance);
+
+
+    balanceElement.classList.remove(
+        "paid",
+        "unpaid"
+    );
+
+
+    balanceElement.classList.add(
+        balance <= 0
+            ? "paid"
+            : "unpaid"
+    );
+
+
+    document.getElementById("loading")
+        .style.display =
         "none";
 
 
-    document.getElementById(
-        "billContainer"
-    ).style.display =
+    document.getElementById("billContainer")
+        .style.display =
         "block";
 
 }
 
 
 /* =========================================================
-   شروع
+   دریافت مشتریان
+========================================================= */
+
+async function loadCustomersForEdit() {
+
+    const select =
+        document.getElementById(
+            "editCustomerId"
+        );
+
+
+    select.innerHTML = `
+        <option value="">
+            ⏳ در حال دریافت مشتریان...
+        </option>
+    `;
+
+
+    const response =
+        await fetch("/api/customers");
+
+
+    const text =
+        await response.text();
+
+
+    let customers;
+
+    try {
+
+        customers =
+            JSON.parse(text);
+
+    } catch {
+
+        throw new Error(
+            "پاسخ لیست مشتریان معتبر نیست."
+        );
+
+    }
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            customers.error ||
+            "خطا در دریافت مشتریان."
+        );
+
+    }
+
+
+    select.innerHTML = "";
+
+
+    if (
+        !Array.isArray(customers) ||
+        customers.length === 0
+    ) {
+
+        select.innerHTML = `
+            <option value="">
+                هیچ مشتری ثبت نشده است
+            </option>
+        `;
+
+        return;
+    }
+
+
+    customers.forEach(customer => {
+
+        const option =
+            document.createElement("option");
+
+
+        option.value =
+            customer.Id;
+
+
+        option.textContent =
+            customer.FullName;
+
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================================================
+   فعال کردن ویرایش
+========================================================= */
+
+async function enableEditMode() {
+
+    if (!currentBill) {
+
+        alert(
+            "❌ اطلاعات بل هنوز بارگذاری نشده است."
+        );
+
+        return;
+    }
+
+
+    const panel =
+        document.getElementById(
+            "editPanel"
+        );
+
+
+    panel.style.display =
+        "block";
+
+
+    document.getElementById(
+        "editBillNumber"
+    ).value =
+        currentBill.BillNumber || "";
+
+
+    document.getElementById(
+        "editBillDate"
+    ).value =
+        formatInputDate(
+            currentBill.BillDate
+        );
+
+
+    document.getElementById(
+        "editDeliveryDate"
+    ).value =
+        formatInputDate(
+            currentBill.DeliveryDate
+        );
+
+
+    try {
+
+        await loadCustomersForEdit();
+
+
+        document.getElementById(
+            "editCustomerId"
+        ).value =
+            String(
+                currentBill.CustomerId || ""
+            );
+
+
+    } catch(error) {
+
+        console.error(error);
+
+        alert(
+            "❌ " + error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   لغو ویرایش
+========================================================= */
+
+function cancelEditMode() {
+
+    document.getElementById(
+        "editPanel"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   ذخیره تغییرات
+========================================================= */
+
+async function saveBillChanges() {
+
+    if (!currentBill) {
+
+        alert(
+            "❌ اطلاعات بل موجود نیست."
+        );
+
+        return;
+    }
+
+
+    const billNumber =
+        document.getElementById(
+            "editBillNumber"
+        ).value.trim();
+
+
+    const customerId =
+        Number(
+            document.getElementById(
+                "editCustomerId"
+            ).value
+        );
+
+
+    const billDate =
+        document.getElementById(
+            "editBillDate"
+        ).value;
+
+
+    const deliveryDate =
+        document.getElementById(
+            "editDeliveryDate"
+        ).value;
+
+
+    if (!billNumber) {
+
+        alert(
+            "❌ شماره بل را وارد کنید."
+        );
+
+        return;
+    }
+
+
+    if (!customerId) {
+
+        alert(
+            "❌ مشتری را انتخاب کنید."
+        );
+
+        return;
+    }
+
+
+    if (!billDate) {
+
+        alert(
+            "❌ تاریخ بل را وارد کنید."
+        );
+
+        return;
+    }
+
+
+    const payload = {
+
+        BillNumber:
+            billNumber,
+
+        CustomerId:
+            customerId,
+
+        BillDate:
+            billDate,
+
+        DeliveryDate:
+            deliveryDate || null,
+
+        TotalAmount:
+            Number(
+                currentBill.TotalAmount || 0
+            ),
+
+        mattressItems:
+            currentMattressItems,
+
+        curtainItems:
+            currentCurtainItems
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/bills/${billId}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const text =
+            await response.text();
+
+
+        let result;
+
+        try {
+
+            result =
+                JSON.parse(text);
+
+        } catch {
+
+            throw new Error(
+                "پاسخ سرور معتبر نیست."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "خطا در ذخیره تغییرات."
+            );
+
+        }
+
+
+        alert(
+            "✅ بل با موفقیت ویرایش شد."
+        );
+
+
+        const freshData =
+            await loadBillDetails();
+
+
+        renderBill(
+            freshData
+        );
+
+
+        cancelEditMode();
+
+
+    } catch(error) {
+
+        console.error(error);
+
+        alert(
+            "❌ " + error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   اتصال دکمه‌ها
+========================================================= */
+
+document
+    .getElementById("backButton")
+    .addEventListener(
+        "click",
+        closeBillPage
+    );
+
+
+document
+    .getElementById("printBillButton")
+    .addEventListener(
+        "click",
+        () => window.print()
+    );
+
+
+document
+    .getElementById("editBillButton")
+    .addEventListener(
+        "click",
+        enableEditMode
+    );
+
+
+document
+    .getElementById("saveEditButton")
+    .addEventListener(
+        "click",
+        saveBillChanges
+    );
+
+
+document
+    .getElementById("cancelEditButton")
+    .addEventListener(
+        "click",
+        cancelEditMode
+    );
+
+
+/* =========================================================
+   شروع برنامه
 ========================================================= */
 
 (async function() {
@@ -2064,28 +1919,23 @@ function renderBill(data) {
             data
         );
 
-    } catch (error) {
 
-        console.error(
-            error
-        );
+    } catch(error) {
+
+        console.error(error);
 
 
-        document.getElementById(
-            "loading"
-        ).style.display =
+        document.getElementById("loading")
+            .style.display =
             "none";
 
 
         const errorBox =
-            document.getElementById(
-                "errorBox"
-            );
+            document.getElementById("errorBox");
 
 
         errorBox.textContent =
-            "❌ " +
-            error.message;
+            "❌ " + error.message;
 
 
         errorBox.style.display =

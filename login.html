@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ورود به سیستم - نمایشگاه پرده کابورا</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f1f5f9;
+        }
+
+        .login-box {
+            width: 380px;
+            max-width: 92%;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 8px;
+            color: #1e293b;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 18px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-family: Tahoma;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-family: Tahoma;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #message {
+            margin-top: 15px;
+            text-align: center;
+            color: #dc2626;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>نمایشگاه پرده کابورا</h1>
+
+        <div class="subtitle">
+            ورود به حساب کاربری
+        </div>
+
+        <form id="loginForm">
+
+            <label for="username">نام کاربری</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="نام کاربری را وارد کنید"
+                required
+            >
+
+            <label for="password">رمز عبور</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="رمز عبور را وارد کنید"
+                required
+            >
+
+            <button type="submit">
+                ورود به سیستم
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+    </div>
+
+    <script>
+        const API = "http://localhost:3000";
+
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+
+            e.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+
+            const message = document.getElementById("message");
+
+            message.textContent = "در حال ورود...";
+
+            try {
+
+                const response = await fetch(`${API}/api/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "نام کاربری یا رمز عبور اشتباه است.");
+                }
+
+                localStorage.setItem("employeeUser", JSON.stringify(data.user));
+
+                window.location.href = "/";
+
+            } catch (error) {
+
+                message.textContent = "❌ " + error.message;
+
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
